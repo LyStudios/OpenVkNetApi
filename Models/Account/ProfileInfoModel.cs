@@ -2,9 +2,9 @@
 {
     public class ProfileInfoModel
     {
-        public PIResponse response { get; set; }
+        public ProfileInfoResponse response { get; set; }
     }
-    public class PIResponse
+    public class ProfileInfoResponse
     {
         public string first_name { get; set; }
         public int id { get; set; }
