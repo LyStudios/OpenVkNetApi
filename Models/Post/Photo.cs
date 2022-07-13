@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace OpenVkNetApi.Models.Wall
+namespace OpenVkNetApi.Models.Post
 {
     public class Photo
     {

@@ -4,7 +4,6 @@ using OpenVkNetApi.Exceptions;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-
 namespace OpenVkNetApi
 {
     public class OVkApi

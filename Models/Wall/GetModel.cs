@@ -10,6 +10,6 @@ namespace OpenVkNetApi.Models.Wall
     public class GetWallResponse
     {
         public int count { get; set; }
-        public List<Post> items { get; set; }
+        public List<Post.Post> items { get; set; }
     }
 }

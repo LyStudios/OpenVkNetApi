@@ -9,6 +9,6 @@ namespace OpenVkNetApi.Models.Wall
 
     public class GetByIdResponse
     {
-        public List<Post> items { get; set; }
+        public List<Post.Post> items { get; set; }
     }
 }

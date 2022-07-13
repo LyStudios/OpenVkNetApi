@@ -1,4 +1,4 @@
-﻿namespace OpenVkNetApi.Models.Wall
+﻿namespace OpenVkNetApi.Models.Post
 {
     public class Likes
     {
