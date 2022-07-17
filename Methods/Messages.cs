@@ -32,5 +32,13 @@ namespace OpenVkNetApi.Methods
         {
             return JsonConvert.DeserializeObject<GetHistoryModel>(await api.GetRequestAsync($"{user.instanceUrl}/method/Messages.getHistory?access_token={user.access_token}&offset={offset}&count={count}&extended={extended}&user_id={user_id}&peer_id={peer_id}&start_message_id={start_message_id}&rev={rev}"));
         }
+        public async Task<GetLongPollHistoryModel> GetLongPollHistory(AuthorizedUser user, int ts = -1, int preview_length = 0, int events_limit = 1000, int msgs_limit = 1000)
+        {
+            return JsonConvert.DeserializeObject<GetLongPollHistoryModel>(await api.GetRequestAsync($"{user.instanceUrl}/method/Messages.getLongPollHistory?access_token={user.access_token}&ts={ts}&preview_length={preview_length}&events_limit={events_limit}&msgs_limit={msgs_limit}"));
+        }
+        public async Task<GetLongPollServerModel> GetLongPollServer(AuthorizedUser user, int need_pts = 1, int lp_version = 3, string group_id = null)
+        {
+            return JsonConvert.DeserializeObject<GetLongPollServerModel>(await api.GetRequestAsync($"{user.instanceUrl}/method/Messages.getLongPollServer?access_token={user.access_token}&need_pts={need_pts}&lp_version={lp_version}&group_id={group_id}"));
+        }
     }
 }

@@ -8,7 +8,13 @@ namespace OpenVkNetApi
 {
     public class OVkApi
     {
-        public async Task<AuthorizedUser> Authorization(string instanceUrl, string username, string password)
+        /// <summary>
+        /// Авторизация в инстанции OpenVK
+        /// </summary>
+        /// <param name="instanceUrl">Ссылка на нужную инстанцию (по умолчанию https://openvk.uk)</param>
+        /// <param name="username">Логин</param>
+        /// <param name="password">Пароль</param>
+        public async Task<AuthorizedUser> Authorization(string username, string password, string instanceUrl = "https://openvk.uk")
         {
             return new AuthorizedUser(JsonConvert.DeserializeObject<AuthorizationModel>(await GetRequestAsync($"{instanceUrl}/token?username={username}&password={password}&grant_type=password")).access_token, instanceUrl);
         }
