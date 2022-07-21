@@ -12,9 +12,9 @@ namespace OpenVkNetApi.Methods
         {
             return JsonConvert.DeserializeObject<LikesModel>(await api.GetRequestAsync($"{user.instanceUrl}/method/Likes.add?access_token={user.access_token}&type={type}&owner_id={owner_id}&item_id={item_id}"));
         }
-        public async Task<LikesModel> Remove(AuthorizedUser user, string type, int owner_id, int item_id)
+        public async Task<LikesModel> Delete(AuthorizedUser user, string type, int owner_id, int item_id)
         {
-            return JsonConvert.DeserializeObject<LikesModel>(await api.GetRequestAsync($"{user.instanceUrl}/method/Likes.remove?access_token={user.access_token}&type={type}&owner_id={owner_id}&item_id={item_id}"));
+            return JsonConvert.DeserializeObject<LikesModel>(await api.GetRequestAsync($"{user.instanceUrl}/method/Likes.delete?access_token={user.access_token}&type={type}&owner_id={owner_id}&item_id={item_id}"));
         }
         public async Task<bool> IsLiked(AuthorizedUser user, string type, int owner_id, int item_id, int user_id)
         {

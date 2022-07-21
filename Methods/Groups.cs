@@ -21,7 +21,7 @@ namespace OpenVkNetApi.Methods
             return JsonConvert.DeserializeObject<GetGroupsModel>(await api.GetRequestAsync($"{user.instanceUrl}/method/Groups.get?access_token={user.access_token}&user_id={user_id}&offset={offset}&count={count}&fields={fields}"));
         }
         /// <summary>
-        /// 
+        /// Возвращает группы(или одну), id которых был указан
         /// </summary>
         /// <param name="user">Авторизованный пользователь(можно получить при авторизации)</param>
         /// <param name="groups_ids">несколько id групп, которые нужно получить</param>

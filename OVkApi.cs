@@ -14,9 +14,10 @@ namespace OpenVkNetApi
         /// <param name="instanceUrl">Ссылка на нужную инстанцию (по умолчанию https://openvk.uk)</param>
         /// <param name="username">Логин</param>
         /// <param name="password">Пароль</param>
-        public async Task<AuthorizedUser> Authorization(string username, string password, string instanceUrl = "https://openvk.uk")
+        /// <param name="code">Код двухфакторной авторизации</param>
+        public async Task<AuthorizedUser> Authorization(string username, string password, string instanceUrl = "https://openvk.uk", string code="0")
         {
-            return new AuthorizedUser(JsonConvert.DeserializeObject<AuthorizationModel>(await GetRequestAsync($"{instanceUrl}/token?username={username}&password={password}&grant_type=password")).access_token, instanceUrl);
+            return new AuthorizedUser(JsonConvert.DeserializeObject<AuthorizationModel>(await GetRequestAsync($"{instanceUrl}/token?username={username}&password={password}&code={code}&grant_type=password")).access_token, instanceUrl);
         }
         internal async Task<string> GetRequestAsync(string Url)
         {
