@@ -1,5 +1,5 @@
 # OpenVkNetApi
-[![NuGet](https://img.shields.io/nuget/v/OpenVkNetApi.svg?label=NuGet)](https://nuget.org/packages/OpenVkNetApi)
+[![NuGet](https://img.shields.io/nuget/v/OpenVkNetApi.svg?label=NuGet)](https://nuget.org/packages/OpenVkNetApi)\
 OpenVkNetApi is an unofficial .NET API Wrapper for the [OpenVK](https://github.com/openvk/openvk)
 
 ## 📄 Documentation
