@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace OpenVkNetApi.Models.FriendsModels
+﻿namespace OpenVkNetApi.Models.FriendsModels
 {
     public class AreFriends
     {
-        public int friend_status { get; set; }
-        public int user_id { get; set; }
+        public int Friend_Status { get; set; }
+        public int User_Id { get; set; }
     }
 
 }

@@ -5,8 +5,6 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenVkNetApi", "OpenVkNetApi.csproj", "{F015B0A4-4DCE-468E-B18A-D0F4BF99B188}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenVkApiNetTests", "..\OpenVkApiNetTests\OpenVkApiNetTests.csproj", "{68E19419-7BB1-40A9-B6E3-744940516F3E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{F015B0A4-4DCE-468E-B18A-D0F4BF99B188}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F015B0A4-4DCE-468E-B18A-D0F4BF99B188}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F015B0A4-4DCE-468E-B18A-D0F4BF99B188}.Release|Any CPU.Build.0 = Release|Any CPU
-		{68E19419-7BB1-40A9-B6E3-744940516F3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{68E19419-7BB1-40A9-B6E3-744940516F3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{68E19419-7BB1-40A9-B6E3-744940516F3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{68E19419-7BB1-40A9-B6E3-744940516F3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
