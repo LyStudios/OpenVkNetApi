@@ -21,7 +21,7 @@ namespace OpenVkNetApi.Methods
         /// <c>Get</c> получает список друзей пользователя
         /// </summary>
         /// <param name="UserId">id пользователя, друзья которого будут получены</param>
-        /// <param name="Offset"></param>
+        /// <param name="Offset">Смещение, необходимое для выборки определённого подмножества результатов поиска. По умолчанию — 0.</param>
         /// <param name="Count">кол-во друзей</param>
         public async Task<FriendsList> Get(int UserId, int Offset = 0, int Count = 100)
         {
@@ -30,9 +30,9 @@ namespace OpenVkNetApi.Methods
         /// <summary>
         /// <c>GetRequests</c> получает запросы в друзья
         /// </summary>
-        /// <param name="Offset"></param>
+        /// <param name="Offset">Смещение, необходимое для выборки определённого подмножества результатов поиска. По умолчанию — 0.</param>
         /// <param name="Count">кол-во запросов</param>
-        /// <param name="Extended"></param>
+        /// <param name="Extended">Определяет, требуется ли возвращать в ответе сообщения от пользователей, подавших заявку на добавление в друзья.</param>
         public async Task<FriendRequestsList> GetRequests(int Offset = 0, int Count = 100, int Extended = 0)
         {
             return JsonConvert.DeserializeObject<dynamic>(await api.GetRequest($"{InstanceUrl}/method/Friends.getRequests?access_token={AccessToken}&extended={Extended}&offset={Offset}&count={Count}")).response.ToObject(typeof(FriendRequestsList));
