@@ -37,9 +37,9 @@ namespace OpenVkNetApi.Methods
         /// <param name="Count">кол-во групп</param>
         /// <param name="Fields">Список дополнительных полей, которые необходимо вернуть.</param>
         /// <returns></returns>
-        public async Task<GroupsList> GetById(string Group_Ids = "", int Offset = 0, int Count = 500, string Fields = "verified,has_photo,photo_max_orig,photo_max,photo_50,photo_100,photo_200,photo_200_orig,photo_400_orig,members_count,site,description,contacts,can_post,is_member")
+        public async Task<Group[]> GetById(string Group_Ids = "", int Offset = 0, int Count = 500, string Fields = "verified,has_photo,photo_max_orig,photo_max,photo_50,photo_100,photo_200,photo_200_orig,photo_400_orig,members_count,site,description,contacts,can_post,is_member")
         {
-            return JsonConvert.DeserializeObject<dynamic>(await api.GetRequest($"{InstanceUrl}/method/Groups.getById?access_token={AccessToken}&group_ids={Group_Ids}&offset={Offset}&count={Count}&fields={Fields}")).response.ToObject(typeof(GroupsList));
+            return JsonConvert.DeserializeObject<dynamic>(await api.GetRequest($"{InstanceUrl}/method/Groups.getById?access_token={AccessToken}&group_ids={Group_Ids}&offset={Offset}&count={Count}&fields={Fields}")).response.ToObject(typeof(Group[]));
         }
         /// <summary>
         /// <c>Search</c> получает найденные группы
@@ -52,10 +52,18 @@ namespace OpenVkNetApi.Methods
         {
             return JsonConvert.DeserializeObject<dynamic>(await api.GetRequest($"{InstanceUrl}/method/Groups.search?access_token={AccessToken}&q={Q}&offset={Offset}&count={Count}")).response.ToObject(typeof(GroupsList));
         }
+        /// <summary>
+        /// <c>Join</c> вступает в группу
+        /// </summary>
+        /// <param name="Group_Id">id группы</param>
         public async Task Join(int Group_Id)
         {
             await api.GetRequest($"{InstanceUrl}/method/Groups.join?access_token={AccessToken}&group_id={Group_Id}");
         }
+        /// <summary>
+        /// <c>Leave</c> покидает группу
+        /// </summary>
+        /// <param name="Group_Id">id группы</param>
         public async Task Leave(int Group_Id)
         {
             await api.GetRequest($"{InstanceUrl}/method/Groups.leave?access_token={AccessToken}&group_id={Group_Id}");

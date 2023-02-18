@@ -4,7 +4,6 @@
     {
         public int? Count { get; set; }
         public Group[]? Items { get; set; }
-        public Group[]? response { get; set; }
     }
 
     public class Contact
