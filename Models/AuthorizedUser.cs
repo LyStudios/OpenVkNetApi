@@ -8,6 +8,7 @@ namespace OpenVkNetApi.Models
         public Friends Friends { get; set; }
         public Groups Groups { get; set; }
         public Likes Likes { get; set; }
+        public Messages Messages { get; set; }
         public string AccessToken { get; set; }
         public string InstanceUrl { get; set; }
         public AuthorizedUser(string token, string instance)
@@ -18,6 +19,7 @@ namespace OpenVkNetApi.Models
             Friends = new Friends(token, instance);
             Groups = new Groups(token, instance);
             Likes = new Likes(token, instance);
+            Messages = new Messages(token, instance);
         }
     }
 }

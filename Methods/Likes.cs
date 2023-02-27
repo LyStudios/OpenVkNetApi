@@ -20,35 +20,35 @@ namespace OpenVkNetApi.Methods
         /// <summary>
         /// <c>Add</c> ставит лайк на объект
         /// </summary>
-        /// <param name="Owner_Id">id автора</param>
-        /// <param name="Item_Id">id объекта</param>
+        /// <param name="OwnerId">id автора</param>
+        /// <param name="ItemId">id объекта</param>
         /// <param name="Type">тип объекта</param>
         /// <returns>Кол-во лайков</returns>
-        public async Task<Like> Add(int Owner_Id, int Item_Id, string Type = "post")
+        public async Task<Like> Add(int OwnerId, int ItemId, string Type = "post")
         {
-            return JsonConvert.DeserializeObject<dynamic>(await api.GetRequest($"{InstanceUrl}/method/Likes.add?access_token={AccessToken}&type={Type}&owner_id={Owner_Id}&item_id={Item_Id}")).response.ToObject(typeof(Like));
+            return JsonConvert.DeserializeObject<dynamic>(await api.GetRequest($"{InstanceUrl}/method/Likes.add?access_token={AccessToken}&type={Type}&owner_id={OwnerId}&item_id={ItemId}")).response.ToObject(typeof(Like));
         }
         /// <summary>
         /// <c>Delete</c> убирает лайк
         /// </summary>
-        /// <param name="Owner_Id">id автора</param>
-        /// <param name="Item_Id">id объекта</param>
+        /// <param name="OwnerId">id автора</param>
+        /// <param name="ItemId">id объекта</param>
         /// <param name="Type">тип объекта</param>
         /// <returns>Кол-во лайков</returns>
-        public async Task<Like> Delete(int Owner_Id, int Item_Id, string Type = "post")
+        public async Task<Like> Delete(int OwnerId, int ItemId, string Type = "post")
         {
-            return JsonConvert.DeserializeObject<dynamic>(await api.GetRequest($"{InstanceUrl}/method/Likes.delete?access_token={AccessToken}&type={Type}&owner_id={Owner_Id}&item_id={Item_Id}")).response.ToObject(typeof(Like));
+            return JsonConvert.DeserializeObject<dynamic>(await api.GetRequest($"{InstanceUrl}/method/Likes.delete?access_token={AccessToken}&type={Type}&owner_id={OwnerId}&item_id={ItemId}")).response.ToObject(typeof(Like));
         }
         /// <summary>
         /// <c>IsLiked</c> проверяет, лайкнут ли объект
         /// </summary>
-        /// <param name="Owner_Id">id автора</param>
-        /// <param name="Item_Id">id объекта</param>
+        /// <param name="OwnerId">id автора</param>
+        /// <param name="ItemId">id объекта</param>
         /// <param name="Type">тип объекта</param>
-        /// <param name="User_Id">id лайкнувшего</param>
-        public async Task<IsLiked> IsLiked(int Owner_Id, int Item_Id, int User_Id, string Type = "post")
+        /// <param name="UserId">id лайкнувшего</param>
+        public async Task<IsLiked> IsLiked(int OwnerId, int ItemId, int UserId, string Type = "post")
         {
-            return JsonConvert.DeserializeObject<dynamic>(await api.GetRequest($"{InstanceUrl}/method/Likes.isLiked?access_token={AccessToken}&type={Type}&user_id={User_Id}&owner_id={Owner_Id}&item_id={Item_Id}")).response.ToObject(typeof(IsLiked));
+            return JsonConvert.DeserializeObject<dynamic>(await api.GetRequest($"{InstanceUrl}/method/Likes.isLiked?access_token={AccessToken}&type={Type}&user_id={UserId}&owner_id={OwnerId}&item_id={ItemId}")).response.ToObject(typeof(IsLiked));
         }
     }
 }
