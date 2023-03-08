@@ -9,6 +9,8 @@ namespace OpenVkNetApi.Models
         public Groups Groups { get; set; }
         public Likes Likes { get; set; }
         public Messages Messages { get; set; }
+        public Ovk Ovk { get; set; }
+        public Utils Utils { get; set; }
         public string AccessToken { get; set; }
         public string InstanceUrl { get; set; }
         public AuthorizedUser(string token, string instance)
@@ -20,6 +22,8 @@ namespace OpenVkNetApi.Models
             Groups = new Groups(token, instance);
             Likes = new Likes(token, instance);
             Messages = new Messages(token, instance);
+            Ovk = new Ovk(token, instance);
+            Utils = new Utils(token, instance);
         }
     }
 }
