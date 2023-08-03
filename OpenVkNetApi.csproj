@@ -5,7 +5,7 @@
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>LeenzeryDev, LyStudios</Authors>
-    <Version>0.2.0</Version>
+    <Version>0.2.2-alpha</Version>
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
