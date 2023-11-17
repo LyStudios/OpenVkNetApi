@@ -23,7 +23,11 @@ namespace OpenVkNetApi.Methods
         }
         public async Task<AudioModel> Get(int Owner_Id = 0, int Album_Id = 0, string Audio_Ids = "", int Need_User = 1, int Offset = 0, int Count = 100, int Uploaded_Only = 0, int Need_Seed = 0, string Shuffle_Seed = "", int Shuffle = 0, string Hash = "")
         {
-            return JsonConvert.DeserializeObject<dynamic>(await api.GetRequest($"{InstanceUrl}/method/Audio.search?access_token={AccessToken}&owner_id={Owner_Id}&album_id={Album_Id}&audio_ids={Audio_Ids}&need_user={Need_User}&offset={Offset}&count={Count}&uploaded_only={Uploaded_Only}&need_seed={Need_Seed}&shuffle_seed={Shuffle_Seed}&shuffle={Shuffle}&hash={Hash}")).response.ToObject(typeof(AudioModel));
+            return JsonConvert.DeserializeObject<dynamic>(await api.GetRequest($"{InstanceUrl}/method/Audio.get?access_token={AccessToken}&owner_id={Owner_Id}&album_id={Album_Id}&audio_ids={Audio_Ids}&need_user={Need_User}&offset={Offset}&count={Count}&uploaded_only={Uploaded_Only}&need_seed={Need_Seed}&shuffle_seed={Shuffle_Seed}&shuffle={Shuffle}&hash={Hash}")).response.ToObject(typeof(AudioModel));
+        }
+        public async Task<AudioModel> GetById(string Audios, string Hash = "", int Need_User = 0)
+        {
+            return JsonConvert.DeserializeObject<dynamic>(await api.GetRequest($"{InstanceUrl}/method/Audio.getById?access_token={AccessToken}&audios={Audios}&need_user={Need_User}&hash={Hash}")).response.ToObject(typeof(AudioModel));
         }
     }
 }
