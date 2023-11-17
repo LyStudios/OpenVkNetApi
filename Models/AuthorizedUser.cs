@@ -4,6 +4,7 @@ namespace OpenVkNetApi.Models
 {
     public class AuthorizedUser
     {
+        public Audio Audio { get; set; }
         public Account Account { get; set; }
         public Friends Friends { get; set; }
         public Groups Groups { get; set; }
@@ -21,6 +22,7 @@ namespace OpenVkNetApi.Models
         {
             AccessToken = token;
             InstanceUrl = instance;
+            Audio = new Audio(token, instance);
             Account = new Account(token, instance);
             Friends = new Friends(token, instance);
             Groups = new Groups(token, instance);
