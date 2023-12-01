@@ -15,7 +15,7 @@
         public string Post_Type { get; set; }
         public string Text { get; set; }
         public Copy_History[] Copy_History { get; set; }
-        public int Can_Edit { get; set; }
+        public bool Can_Edit { get; set; }
         public bool Can_Delete { get; set; }
         public bool Can_Pin { get; set; }
         public bool Can_Archive { get; set; }
@@ -64,7 +64,6 @@
         public Attachment[] Attachments { get; set; }
         public Post_Source Post_Source { get; set; }
     }
-
 
     public class Attachment
     {
