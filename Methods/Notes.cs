@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenVkNetApi.Models;
+using OpenVkNetApi.Models.Comments;
 using OpenVkNetApi.Models.Notes;
 using OpenVkNetApi.Models.RequestParameters.Notes;
 using OpenVkNetApi.Utils;

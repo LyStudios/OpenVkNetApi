@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using OpenVkNetApi.Models.Attachments;
 using OpenVkNetApi.Utils;
 
-namespace OpenVkNetApi.Models.Photos
+namespace OpenVkNetApi.Models.Comments
 {
     /// <summary>
-    /// Represents a comment on a photo.
+    /// Represents a base comment model.
     /// </summary>
-    public class PhotoComment
+    public class Comment
     {
         /// <summary>
         /// The comment ID.
@@ -17,58 +17,46 @@ namespace OpenVkNetApi.Models.Photos
         public int Id { get; set; }
 
         /// <summary>
-        /// The author's ID.
+        /// The ID of the user or community who posted the comment.
         /// </summary>
         [JsonProperty("from_id")]
         public int FromId { get; set; }
 
         /// <summary>
-        /// The date when the comment was created, in Unix time.
+        /// The date when the comment was posted, in Unix time.
         /// </summary>
         [JsonProperty("date")]
         public long Date { get; set; }
 
         /// <summary>
-        /// The comment text.
+        /// The text of the comment.
         /// </summary>
         [JsonProperty("text")]
         public string? Text { get; set; }
 
         /// <summary>
-        /// Information about likes on the comment.
-        /// </summary>
-        [JsonProperty("likes")]
-        public CommentLikes? Likes { get; set; }
-
-        /// <summary>
-        /// A list of attachments in the comment.
+        /// A list of attachments to the comment.
         /// </summary>
         [JsonProperty("attachments")]
         [JsonConverter(typeof(AttachmentJsonConverter))]
         public List<Attachment>? Attachments { get; set; }
-    }
 
-    /// <summary>
-    /// Represents the 'likes' object for a comment.
-    /// </summary>
-    public class CommentLikes
-    {
         /// <summary>
-        /// The total number of likes.
+        /// A stack of parent comment IDs for replies.
         /// </summary>
-        [JsonProperty("count")]
-        public int Count { get; set; }
+        [JsonProperty("parents_stack")]
+        public List<object>? ParentsStack { get; set; }
 
         /// <summary>
-        /// Whether the current user has liked this comment (1 for yes, 0 for no).
+        /// Indicates if the current user has liked this comment (1 for yes, 0 for no).
         /// </summary>
         [JsonProperty("user_likes")]
-        public int UserLikes { get; set; }
+        public int? UserLikes { get; set; }
 
         /// <summary>
-        /// Whether the current user can like this comment (1 for yes, 0 for no).
+        /// Indicates if the current user can like this comment.
         /// </summary>
         [JsonProperty("can_like")]
-        public int CanLike { get; set; }
+        public bool? CanLike { get; set; }
     }
 }

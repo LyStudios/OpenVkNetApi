@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using OpenVkNetApi.Models.Users;
 using System.Collections.Generic;
+using OpenVkNetApi.Models.Comments;
 
 namespace OpenVkNetApi.Models.Photos
 {

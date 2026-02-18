@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using OpenVkNetApi.Models.Users;
 using OpenVkNetApi.Models.Groups;
+using OpenVkNetApi.Models.Comments;
 
 namespace OpenVkNetApi.Models.Board
 {

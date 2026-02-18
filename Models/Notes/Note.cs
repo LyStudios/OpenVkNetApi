@@ -44,12 +44,6 @@ namespace OpenVkNetApi.Models.Notes
         public int Comments { get; set; }
 
         /// <summary>
-        /// The number of comments read by the current user.
-        /// </summary>
-        [JsonProperty("read_comments")]
-        public int ReadComments { get; set; }
-
-        /// <summary>
         /// The URL to view the note.
         /// </summary>
         [JsonProperty("view_url")]

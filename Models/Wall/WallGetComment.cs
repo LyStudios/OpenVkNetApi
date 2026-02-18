@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using OpenVkNetApi.Models.Account;
+using OpenVkNetApi.Models.Comments;
 
 namespace OpenVkNetApi.Models.Wall
 {
