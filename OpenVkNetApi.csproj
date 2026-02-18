@@ -9,6 +9,7 @@
     <Authors>LyStudios, LeenzeryDev</Authors>
     <Description>A Client for the OpenVK API, written in C#/.NET</Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<CheckNotRecommendedTargetFramework>false</CheckNotRecommendedTargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
