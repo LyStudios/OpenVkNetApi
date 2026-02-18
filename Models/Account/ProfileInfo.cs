@@ -8,20 +8,8 @@ namespace OpenVkNetApi.Models.Account
     /// Used in <see cref="OpenVkNetApi.Methods.Account.GetProfileInfoAsync"/>.
     /// Contains detailed information about a user's profile.
     /// </summary>
-    public class ProfileInfo : UserBase
+    public class ProfileInfo : UserCommon
     {
-        /// <summary>
-        /// The user's nickname.
-        /// </summary>
-        [JsonProperty("nickname")]
-        public string? Nickname { get; set; }
-
-        /// <summary>
-        /// URL of the 200px profile photo.
-        /// </summary>
-        [JsonProperty("photo_200")]
-        public string? Photo200 { get; set; }
-        
         /// <summary>
         /// Indicates if this is a service account.
         /// </summary>
@@ -47,24 +35,6 @@ namespace OpenVkNetApi.Models.Account
         public string? HomeTown { get; set; }
         
         /// <summary>
-        /// The user's status message.
-        /// </summary>
-        [JsonProperty("status")]
-        public string? Status { get; set; }
-        
-        /// <summary>
-        /// The user's birth date.
-        /// </summary>
-        [JsonProperty("bdate")]
-        public string? Bdate { get; set; }
-        
-        /// <summary>
-        /// The visibility of the user's birth date.
-        /// </summary>
-        [JsonProperty("bdate_visibility")]
-        public int? BdateVisibility { get; set; }
-        
-        /// <summary>
         /// The user's phone number.
         /// </summary>
         [JsonProperty("phone")]
@@ -75,18 +45,6 @@ namespace OpenVkNetApi.Models.Account
         /// </summary>
         [JsonProperty("relation")]
         public int? Relation { get; set; }
-        
-        /// <summary>
-        /// The user's screen name (short name).
-        /// </summary>
-        [JsonProperty("screen_name")]
-        public string? ScreenName { get; set; }
-        
-        /// <summary>
-        /// The user's gender/sex.
-        /// </summary>
-        [JsonProperty("sex")]
-        public int? Sex { get; set; }
         
         /// <summary>
         /// The audio file set as the user's status.
