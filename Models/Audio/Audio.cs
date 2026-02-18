@@ -17,7 +17,7 @@ namespace OpenVkNetApi.Models.Audio
         /// The audio file ID.
         /// </summary>
         [JsonProperty("aid")]
-        public int Aid { get; set; }
+        public int? AudioId { get; set; }
         
         /// <summary>
         /// The audio file's primary ID.
@@ -41,19 +41,19 @@ namespace OpenVkNetApi.Models.Audio
         /// The duration of the audio file in seconds.
         /// </summary>
         [JsonProperty("duration")]
-        public int Duration { get; set; }
+        public int? Duration { get; set; }
         
         /// <summary>
         /// Information about the album.
         /// </summary>
         [JsonProperty("album")]
-        public object? Album { get; set; }
+        public Album? Album { get; set; }
         
         /// <summary>
         /// The album ID.
         /// </summary>
         [JsonProperty("album_id")]
-        public object? AlbumId { get; set; }
+        public int? AlbumId { get; set; }
         
         /// <summary>
         /// The URL to play the audio file.
