@@ -11,13 +11,13 @@ namespace OpenVkNetApi.Models.Photos
         /// The proportional size type (e.g., 's', 'm', 'x').
         /// </summary>
         [JsonProperty("type")]
-        public string Type { get; set; }
+        public string Type { get; set; } = null!;
 
         /// <summary>
         /// The URL of the image for this size.
         /// </summary>
         [JsonProperty("url")]
-        public string Url { get; set; }
+        public string Url { get; set; } = null!;
 
         /// <summary>
         /// The width in pixels. Can be null if the size has not been processed yet.

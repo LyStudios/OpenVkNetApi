@@ -11,13 +11,13 @@ namespace OpenVkNetApi.Models.RequestParameters.Photos
         /// The 'photo' parameter returned by the upload server.
         /// </summary>
         [JsonProperty("photo")]
-        public string Photo { get; set; }
+        public string Photo { get; set; } = null!;
 
         /// <summary>
         /// The 'hash' parameter returned by the upload server.
         /// </summary>
         [JsonProperty("hash")]
-        public string Hash { get; set; }
+        public string Hash { get; set; } = null!;
 
         /// <summary>
         /// ID of the group to save the photo to.
