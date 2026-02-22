@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using OpenVkNetApi.Methods;
 using OpenVkNetApi.Models;
+using OpenVkNetApi.Services;
 using OpenVkNetApi.Utils;
 using System;
 using System.Collections.Generic;
@@ -75,6 +76,11 @@ namespace OpenVkNetApi
         /// Provides methods for working with messages.
         /// </summary>
         public Messages Messages { get; }
+
+        /// <summary>
+        /// Provides methods for working with Long Poll events.
+        /// </summary>
+        public LongPollService LongPoll { get; }
 
         /// <summary>
         /// Provides methods for working with the newsfeed.
@@ -159,13 +165,14 @@ namespace OpenVkNetApi
             Gifts = new Gifts(this);
             Groups = new Groups(this);
             Likes = new Likes(this);
+            Photos = new Photos(this);
             Messages = new Messages(this);
+            LongPoll = new LongPollService(this);
             Newsfeed = new Newsfeed(this);
             Notes = new Notes(this);
             Notifications = new Notifications(this);
             Ovk = new Ovk(this);
             Pay = new Pay(this);
-            Photos = new Photos(this);
             Polls = new Polls(this);
             Reports = new Reports(this);
             Status = new Status(this);

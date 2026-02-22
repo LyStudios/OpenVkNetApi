@@ -1,13 +1,15 @@
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 using OpenVkNetApi.Models;
+using OpenVkNetApi.Models.Comments;
 using OpenVkNetApi.Models.Photos;
 using OpenVkNetApi.Models.RequestParameters.Photos;
 using OpenVkNetApi.Utils;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using Newtonsoft.Json;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace OpenVkNetApi.Methods
 {
@@ -21,7 +23,12 @@ namespace OpenVkNetApi.Methods
         /// </summary>
         /// <param name="api">The API instance.</param>
         public Photos(OpenVkApi api) : base(api, "photos") { }
-        
+
+        /// <summary>
+        /// Determines the MIME type of a file based on its extension.
+        /// </summary>
+        /// <param name="fileName">The file name including extension.</param>
+        /// <returns>The corresponding MIME type string. Returns <c>application/octet-stream</c> if the type is unknown.</returns>
         private string GetMimeType(string fileName)
         {
             var extension = Path.GetExtension(fileName).ToLowerInvariant();
@@ -40,29 +47,56 @@ namespace OpenVkNetApi.Methods
                     return "application/octet-stream";
             }
         }
-        
-        private async Task<UploadResult> UploadAsync(string uploadUrl, Stream photoStream, string fileName, CancellationToken ct)
+
+        /// <summary>
+        /// Uploads a photo stream to the specified upload server URL.
+        /// </summary>
+        /// <param name="uploadUrl">The upload server URL returned by the API.</param>
+        /// <param name="photoStream">The stream containing the photo data.</param>
+        /// <param name="fileName">The file name (used for MIME type detection).</param>
+        /// <param name="isMultifileMode">
+        /// Indicates whether the upload is performed in multifile mode 
+        /// (used for album uploads where the field name differs).
+        /// </param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>
+        /// An <see cref="UploadResult"/> object containing raw upload data 
+        /// (hash, photo, photos_list).
+        /// </returns>
+        /// <exception cref="HttpRequestException">Thrown if the upload request fails.</exception>
+        /// <exception cref="OvkApiException">Thrown if the upload response is invalid.</exception>
+        private async Task<UploadResult> UploadAsync(string uploadUrl, Stream photoStream, string fileName, bool isMultifileMode, CancellationToken ct)
         {
-            using var form = new MultipartFormDataContent();
-            using var streamContent = new StreamContent(photoStream);
+            using (var form = new MultipartFormDataContent())
+            using (var streamContent = new StreamContent(photoStream))
+            {
+                // determine MIME
+                streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(GetMimeType(fileName));
 
-            streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(GetMimeType(fileName));
-            form.Add(streamContent, "photo", fileName);
+                // Field name for multi-upload
+                string fieldName = "photo";
+                if (isMultifileMode)
+                {
+                    fieldName += "1";
+                }
 
-            var uploadResponse = await _api.HttpClient.PostAsync(uploadUrl, form, ct);
+                form.Add(streamContent, fieldName, fileName);
 
-            if (!uploadResponse.IsSuccessStatusCode)
-                throw new HttpRequestException($"Photo upload failed with status code {uploadResponse.StatusCode}");
+                var uploadResponse = await _api.HttpClient.PostAsync(uploadUrl, form, ct);
+                var json = await uploadResponse.Content.ReadAsStringAsync();
+                if (!uploadResponse.IsSuccessStatusCode)
+                    throw new HttpRequestException($"Photo upload failed with status code {uploadResponse.StatusCode}: {json}");
 
-            var json = await uploadResponse.Content.ReadAsStringAsync();
-            var uploadData = JsonConvert.DeserializeObject<UploadResult>(json);
+                var uploadData = JsonConvert.DeserializeObject<UploadResult>(json);
 
-            if (uploadData == null || string.IsNullOrEmpty(uploadData.Hash) || (string.IsNullOrEmpty(uploadData.Photo) && string.IsNullOrEmpty(uploadData.PhotosList)))
-                throw new OvkApiException(-1, "Failed to process upload response.");
+                if (uploadData == null || string.IsNullOrEmpty(uploadData.Hash) ||
+                    (string.IsNullOrEmpty(uploadData.Photo) && string.IsNullOrEmpty(uploadData.PhotosList)))
+                    throw new OvkApiException(-1, "Failed to process upload response.");
 
-            return uploadData;
+                return uploadData;
+            }
         }
-        
+
         /// <summary>
         /// Uploads a photo to a user's or group's wall.
         /// </summary>
@@ -82,7 +116,7 @@ namespace OpenVkNetApi.Methods
             if (string.IsNullOrEmpty(uploadServerInfo.UploadUrl))
                 throw new OvkApiException(-1, "Failed to get wall upload URL.");
 
-            var uploadData = await UploadAsync(uploadServerInfo.UploadUrl!, photoStream, fileName, ct);
+            var uploadData = await UploadAsync(uploadServerInfo.UploadUrl!, photoStream, fileName, false, ct);
 
             return await SaveWallPhotoAsync(new PhotosSaveWallPhotoParams
             {
@@ -110,11 +144,34 @@ namespace OpenVkNetApi.Methods
             if (string.IsNullOrEmpty(uploadServerInfo.UploadUrl))
                 throw new OvkApiException(-1, "Failed to get owner photo upload URL.");
 
-            var uploadData = await UploadAsync(uploadServerInfo.UploadUrl!, photoStream, fileName, ct);
+            var uploadData = await UploadAsync(uploadServerInfo.UploadUrl!, photoStream, fileName, false, ct);
 
             return await SaveOwnerPhotoAsync(uploadData.Photo!, uploadData.Hash, ct);
         }
-        
+
+        /// <summary>
+        /// Uploads a photo intended to be attached to a private message.
+        /// </summary>
+        /// <param name="stream">A stream containing the photo data.</param>
+        /// <param name="fileName">The file name (e.g., "image.jpg").</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>
+        /// A <see cref="Collection{Photo}"/> containing uploaded photo objects
+        /// ready to be attached to a message.
+        /// </returns>
+        internal async Task<Collection<Photo>> UploadMessagePhotoAsync(Stream stream, string fileName, CancellationToken ct = default)
+        {
+            var result = await UploadAlbumPhotoAsync(
+                stream,
+                fileName,
+                albumId: 0,
+                caption: null,
+                ct);
+
+            return result;
+        }
+
+
         /// <summary>
         /// Uploads a photo to a specific album.
         /// </summary>
@@ -124,7 +181,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="caption">The caption for the photo.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A collection of the uploaded <see cref="Photo"/> objects.</returns>
-        public async Task<Collection<Photo>> UploadAlbumPhotoAsync(Stream photoStream, string fileName, int albumId, string? caption = null, CancellationToken ct = default)
+        public async Task<Collection<Photo>> UploadAlbumPhotoAsync(Stream photoStream, string fileName, int? albumId, string? caption = null, CancellationToken ct = default)
         {
             if (string.IsNullOrEmpty(_api.AccessToken))
                 throw new System.InvalidOperationException("API is not authorized. Call AuthorizeAsync() first.");
@@ -133,7 +190,7 @@ namespace OpenVkNetApi.Methods
             if (string.IsNullOrEmpty(uploadServerInfo.UploadUrl))
                 throw new OvkApiException(-1, "Failed to get album upload URL.");
 
-            var uploadData = await UploadAsync(uploadServerInfo.UploadUrl!, photoStream, fileName, ct);
+            var uploadData = await UploadAsync(uploadServerInfo.UploadUrl!, photoStream, fileName, true, ct);
 
             return await SaveAsync(new PhotosSaveParams
             {
@@ -142,6 +199,57 @@ namespace OpenVkNetApi.Methods
                 AlbumId = albumId,
                 Caption = caption
             }, ct);
+        }
+
+        /// <summary>
+        /// Uploads multiple photos to a specific album.
+        /// </summary>
+        /// <param name="photos">A collection of tuples (Stream, fileName) representing photos to upload.</param>
+        /// <param name="albumId">The album ID to upload the photos to.</param>
+        /// <param name="caption">Optional caption for the photos.</param>
+        /// <param name="ct">Cancellation token.</param>
+        /// <returns>A collection of uploaded <see cref="Photo"/> objects.</returns>
+        public async Task<Collection<Photo>> UploadAlbumPhotosAsync(IEnumerable<Tuple<Stream, string>> photos, int? albumId, string? caption = null, CancellationToken ct = default)
+        {
+            if (string.IsNullOrEmpty(_api.AccessToken))
+                throw new InvalidOperationException("API is not authorized. Call AuthorizeAsync() first.");
+
+            var uploadServerInfo = await GetUploadServerAsync(albumId, ct);
+            if (string.IsNullOrEmpty(uploadServerInfo.UploadUrl))
+                throw new OvkApiException(-1, "Failed to get album upload URL.");
+
+            using (var form = new MultipartFormDataContent())
+            {
+                int index = 1;
+                foreach (var photo in photos)
+                {
+                    var stream = photo.Item1;
+                    var fileName = photo.Item2;
+
+                    var streamContent = new StreamContent(stream);
+                    streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(GetMimeType(fileName));
+
+                    form.Add(streamContent, "file" + index, fileName); // file1, file2, file3...
+                    index++;
+                }
+
+                var uploadResponse = await _api.HttpClient.PostAsync(uploadServerInfo.UploadUrl, form, ct);
+                var json = await uploadResponse.Content.ReadAsStringAsync();
+                if (!uploadResponse.IsSuccessStatusCode)
+                    throw new HttpRequestException($"Photo upload failed with status code {uploadResponse.StatusCode}: {json}");
+
+                var uploadData = JsonConvert.DeserializeObject<UploadResult>(json);
+                if (uploadData == null || string.IsNullOrEmpty(uploadData.Hash) || string.IsNullOrEmpty(uploadData.PhotosList))
+                    throw new OvkApiException(-1, "Failed to process upload response.");
+
+                return await SaveAsync(new PhotosSaveParams
+                {
+                    PhotosList = uploadData.PhotosList!,
+                    Hash = uploadData.Hash,
+                    AlbumId = albumId,
+                    Caption = caption
+                }, ct);
+            }
         }
 
         /// <summary>
@@ -395,9 +503,9 @@ namespace OpenVkNetApi.Methods
         /// </summary>
         /// <param name="params">The request parameters.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
-        public async Task<PhotosComments> GetCommentsAsync(PhotosGetCommentsParams @params, CancellationToken ct = default)
+        public async Task<ExtendedCollection<PhotoComment>> GetCommentsAsync(PhotosGetCommentsParams @params, CancellationToken ct = default)
         {
-            return await GetAsync<PhotosComments>("getComments", @params, ct);
+            return await GetAsync<ExtendedCollection<PhotoComment>>("getComments", @params, ct);
         }
     }
 }

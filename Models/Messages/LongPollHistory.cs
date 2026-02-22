@@ -7,7 +7,7 @@ namespace OpenVkNetApi.Models.Messages
     /// <summary>
     /// Represents the response from a messages.getLongPollHistory API call.
     /// </summary>
-    public class MessagesGetLongPollHistoryResponse
+    public class LongPollHistory
     {
         /// <summary>
         /// A list of history events. The exact type of objects is not strictly defined.

@@ -1,11 +1,13 @@
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using OpenVkNetApi.Builders;
 using OpenVkNetApi.Models;
+using OpenVkNetApi.Models.Enums;
 using OpenVkNetApi.Models.Messages;
 using OpenVkNetApi.Models.RequestParameters.Messages;
 using OpenVkNetApi.Utils;
-using OpenVkNetApi.Models.Enums;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace OpenVkNetApi.Methods
 {
@@ -15,11 +17,24 @@ namespace OpenVkNetApi.Methods
     /// </summary>
     public class Messages : MethodBase
     {
+        private readonly Photos _photosApi;
         /// <summary>
         /// Initializes a new instance of the <see cref="Messages"/> class.
         /// </summary>
         /// <param name="api">An API instance to make requests with.</param>
-        public Messages(OpenVkApi api) : base(api, "messages") { }
+        public Messages(OpenVkApi api) : base(api, "messages")
+        {
+            _photosApi = api.Photos;
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="MessageBuilder"/> instance for fluent message construction.
+        /// </summary>
+        /// <returns>A new <see cref="MessageBuilder"/>.</returns>
+        public MessageBuilder CreateBuilder()
+        {
+            return new MessageBuilder(this, _photosApi);
+        }
 
         /// <summary>
         /// Returns a list of messages by their IDs.
@@ -46,9 +61,14 @@ namespace OpenVkNetApi.Methods
         /// <param name="params">Parameters for the message.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>The ID of the sent message, or an array of IDs if multiple recipients were specified.</returns>
-        public async Task<object> SendAsync(MessagesSendParams @params, CancellationToken ct = default)
+        public async Task<List<int>> SendAsync(MessagesSendParams @params, CancellationToken ct = default)
         {
-            return await PostAsync<object>("send", @params, ct);
+            var result = await PostAsync<JToken>("send", @params, ct);
+
+            if (result.Type == JTokenType.Array)
+                return result.ToObject<List<int>>()!;
+
+            return new List<int> { result.ToObject<int>() };
         }
 
         /// <summary>
@@ -58,15 +78,15 @@ namespace OpenVkNetApi.Methods
         /// <param name="spam">True to mark the messages as spam.</param>
         /// <param name="deleteForAll">True to delete the messages for all recipients.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
-        /// <returns>A <see cref="MessagesDelete"/> object with the results of the deletion.</returns>
-        public async Task<MessagesDelete> DeleteAsync(string messageIds, int spam = 0, int deleteForAll = 0, CancellationToken ct = default)
+        /// <returns>A <see cref="Dictionary<string, int>"/> object with the results of the deletion.</returns>
+        public async Task<Dictionary<string, int>> DeleteAsync(string messageIds, int spam = 0, int deleteForAll = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("message_ids", messageIds)
                 .Add("spam", spam)
                 .Add("delete_for_all", deleteForAll)
                 .ToDictionary();
-            return await PostAsync<MessagesDelete>("delete", parameters, ct);
+            return await PostAsync<Dictionary<string, int>>("delete", parameters, ct);
         }
 
         /// <summary>
@@ -90,9 +110,9 @@ namespace OpenVkNetApi.Methods
         /// <param name="params">Parameters for the request.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="MessagesGetConversationsResponse"/> object containing conversations.</returns>
-        public async Task<MessagesGetConversationsResponse> GetConversationsAsync(MessagesGetConversationsParams @params, CancellationToken ct = default)
+        public async Task<ExtendedCollection<Conversation>> GetConversationsAsync(MessagesGetConversationsParams @params, CancellationToken ct = default)
         {
-            return await GetAsync<MessagesGetConversationsResponse>("getConversations", @params, ct);
+            return await GetAsync<ExtendedCollection<Conversation>>("getConversations", @params, ct);
         }
 
         /// <summary>
@@ -103,7 +123,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="fields">A list of additional profile fields to return.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="MessagesGetConversationsResponse"/> object containing conversations.</returns>
-        public async Task<MessagesGetConversationsResponse> GetConversationsByIdAsync(string peerIds, int extended = 0, UserFields fields = UserFields.None, CancellationToken ct = default)
+        public async Task<ExtendedCollection<Conversation>> GetConversationsByIdAsync(string peerIds, int extended = 0, UserFields fields = UserFields.None, CancellationToken ct = default)
         {
             var parameters = new Dictionary<string, string>
             {
@@ -111,7 +131,7 @@ namespace OpenVkNetApi.Methods
                 ["extended"] = extended.ToString(),
                 ["fields"] = EnumHelper.GetEnumFlagsDescription(fields)
             };
-            return await GetAsync<MessagesGetConversationsResponse>("getConversationsById", parameters, ct);
+            return await GetAsync<ExtendedCollection<Conversation>>("getConversationsById", parameters, ct);
         }
 
         /// <summary>
@@ -119,10 +139,10 @@ namespace OpenVkNetApi.Methods
         /// </summary>
         /// <param name="params">Parameters for the request.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
-        /// <returns>A <see cref="MessagesGetHistoryResponse"/> object containing messages.</returns>
-        public async Task<MessagesGetHistoryResponse> GetHistoryAsync(MessagesGetHistoryParams @params, CancellationToken ct = default)
+        /// <returns>A <see cref="ExtendedCollection<Message>"/> object containing messages.</returns>
+        public async Task<ExtendedCollection<Message>> GetHistoryAsync(MessagesGetHistoryParams @params, CancellationToken ct = default)
         {
-            return await GetAsync<MessagesGetHistoryResponse>("getHistory", @params, ct);
+            return await GetAsync<ExtendedCollection<Message>>("getHistory", @params, ct);
         }
 
         /// <summary>
@@ -130,10 +150,10 @@ namespace OpenVkNetApi.Methods
         /// </summary>
         /// <param name="params">Parameters for the request.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
-        /// <returns>A <see cref="MessagesGetLongPollHistoryResponse"/> object with updates.</returns>
-        public async Task<MessagesGetLongPollHistoryResponse> GetLongPollHistoryAsync(MessagesGetLongPollHistoryParams @params, CancellationToken ct = default)
+        /// <returns>A <see cref="LongPollHistory"/> object with updates.</returns>
+        public async Task<LongPollHistory> GetLongPollHistoryAsync(MessagesGetLongPollHistoryParams @params, CancellationToken ct = default)
         {
-            return await GetAsync<MessagesGetLongPollHistoryResponse>("getLongPollHistory", @params, ct);
+            return await GetAsync<LongPollHistory>("getLongPollHistory", @params, ct);
         }
 
         /// <summary>
@@ -143,8 +163,8 @@ namespace OpenVkNetApi.Methods
         /// <param name="lpVersion">The long poll version.</param>
         /// <param name="groupId">The group ID (if for a community).</param>
         /// <param name="ct">A cancellation token for the operation.</param>
-        /// <returns>A <see cref="MessagesGetLongPollServer"/> object with connection data.</returns>
-        public async Task<MessagesGetLongPollServer> GetLongPollServerAsync(int needPts = 1, int lpVersion = 3, int? groupId = null, CancellationToken ct = default)
+        /// <returns>A <see cref="LongPollServerInfo"/> object with connection data.</returns>
+        public async Task<LongPollServerInfo> GetLongPollServerAsync(int needPts = 1, int lpVersion = 3, int? groupId = null, CancellationToken ct = default)
         {
             var parameters = new Dictionary<string, string>
             {
@@ -155,7 +175,7 @@ namespace OpenVkNetApi.Methods
             {
                 parameters["group_id"] = groupId.Value.ToString();
             }
-            return await GetAsync<MessagesGetLongPollServer>("getLongPollServer", parameters, ct);
+            return await GetAsync<LongPollServerInfo>("getLongPollServer", parameters, ct);
         }
 
         /// <summary>
