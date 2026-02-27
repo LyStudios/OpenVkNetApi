@@ -29,12 +29,12 @@ namespace OpenVkNetApi.Methods
         /// <returns>A list of <see cref="UserGift"/> objects.</returns>
         public async Task<List<UserGift>> GetAsync(int userId = 0, int count = 10, int offset = 0, CancellationToken cancellationToken = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["user_id"] = userId.ToString(),
-                ["count"] = count.ToString(),
-                ["offset"] = offset.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("user_id", userId)
+                .Add("count", count)
+                .Add("offset", offset)
+                .ToDictionary();
+
             return await GetAsync<List<UserGift>>("get", parameters, cancellationToken);
         }
 
@@ -58,11 +58,11 @@ namespace OpenVkNetApi.Methods
         /// <returns>A list of <see cref="GiftCategory"/> objects.</returns>
         public async Task<List<GiftCategory>> GetCategoriesAsync(bool extended = false, int page = 1, CancellationToken cancellationToken = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["extended"] = extended ? "1" : "0",
-                ["page"] = page.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("extended", extended)
+                .Add("page", page)
+                .ToDictionary();
+
             return await GetAsync<List<GiftCategory>>("getCategories", parameters, cancellationToken);
         }
 
@@ -75,11 +75,11 @@ namespace OpenVkNetApi.Methods
         /// <returns>A list of <see cref="CatalogGift"/> objects.</returns>
         public async Task<List<CatalogGift>> GetGiftsInCategoryAsync(int id, int page = 1, CancellationToken cancellationToken = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["id"] = id.ToString(),
-                ["page"] = page.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("id", id)
+                .Add("page", page)
+                .ToDictionary();
+
             return await GetAsync<List<CatalogGift>>("getGiftsInCategory", parameters, cancellationToken);
         }
     }

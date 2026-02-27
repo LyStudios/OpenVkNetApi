@@ -40,10 +40,10 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the API's response code.</returns>
         public async Task<int> AddAsync(string userId, CancellationToken cancellationToken = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["user_id"] = userId
-            };
+            var parameters = new RequestParams()
+                .Add("user_id", userId)
+                .ToDictionary();
+
             return await PostAsync<int>("add", parameters, cancellationToken);
         }
 
@@ -55,10 +55,10 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the API's response code.</returns>
         public async Task<int> DeleteAsync(string userId, CancellationToken cancellationToken = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["user_id"] = userId
-            };
+            var parameters = new RequestParams()
+                .Add("user_id", userId)
+                .ToDictionary();
+
             return await PostAsync<int>("delete", parameters, cancellationToken);
         }
 
@@ -70,10 +70,10 @@ namespace OpenVkNetApi.Methods
         /// <returns>A list of <see cref="FriendStatus"/> objects indicating the relationship status.</returns>
         public async Task<List<FriendStatus>> AreFriendsAsync(string userIds, CancellationToken cancellationToken = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["user_ids"] = userIds
-            };
+            var parameters = new RequestParams()
+                .Add("user_ids", userIds)
+                .ToDictionary();
+
             return await GetAsync<List<FriendStatus>>("areFriends", parameters, cancellationToken);
         }
 

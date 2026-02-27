@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Notes
 {
@@ -10,25 +10,25 @@ namespace OpenVkNetApi.Models.RequestParameters.Notes
         /// <summary>
         /// ID of the note.
         /// </summary>
-        [JsonProperty("note_id")]
+        [ApiParameter("note_id")]
         public int NoteId { get; set; }
 
         /// <summary>
         /// ID of the note owner.
         /// </summary>
-        [JsonProperty("owner_id")]
+        [ApiParameter("owner_id")]
         public int OwnerId { get; set; }
 
         /// <summary>
         /// The text of the comment.
         /// </summary>
-        [JsonProperty("message")]
-        public string Message { get; set; } = "";
+        [ApiParameter("message")]
+        public string Message { get; set; } = null!;
 
         /// <summary>
         /// Attachments to the comment.
         /// </summary>
-        [JsonProperty("attachments")]
+        [ApiParameter("attachments")]
         public string Attachments { get; set; } = "";
     }
 }

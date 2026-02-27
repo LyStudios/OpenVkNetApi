@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Audio
 {
@@ -11,49 +11,50 @@ namespace OpenVkNetApi.Models.RequestParameters.Audio
         /// <summary>
         /// The ID of the audio file's owner.
         /// </summary>
-        [JsonProperty("owner_id")]
+        [ApiParameter("owner_id")]
         public int OwnerId { get; set; }
         
         /// <summary>
         /// The ID of the audio file to edit.
         /// </summary>
-        [JsonProperty("audio_id")]
+        [ApiParameter("audio_id")]
         public int AudioId { get; set; }
         
         /// <summary>
         /// The new artist name.
         /// </summary>
-        [JsonProperty("artist")]
-        public string? Artist { get; set; }
-        
+        [ApiParameter("artist")]
+        public string? Artist { get; set; } = null;
+
         /// <summary>
         /// The new track title.
         /// </summary>
-        [JsonProperty("title")]
-        public string? Title { get; set; }
-        
+        [ApiParameter("title")]
+        public string? Title { get; set; } = null;
+
         /// <summary>
         /// The lyrics text.
         /// </summary>
-        [JsonProperty("text")]
-        public string? Text { get; set; }
-        
+        [ApiParameter("text")]
+        public string? Text { get; set; } = null;
+
         /// <summary>
         /// The numerical genre ID.
         /// </summary>
-        [JsonProperty("genre_id")]
+        [ApiParameter("genre_id")]
         public int? GenreId { get; set; } = null;
         
         /// <summary>
         /// The genre name string.
         /// </summary>
-        [JsonProperty("genre_str")]
+        [ApiParameter("genre_str")]
         public string? GenreStr { get; set; } = null;
         
         /// <summary>
         /// Whether to exclude the record from search results (0 or 1).
         /// </summary>
-        [JsonProperty("no_search")]
-        public int NoSearch { get; set; } = 0;
+        [ApiParameter("no_search")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool NoSearch { get; set; } = false;
     }
 }

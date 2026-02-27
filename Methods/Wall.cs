@@ -39,14 +39,14 @@ namespace OpenVkNetApi.Methods
         /// <param name="fields">A list of additional profile fields to return.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="WallGetById"/> object containing the requested posts.</returns>
-        public async Task<WallGetById> GetByIdAsync(string posts, int extended = 0, UserFields fields = UserFields.None, CancellationToken ct = default)
+        public async Task<WallGetById> GetByIdAsync(string posts, bool extended = false, UserFields fields = UserFields.None, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["posts"] = posts,
-                ["extended"] = extended.ToString(),
-                ["fields"] = EnumHelper.GetEnumFlagsDescription(fields)
-            };
+            var parameters = new RequestParams()
+                .Add("posts", posts)
+                .Add("extended", extended ? 1 : 0)
+                .Add("fields", EnumHelper.GetEnumFlagsDescription(fields))
+                .ToDictionary();
+
             return await GetAsync<WallGetById>("getById", parameters, ct);
         }
 
@@ -113,10 +113,10 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
         public async Task<int> DeleteCommentAsync(int commentId, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["comment_id"] = commentId.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("comment_id", commentId)
+                .ToDictionary();
+
             return await PostAsync<int>("deleteComment", parameters, ct);
         }
 
@@ -129,11 +129,11 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
         public async Task<int> DeleteAsync(int ownerId, int postId, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["owner_id"] = ownerId.ToString(),
-                ["post_id"] = postId.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .Add("post_id", postId)
+                .ToDictionary();
+
             return await PostAsync<int>("delete", parameters, ct);
         }
 
@@ -158,7 +158,23 @@ namespace OpenVkNetApi.Methods
         {
             return await PostAsync<int>("editComment", @params, ct);
         }
-        
+
+        /// <summary>
+        /// Checks a link for potential copyright restrictions.
+        /// </summary>
+        /// <param name="link"> The URL to be checked. </param>
+        /// <param name="ct"> A <see cref="CancellationToken"/> that can be used to cancel the request. </param>
+        /// <returns> An integer representing the API's result code. Typically returns <c>1</c> if the link passes the check.
+        /// </returns>
+        public async Task<int> CheckCopyrightLinkAsync(string link, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("link", link)
+                .ToDictionary();
+
+            return await GetAsync<int>("checkCopyrightLink", parameters, ct);
+        }
+
         /// <summary>
         /// Pins a post to the top of a wall.
         /// </summary>
@@ -168,11 +184,11 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
         public async Task<int> PinAsync(int ownerId, int postId, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["owner_id"] = ownerId.ToString(),
-                ["post_id"] = postId.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .Add("post_id", postId)
+                .ToDictionary();
+
             return await PostAsync<int>("pin", parameters, ct);
         }
 
@@ -185,11 +201,11 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
         public async Task<int> UnpinAsync(int ownerId, int postId, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["owner_id"] = ownerId.ToString(),
-                ["post_id"] = postId.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .Add("post_id", postId)
+                .ToDictionary();
+
             return await PostAsync<int>("unpin", parameters, ct);
         }
     }

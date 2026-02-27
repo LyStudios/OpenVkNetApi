@@ -25,13 +25,12 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The community ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="UserStatus"/> object.</returns>
-        public async Task<UserStatus> GetAsync(int userId, int groupId, CancellationToken ct = default)
+        public async Task<UserStatus> GetAsync(int userId = 0, int groupId = 0, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["user_id"] = userId.ToString(),
-                ["group_id"] = groupId.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("user_id", userId)
+                .Add("group_id", groupId)
+                .ToDictionary();
 
             return await GetAsync<UserStatus>("get", parameters, ct);
         }
@@ -45,11 +44,11 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
         public async Task<int> SetAsync(string text, int groupId = 0, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["text"] = text,
-                ["group_id"] = groupId.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("text", text)
+                .Add("group_id", groupId)
+                .ToDictionary();
+
             return await PostAsync<int>("set", parameters, ct);
         }
     }

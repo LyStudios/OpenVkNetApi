@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Photos
 {
@@ -10,31 +10,32 @@ namespace OpenVkNetApi.Models.RequestParameters.Photos
         /// <summary>
         /// Album ID.
         /// </summary>
-        [JsonProperty("album_id")]
+        [ApiParameter("album_id")]
         public int AlbumId { get; set; }
 
         /// <summary>
         /// Album owner's ID.
         /// </summary>
-        [JsonProperty("owner_id")]
+        [ApiParameter("owner_id")]
         public int OwnerId { get; set; }
 
         /// <summary>
         /// New album title.
         /// </summary>
-        [JsonProperty("title")]
-        public string? Title { get; set; }
+        [ApiParameter("title")]
+        public string? Title { get; set; } = null;
 
         /// <summary>
         /// New album description.
         /// </summary>
-        [JsonProperty("description")]
-        public string? Description { get; set; }
+        [ApiParameter("description")]
+        public string? Description { get; set; } = null;
 
         /// <summary>
         /// Privacy settings for the album.
         /// </summary>
-        [JsonProperty("privacy")]
-        public int Privacy { get; set; } = 0;
+        [ApiParameter("privacy")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool Privacy { get; set; } = false;
     }
 }

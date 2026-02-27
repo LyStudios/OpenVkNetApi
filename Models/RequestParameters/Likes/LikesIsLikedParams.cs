@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Likes
 {
@@ -10,25 +10,25 @@ namespace OpenVkNetApi.Models.RequestParameters.Likes
         /// <summary>
         /// The ID of the user to check the like status for.
         /// </summary>
-        [JsonProperty("user_id")]
+        [ApiParameter("user_id")]
         public int UserId { get; set; }
 
         /// <summary>
         /// The type of object to check (e.g., "post", "comment", "photo").
         /// </summary>
-        [JsonProperty("type")]
+        [ApiParameter("type")]
         public string Type { get; set; } = null!;
 
         /// <summary>
         /// The ID of the owner of the object.
         /// </summary>
-        [JsonProperty("owner_id")]
+        [ApiParameter("owner_id")]
         public int OwnerId { get; set; }
 
         /// <summary>
         /// The ID of the object.
         /// </summary>
-        [JsonProperty("item_id")]
+        [ApiParameter("item_id")]
         public int ItemId { get; set; }
     }
 }

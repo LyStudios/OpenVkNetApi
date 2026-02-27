@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Docs
 {
@@ -10,37 +10,38 @@ namespace OpenVkNetApi.Models.RequestParameters.Docs
         /// <summary>
         /// Number of documents to return.
         /// </summary>
-        [JsonProperty("count")]
+        [ApiParameter("count")]
         public int Count { get; set; } = 30;
 
         /// <summary>
         /// Offset needed to return a specific subset of documents.
         /// </summary>
-        [JsonProperty("offset")]
+        [ApiParameter("offset")]
         public int Offset { get; set; } = 0;
 
         /// <summary>
         /// Document type.
         /// </summary>
-        [JsonProperty("type")]
+        [ApiParameter("type")]
         public int Type { get; set; } = -1;
 
         /// <summary>
         /// Owner ID of the documents.
         /// </summary>
-        [JsonProperty("owner_id")]
+        [ApiParameter("owner_id")]
         public int? OwnerId { get; set; } = null;
 
         /// <summary>
         /// Whether to return tags (0 or 1).
         /// </summary>
-        [JsonProperty("return_tags")]
-        public int ReturnTags { get; set; } = 0;
+        [ApiParameter("return_tags")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool ReturnTags { get; set; } = false;
 
         /// <summary>
         /// The order of documents (0 - by date, 1 - by size, 2 - by title).
         /// </summary>
-        [JsonProperty("order")]
+        [ApiParameter("order")]
         public int Order { get; set; } = 0;
     }
 }

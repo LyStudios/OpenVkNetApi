@@ -1,5 +1,5 @@
-using Newtonsoft.Json;
 using OpenVkNetApi.Models.Enums;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Friends
 {
@@ -11,31 +11,33 @@ namespace OpenVkNetApi.Models.RequestParameters.Friends
         /// <summary>
         /// A list of additional fields to return for each user.
         /// </summary>
-        [JsonProperty("fields")]
+        [ApiParameter("fields")]
         public UserFields Fields { get; set; } = UserFields.None;
 
         /// <summary>
         /// 1 to return outgoing friend requests, 0 for incoming.
         /// </summary>
-        [JsonProperty("out")]
-        public int Out { get; set; } = 0;
+        [ApiParameter("out")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool Out { get; set; } = false;
 
         /// <summary>
         /// Offset needed to return a specific subset of requests.
         /// </summary>
-        [JsonProperty("offset")]
+        [ApiParameter("offset")]
         public int Offset { get; set; } = 0;
 
         /// <summary>
         /// Number of requests to return.
         /// </summary>
-        [JsonProperty("count")]
+        [ApiParameter("count")]
         public int Count { get; set; } = 100;
 
         /// <summary>
         /// 1 to return extended information about users.
         /// </summary>
-        [JsonProperty("extended")]
-        public int Extended { get; set; } = 0;
+        [ApiParameter("extended")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool Extended { get; set; } = false;
     }
 }

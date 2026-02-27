@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Gifts
 {
@@ -10,25 +10,26 @@ namespace OpenVkNetApi.Models.RequestParameters.Gifts
         /// <summary>
         /// ID of the user to whom the gift will be sent.
         /// </summary>
-        [JsonProperty("user_ids")]
+        [ApiParameter("user_ids")]
         public int UserIds { get; set; }
 
         /// <summary>
         /// ID of the gift to send.
         /// </summary>
-        [JsonProperty("gift_id")]
+        [ApiParameter("gift_id")]
         public int GiftId { get; set; }
 
         /// <summary>
         /// A message to include with the gift.
         /// </summary>
-        [JsonProperty("message")]
+        [ApiParameter("message")]
         public string Message { get; set; } = "";
 
         /// <summary>
         /// Privacy settings for the gift (0 - public, 1 - private).
         /// </summary>
-        [JsonProperty("privacy")]
-        public int Privacy { get; set; } = 0;
+        [ApiParameter("privacy")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool Privacy { get; set; } = false;
     }
 }

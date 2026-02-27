@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Board
 {
@@ -10,37 +10,37 @@ namespace OpenVkNetApi.Models.RequestParameters.Board
         /// <summary>
         /// ID of the community.
         /// </summary>
-        [JsonProperty("group_id")]
+        [ApiParameter("group_id")]
         public int GroupId { get; set; }
 
         /// <summary>
         /// ID of the topic.
         /// </summary>
-        [JsonProperty("topic_id")]
+        [ApiParameter("topic_id")]
         public int TopicId { get; set; }
 
         /// <summary>
         /// True to return the 'likes' object.
         /// </summary>
-        [JsonProperty("need_likes")]
+        [ApiParameter("need_likes")]
         public bool NeedLikes { get; set; } = false;
 
         /// <summary>
         /// Offset needed to return a specific subset of comments.
         /// </summary>
-        [JsonProperty("offset")]
+        [ApiParameter("offset")]
         public int Offset { get; set; } = 0;
 
         /// <summary>
         /// Number of comments to return.
         /// </summary>
-        [JsonProperty("count")]
+        [ApiParameter("count")]
         public int Count { get; set; } = 10;
 
         /// <summary>
         /// True to return extended information about users who posted comments.
         /// </summary>
-        [JsonProperty("extended")]
+        [ApiParameter("extended")]
         public bool Extended { get; set; } = false;
     }
 }

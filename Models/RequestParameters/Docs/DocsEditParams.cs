@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Docs
 {
@@ -10,37 +10,38 @@ namespace OpenVkNetApi.Models.RequestParameters.Docs
         /// <summary>
         /// The document owner's ID.
         /// </summary>
-        [JsonProperty("owner_id")]
+        [ApiParameter("owner_id")]
         public int OwnerId { get; set; }
 
         /// <summary>
         /// The document ID.
         /// </summary>
-        [JsonProperty("doc_id")]
+        [ApiParameter("doc_id")]
         public int DocId { get; set; }
 
         /// <summary>
         /// The new document title.
         /// </summary>
-        [JsonProperty("title")]
+        [ApiParameter("title")]
         public string? Title { get; set; } = "";
 
         /// <summary>
         /// A comma-separated list of new tags for the document.
         /// </summary>
-        [JsonProperty("tags")]
+        [ApiParameter("tags")]
         public string? Tags { get; set; } = "";
 
         /// <summary>
         /// The ID of the folder to move the document to.
         /// </summary>
-        [JsonProperty("folder_id")]
-        public int FolderId { get; set; } = 0;
+        [ApiParameter("folder_id")]
+        public int? FolderId { get; set; } = 0;
 
         /// <summary>
         /// Whether to hide the owner's name.
         /// </summary>
-        [JsonProperty("owner_hidden")]
-        public int OwnerHidden { get; set; } = -1;
+        [ApiParameter("owner_hidden")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool? OwnerHidden { get; set; } = null;
     }
 }

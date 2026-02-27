@@ -1,5 +1,5 @@
-using Newtonsoft.Json;
 using OpenVkNetApi.Models.Enums;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Users
 {
@@ -11,25 +11,25 @@ namespace OpenVkNetApi.Models.RequestParameters.Users
         /// <summary>
         /// ID of the user whose followers to return.
         /// </summary>
-        [JsonProperty("user_id")]
+        [ApiParameter("user_id")]
         public int UserId { get; set; }
 
         /// <summary>
         /// A list of additional fields to return for each user.
         /// </summary>
-        [JsonProperty("fields")]
+        [ApiParameter("fields")]
         public UserFields Fields { get; set; } = UserFields.None;
 
         /// <summary>
         /// Offset needed to return a specific subset of followers.
         /// </summary>
-        [JsonProperty("offset")]
+        [ApiParameter("offset")]
         public int Offset { get; set; } = 0;
 
         /// <summary>
         /// Number of followers to return.
         /// </summary>
-        [JsonProperty("count")]
+        [ApiParameter("count")]
         public int Count { get; set; } = 100;
     }
 }

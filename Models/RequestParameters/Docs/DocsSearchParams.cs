@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Docs
 {
@@ -10,49 +10,51 @@ namespace OpenVkNetApi.Models.RequestParameters.Docs
         /// <summary>
         /// Search query.
         /// </summary>
-        [JsonProperty("q")]
+        [ApiParameter("q")]
         public string Q { get; set; } = "";
 
         /// <summary>
         /// Whether to search only among own documents.
         /// </summary>
-        [JsonProperty("search_own")]
-        public int SearchOwn { get; set; } = -1;
+        [ApiParameter("search_own")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool SearchOwn { get; set; } = false;
 
         /// <summary>
         /// The order of results.
         /// </summary>
-        [JsonProperty("order")]
+        [ApiParameter("order")]
         public int Order { get; set; } = -1;
 
         /// <summary>
         /// Number of documents to return.
         /// </summary>
-        [JsonProperty("count")]
+        [ApiParameter("count")]
         public int Count { get; set; } = 30;
 
         /// <summary>
         /// Offset for pagination.
         /// </summary>
-        [JsonProperty("offset")]
+        [ApiParameter("offset")]
         public int Offset { get; set; } = 0;
 
         /// <summary>
         /// Whether to return tags in the response.
         /// </summary>
-        [JsonProperty("return_tags")]
-        public int ReturnTags { get; set; } = 0;
+        [ApiParameter("return_tags")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool ReturnTags { get; set; } = false;
 
         /// <summary>
         /// Document type.
         /// </summary>
-        [JsonProperty("type")]
+        [ApiParameter("type")]
         public int Type { get; set; } = 0;
 
         /// <summary>
         /// Tags to filter by.
         /// </summary>
-        [JsonProperty("tags")]
-        public string? Tags { get; set; }
+        [ApiParameter("tags")]
+        public string? Tags { get; set; } = null;
     }
 }

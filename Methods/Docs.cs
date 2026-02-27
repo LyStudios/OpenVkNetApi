@@ -28,14 +28,14 @@ namespace OpenVkNetApi.Methods
         /// <param name="accessKey">The access key for the document.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>The ID of the added document.</returns>
-        public async Task<string> AddAsync(int ownerId, int docId, string accessKey, CancellationToken ct = default)
+        public async Task<string> AddAsync(int ownerId, int docId, string? accessKey = null, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["owner_id"] = ownerId.ToString(),
-                ["doc_id"] = docId.ToString(),
-                ["access_key"] = accessKey
-            };
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .Add("doc_id", docId)
+                .Add("access_key", accessKey)
+                .ToDictionary();
+
             return await PostAsync<string>("add", parameters, ct);
         }
         
@@ -48,11 +48,11 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
         public async Task<int> DeleteAsync(int ownerId, int docId, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["owner_id"] = ownerId.ToString(),
-                ["doc_id"] = docId.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .Add("doc_id", docId)
+                .ToDictionary();
+
             return await PostAsync<int>("delete", parameters, ct);
         }
 
@@ -65,11 +65,11 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
         public async Task<int> RestoreAsync(int ownerId, int docId, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["owner_id"] = ownerId.ToString(),
-                ["doc_id"] = docId.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .Add("doc_id", docId)
+                .ToDictionary();
+
             return await PostAsync<int>("restore", parameters, ct);
         }
 
@@ -102,13 +102,13 @@ namespace OpenVkNetApi.Methods
         /// <param name="returnTags">Whether to return document tags.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A list of <see cref="Doc"/> objects.</returns>
-        public async Task<List<Doc>> GetByIdAsync(string docs, int returnTags, CancellationToken ct = default)
+        public async Task<List<Doc>> GetByIdAsync(string docs, bool returnTags = false, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["docs"] = docs,
-                ["return_tags"] = returnTags.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("docs", docs)
+                .Add("return_tags", returnTags ? 1 : 0)
+                .ToDictionary();
+
             return await GetAsync<List<Doc>>("getById", parameters, ct);
         }
 
@@ -120,14 +120,30 @@ namespace OpenVkNetApi.Methods
         /// <returns>A <see cref="Collection{DocType}"/> of document types.</returns>
         public async Task<Collection<DocType>> GetTypesAsync(int? ownerId = null, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>();
-            if (ownerId.HasValue)
-            {
-                parameters["owner_id"] = ownerId.Value.ToString();
-            }
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .ToDictionary();
+
             return await GetAsync<Collection<DocType>>("getTypes", parameters, ct);
         }
-        
+
+        /// <summary>
+        /// Retrieves the list of tags for documents of a user.
+        /// </summary>
+        /// <param name="ownerId"> The ID of the document owner. If <c>null</c>, defaults to the current authorized user. </param>
+        /// <param name="type"> The type of documents to filter by. If <c>null</c>, defaults to 0 (all types). </param>
+        /// <param name="ct"> A <see cref="CancellationToken"/> that can be used to cancel the request. </param>
+        /// <returns> A <see cref="List{String}"/> containing the document tags. </returns>
+        public async Task<List<string>> GetTagsAsync(int? ownerId = null, int? type = 0, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .Add("type", type)
+                .ToDictionary();
+
+            return await GetAsync<List<string>>("getTags", parameters, ct);
+        }
+
         /// <summary>
         /// Searches for documents.
         /// </summary>
@@ -147,11 +163,10 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the upload server URL.</returns>
         public async Task<int> GetUploadServerAsync(int? groupId = null, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>();
-            if (groupId.HasValue)
-            {
-                parameters["group_id"] = groupId.Value.ToString();
-            }
+            var parameters = new RequestParams()
+                .Add("group_id", groupId)
+                .ToDictionary();
+
             return await GetAsync<int>("getUploadServer", parameters, ct);
         }
 
@@ -162,12 +177,11 @@ namespace OpenVkNetApi.Methods
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An integer representing the upload server URL.</returns>
         public async Task<int> GetWallUploadServerAsync(int? groupId = null, CancellationToken ct = default)
-        {   
-            var parameters = new Dictionary<string, string>();
-            if (groupId.HasValue)
-            {
-                parameters["group_id"] = groupId.Value.ToString();
-            }
+        {
+            var parameters = new RequestParams()
+                .Add("group_id", groupId)
+                .ToDictionary();
+
             return await GetAsync<int>("getWallUploadServer", parameters, ct);
         }
 

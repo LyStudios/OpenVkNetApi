@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Groups
 {
@@ -10,67 +10,72 @@ namespace OpenVkNetApi.Models.RequestParameters.Groups
         /// <summary>
         /// The group ID.
         /// </summary>
-        [JsonProperty("group_id")]
+        [ApiParameter("group_id")]
         public int GroupId { get; set; }
 
         /// <summary>
         /// The new group title.
         /// </summary>
-        [JsonProperty("title")]
-        public string? Title { get; set; }
+        [ApiParameter("title")]
+        public string? Title { get; set; } = null;
 
         /// <summary>
         /// The new group description.
         /// </summary>
-        [JsonProperty("description")]
-        public string? Description { get; set; }
+        [ApiParameter("description")]
+        public string? Description { get; set; } = null;
 
         /// <summary>
         /// The new group screen name (short address).
         /// </summary>
-        [JsonProperty("screen_name")]
-        public string? ScreenName { get; set; }
+        [ApiParameter("screen_name")]
+        public string? ScreenName { get; set; } = null;
 
         /// <summary>
         /// The new group website.
         /// </summary>
-        [JsonProperty("website")]
-        public string? Website { get; set; }
+        [ApiParameter("website")]
+        public string? Website { get; set; } = null;
 
         /// <summary>
         /// Wall settings (0 - off, 1 - open, 2 - limited, 3 - closed). Default is -1 (no change).
         /// </summary>
-        [JsonProperty("wall")]
+        [ApiParameter("wall")]
         public int Wall { get; set; } = -1;
 
         /// <summary>
-        /// Topics (board) settings. Default is null (no change).
+        /// Topics (board) settings. True = everyone can create topics, false = no change, null = no change.
         /// </summary>
-        [JsonProperty("topics")]
-        public int? Topics { get; set; }
+        [ApiParameter("topics")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool? Topics { get; set; } = null;
 
         /// <summary>
-        /// Admin list settings. Default is null (no change).
+        /// Admin list settings. True = show, false = hide, null = no change.
         /// </summary>
-        [JsonProperty("adminlist")]
-        public int? Adminlist { get; set; }
+        [ApiParameter("adminlist")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool? Adminlist { get; set; } = null;
 
         /// <summary>
-        /// Whether topics should be displayed above the wall. Default is null (no change).
+        /// Whether topics should be displayed above the wall. True = display, false = hide, null = no change.
         /// </summary>
-        [JsonProperty("topicsAboveWall")]
-        public int? TopicsAboveWall { get; set; }
+        [ApiParameter("topicsAboveWall")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool? TopicsAboveWall { get; set; } = null;
 
         /// <summary>
-        /// Whether to hide the group from the global feed. Default is null (no change).
+        /// Whether to hide the group from the global feed. True = hide, false = show, null = no change.
         /// </summary>
-        [JsonProperty("hideFromGlobalFeed")]
-        public int? HideFromGlobalFeed { get; set; }
+        [ApiParameter("hideFromGlobalFeed")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool? HideFromGlobalFeed { get; set; } = null;
 
         /// <summary>
-        /// Audio settings. Default is null (no change).
+        /// Audio settings. True = everyone can upload, false = no change, null = no change.
         /// </summary>
-        [JsonProperty("audio")]
-        public int? Audio { get; set; }
+        [ApiParameter("audio")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool? Audio { get; set; } = null;
     }
 }

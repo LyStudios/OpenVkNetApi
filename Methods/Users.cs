@@ -64,12 +64,12 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
         public async Task<int> ReportAsync(int userId, string type = "spam", string comment = "", CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["user_id"] = userId.ToString(),
-                ["type"] = type,
-                ["comment"] = comment
-            };
+            var parameters = new RequestParams()
+                .Add("user_id", userId)
+                .Add("type", type)
+                .Add("comment", comment)
+                .ToDictionary();
+
             return await PostAsync<int>("report", parameters, ct);
         }
     }

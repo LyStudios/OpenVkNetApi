@@ -13,12 +13,12 @@ namespace OpenVkNetApi.Models
         /// The total number of items in the collection.
         /// </summary>
         [JsonProperty("count")]
-        public int? Count { get; set; }
+        public int Count { get; set; }
 
         /// <summary>
         /// The list of items on the current page.
         /// </summary>
         [JsonProperty("items")]
-        public List<T>? Items { get; set; }
+        public List<T> Items { get; set; } = new List<T>();
     }
 }

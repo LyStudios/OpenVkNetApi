@@ -257,13 +257,12 @@ namespace OpenVkNetApi.Methods
         /// </summary>
         /// <param name="ownerId">The user or group ID. Use a negative value for a group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
-        public async Task<PhotosOwnerPhotoUploadServer> GetOwnerPhotoUploadServerAsync(int? ownerId = null, CancellationToken ct = default)
+        public async Task<PhotosOwnerPhotoUploadServer> GetOwnerPhotoUploadServerAsync(int? ownerId = 0, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>();
-            if (ownerId.HasValue)
-            {
-                parameters["owner_id"] = ownerId.Value.ToString();
-            }
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .ToDictionary();
+
             return await GetAsync<PhotosOwnerPhotoUploadServer>("getOwnerPhotoUploadServer", parameters, ct);
         }
 
@@ -275,11 +274,11 @@ namespace OpenVkNetApi.Methods
         /// <param name="ct">A cancellation token for the operation.</param>
         public async Task<PhotosSaveOwnerPhoto> SaveOwnerPhotoAsync(string photo, string hash, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["photo"] = photo,
-                ["hash"] = hash
-            };
+            var parameters = new RequestParams()
+                .Add("photo", photo)
+                .Add("hash", hash)
+                .ToDictionary();
+
             return await PostAsync<PhotosSaveOwnerPhoto>("saveOwnerPhoto", parameters, ct);
         }
 
@@ -290,11 +289,10 @@ namespace OpenVkNetApi.Methods
         /// <param name="ct">A cancellation token for the operation.</param>
         public async Task<PhotosUploadServer> GetWallUploadServerAsync(int? groupId = null, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>();
-            if (groupId.HasValue)
-            {
-                parameters["group_id"] = groupId.Value.ToString();
-            }
+            var parameters = new RequestParams()
+                .Add("group_id", groupId)
+                .ToDictionary();
+
             return await GetAsync<PhotosUploadServer>("getWallUploadServer", parameters, ct);
         }
 
@@ -315,11 +313,10 @@ namespace OpenVkNetApi.Methods
         /// <param name="ct">A cancellation token for the operation.</param>
         public async Task<PhotosUploadServer> GetUploadServerAsync(int? albumId = null, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>();
-            if (albumId.HasValue)
-            {
-                parameters["album_id"] = albumId.Value.ToString();
-            }
+            var parameters = new RequestParams()
+                .Add("album_id", albumId)
+                .ToDictionary();
+
             return await GetAsync<PhotosUploadServer>("getUploadServer", parameters, ct);
         }
         
@@ -342,12 +339,12 @@ namespace OpenVkNetApi.Methods
         /// <param name="ct">A cancellation token for the operation.</param>
         public async Task<Album> CreateAlbumAsync(string title, int groupId = 0, string description = "", CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["title"] = title,
-                ["group_id"] = groupId.ToString(),
-                ["description"] = description
-            };
+            var parameters = new RequestParams()
+                .Add("title", title)
+                .Add("group_id", groupId)
+                .Add("description", description)
+                .ToDictionary();
+
             return await PostAsync<Album>("createAlbum", parameters, ct);
         }
         
@@ -379,15 +376,11 @@ namespace OpenVkNetApi.Methods
         /// <param name="ct">A cancellation token for the operation.</param>
         public async Task<int> GetAlbumsCountAsync(int? userId = null, int? groupId = null, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>();
-            if (userId.HasValue)
-            {
-                parameters["user_id"] = userId.Value.ToString();
-            }
-            if (groupId.HasValue)
-            {
-                parameters["group_id"] = groupId.Value.ToString();
-            }
+            var parameters = new RequestParams()
+                .Add("user_id", userId)
+                .Add("group_id", groupId)
+                .ToDictionary();
+
             return await GetAsync<int>("getAlbumsCount", parameters, ct);
         }
 
@@ -400,12 +393,12 @@ namespace OpenVkNetApi.Methods
         /// <param name="ct">A cancellation token for the operation.</param>
         public async Task<List<Photo>> GetByIdAsync(string photos, bool extended = false, bool photoSizes = false, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["photos"] = photos,
-                ["extended"] = extended ? "1" : "0",
-                ["photo_sizes"] = photoSizes ? "1" : "0"
-            };
+            var parameters = new RequestParams()
+                .Add("photos", photos)
+                .Add("extended", extended)
+                .Add("photo_sizes", photoSizes)
+                .ToDictionary();
+
             return await GetAsync<List<Photo>>("getById", parameters, ct);
         }
 
@@ -427,11 +420,11 @@ namespace OpenVkNetApi.Methods
         /// <param name="ct">A cancellation token for the operation.</param>
         public async Task<int> DeleteAlbumAsync(int albumId, int groupId = 0, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["album_id"] = albumId.ToString(),
-                ["group_id"] = groupId.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("album_id", albumId)
+                .Add("group_id", groupId)
+                .ToDictionary();
+
             return await PostAsync<int>("deleteAlbum", parameters, ct);
         }
 
@@ -444,12 +437,12 @@ namespace OpenVkNetApi.Methods
         /// <param name="ct">A cancellation token for the operation.</param>
         public async Task<int> EditAsync(int ownerId, int photoId, string caption = "", CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["owner_id"] = ownerId.ToString(),
-                ["photo_id"] = photoId.ToString(),
-                ["caption"] = caption
-            };
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .Add("photo_id", photoId)
+                .Add("caption", caption)
+                .ToDictionary();
+
             return await PostAsync<int>("edit", parameters, ct);
         }
 
@@ -462,19 +455,12 @@ namespace OpenVkNetApi.Methods
         /// <param name="ct">A cancellation token for the operation.</param>
         public async Task<int> DeleteAsync(int? ownerId = null, int? photoId = null, string? photos = null, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>();
-            if (ownerId.HasValue)
-            {
-                parameters["owner_id"] = ownerId.Value.ToString();
-            }
-            if (photoId.HasValue)
-            {
-                parameters["photo_id"] = photoId.Value.ToString();
-            }
-            if (!string.IsNullOrEmpty(photos))
-            {
-                parameters["photos"] = photos!;
-            }
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .Add("photo_id", photoId)
+                .Add("photos", photos)
+                .ToDictionary();
+
             return await PostAsync<int>("delete", parameters, ct);
         }
 

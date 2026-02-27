@@ -62,11 +62,11 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupIds">A comma-separated list of group IDs.</param>
         public async Task<int> AddBanAsync(string userIds = "", string groupIds = "")
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["user_ids"] = userIds,
-                ["group_ids"] = groupIds
-            };
+            var parameters = new RequestParams()
+                .Add("user_ids", userIds)
+                .Add("group_ids", groupIds)
+                .ToDictionary();
+
             return await PostAsync<int>("addBan", parameters);
         }
 
@@ -77,11 +77,11 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupIds">A comma-separated list of group IDs.</param>
         public async Task<int> DeleteBanAsync(string userIds = "", string groupIds = "")
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["user_ids"] = userIds,
-                ["group_ids"] = groupIds
-            };
+            var parameters = new RequestParams()
+                .Add("user_ids", userIds)
+                .Add("group_ids", groupIds)
+                .ToDictionary();
+
             return await PostAsync<int>("deleteBan", parameters);
         }
     }

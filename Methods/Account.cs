@@ -76,7 +76,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="filter">A comma-separated list of counter names to return (e.g., "friends,messages").</param>
         /// <param name="cancellationToken">A cancellation token for the operation.</param>
         /// <returns>An <see cref="AccountCounters"/> object with the requested counters.</returns>
-        public Task<AccountCounters> GetCountersAsync(string? filter = "", CancellationToken cancellationToken = default)
+        public Task<AccountCounters> GetCountersAsync(string filter = "", CancellationToken cancellationToken = default)
         {
             var parameters = new RequestParams().Add("filter", filter).ToDictionary();
             return GetAsync<AccountCounters>("getCounters", parameters, cancellationToken: cancellationToken);
@@ -121,7 +121,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="message">An optional message to include with the transfer.</param>
         /// <param name="cancellationToken">A cancellation token for the operation.</param>
         /// <returns>An <see cref="AccountBalance"/> object with the updated balance.</returns>
-        public Task<AccountBalance> SendVotesAsync(int receiverId, int value, string? message = "", CancellationToken cancellationToken = default)
+        public Task<AccountBalance> SendVotesAsync(int receiverId, int value, string message = "", CancellationToken cancellationToken = default)
         {
             var parameters = new RequestParams()
                 .Add("receiver", receiverId)

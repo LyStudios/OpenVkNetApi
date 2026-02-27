@@ -1,5 +1,5 @@
-using Newtonsoft.Json;
 using OpenVkNetApi.Models.Enums;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Wall
 {
@@ -11,25 +11,25 @@ namespace OpenVkNetApi.Models.RequestParameters.Wall
         /// <summary>
         /// ID of the post owner.
         /// </summary>
-        [JsonProperty("owner_id")]
+        [ApiParameter("owner_id")]
         public int OwnerId { get; set; }
 
         /// <summary>
         /// ID of the comment.
         /// </summary>
-        [JsonProperty("comment_id")]
+        [ApiParameter("comment_id")]
         public int CommentId { get; set; }
 
         /// <summary>
         /// 1 to return extended information about users.
         /// </summary>
-        [JsonProperty("extended")]
+        [ApiParameter("extended")]
         public bool Extended { get; set; } = false;
 
         /// <summary>
         /// A list of additional fields to return for each user.
         /// </summary>
-        [JsonProperty("fields")]
+        [ApiParameter("fields")]
         public UserFields Fields { get; set; } = UserFields.None;
     }
 }

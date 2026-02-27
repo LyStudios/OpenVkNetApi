@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Audio
 {
@@ -11,25 +11,25 @@ namespace OpenVkNetApi.Models.RequestParameters.Audio
         /// <summary>
         /// The ID of the audio file to restore.
         /// </summary>
-        [JsonProperty("audio_id")]
+        [ApiParameter("audio_id")]
         public int AudioId { get; set; }
         
         /// <summary>
         /// The ID of the audio file's owner.
         /// </summary>
-        [JsonProperty("owner_id")]
+        [ApiParameter("owner_id")]
         public int OwnerId { get; set; }
         
         /// <summary>
         /// The community ID (if restoring to a group).
         /// </summary>
-        [JsonProperty("group_id")]
-        public int? GroupId { get; set; } = 0;
+        [ApiParameter("group_id")]
+        public int? GroupId { get; set; } = null;
         
         /// <summary>
         /// The hash for the request.
         /// </summary>
-        [JsonProperty("hash")]
-        public string? Hash { get; set; }
+        [ApiParameter("hash")]
+        public string? Hash { get; set; } = null;
     }
 }

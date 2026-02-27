@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Likes
 {
@@ -10,43 +10,43 @@ namespace OpenVkNetApi.Models.RequestParameters.Likes
         /// <summary>
         /// The type of object for which to return likes (e.g., "post", "comment", "photo").
         /// </summary>
-        [JsonProperty("type")]
+        [ApiParameter("type")]
         public string Type { get; set; } = null!;
 
         /// <summary>
         /// The ID of the owner of the object.
         /// </summary>
-        [JsonProperty("owner_id")]
+        [ApiParameter("owner_id")]
         public int OwnerId { get; set; }
 
         /// <summary>
         /// The ID of the object.
         /// </summary>
-        [JsonProperty("item_id")]
+        [ApiParameter("item_id")]
         public int ItemId { get; set; }
 
         /// <summary>
         /// Internal property to control extended information.
         /// </summary>
-        [JsonProperty("extended")]
+        [ApiParameter("extended")]
         internal bool Extended { get; set; } = false;
 
         /// <summary>
         /// Offset needed to return a specific subset of likes.
         /// </summary>
-        [JsonProperty("offset")]
+        [ApiParameter("offset")]
         public int Offset { get; set; } = 0;
 
         /// <summary>
         /// Number of likes to return.
         /// </summary>
-        [JsonProperty("count")]
+        [ApiParameter("count")]
         public int Count { get; set; } = 10;
 
         /// <summary>
         /// True to skip likes from the current user.
         /// </summary>
-        [JsonProperty("skip_own")]
+        [ApiParameter("skip_own")]
         public bool SkipOwn { get; set; } = false;
     }
 }

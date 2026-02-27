@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Photos
 {
@@ -10,25 +10,25 @@ namespace OpenVkNetApi.Models.RequestParameters.Photos
         /// <summary>
         /// ID of the user or community that owns the photo.
         /// </summary>
-        [JsonProperty("owner_id")]
+        [ApiParameter("owner_id")]
         public int OwnerId { get; set; }
 
         /// <summary>
         /// Photo ID.
         /// </summary>
-        [JsonProperty("photo_id")]
+        [ApiParameter("photo_id")]
         public int PhotoId { get; set; }
 
         /// <summary>
         /// The text of the comment.
         /// </summary>
-        [JsonProperty("message")]
+        [ApiParameter("message")]
         public string Message { get; set; } = "";
 
         /// <summary>
         /// True if the comment is published on behalf of a group.
         /// </summary>
-        [JsonProperty("from_group")]
+        [ApiParameter("from_group")]
         public bool FromGroup { get; set; } = false;
     }
 }

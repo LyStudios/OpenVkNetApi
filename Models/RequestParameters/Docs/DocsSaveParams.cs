@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Docs
 {
@@ -10,25 +10,26 @@ namespace OpenVkNetApi.Models.RequestParameters.Docs
         /// <summary>
         /// A string representing the uploaded file.
         /// </summary>
-        [JsonProperty("file")]
+        [ApiParameter("file")]
         public string File { get; set; } = null!;
 
         /// <summary>
         /// The document title.
         /// </summary>
-        [JsonProperty("title")]
+        [ApiParameter("title")]
         public string Title { get; set; } = null!;
 
         /// <summary>
         /// Tags for the document.
         /// </summary>
-        [JsonProperty("tags")]
+        [ApiParameter("tags")]
         public string Tags { get; set; } = null!;
 
         /// <summary>
         /// Whether to return tags in the response.
         /// </summary>
-        [JsonProperty("return_tags")]
-        public int ReturnTags { get; set; } = 0;
+        [ApiParameter("return_tags")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool? ReturnTags { get; set; } = false;
     }
 }

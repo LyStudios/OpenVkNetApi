@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Board
 {
@@ -10,25 +10,25 @@ namespace OpenVkNetApi.Models.RequestParameters.Board
         /// <summary>
         /// ID of the community.
         /// </summary>
-        [JsonProperty("group_id")]
+        [ApiParameter("group_id")]
         public int GroupId { get; set; }
 
         /// <summary>
         /// ID of the topic.
         /// </summary>
-        [JsonProperty("topic_id")]
+        [ApiParameter("topic_id")]
         public int TopicId { get; set; }
 
         /// <summary>
         /// The text of the comment.
         /// </summary>
-        [JsonProperty("message")]
+        [ApiParameter("message")]
         public string Message { get; set; } = "";
 
         /// <summary>
         /// True if the comment is published on behalf of the group.
         /// </summary>
-        [JsonProperty("from_group")]
+        [ApiParameter("from_group")]
         public bool FromGroup { get; set; } = true;
     }
 }

@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Messages
 {
@@ -10,25 +10,25 @@ namespace OpenVkNetApi.Models.RequestParameters.Messages
         /// <summary>
         /// The message ID to edit.
         /// </summary>
-        [JsonProperty("message_id")]
+        [ApiParameter("message_id")]
         public int MessageId { get; set; }
 
         /// <summary>
         /// The new message text.
         /// </summary>
-        [JsonProperty("message")]
+        [ApiParameter("message")]
         public string Message { get; set; } = "";
 
         /// <summary>
         /// New attachment (e.g., photo_id, video_id).
         /// </summary>
-        [JsonProperty("attachment")]
+        [ApiParameter("attachment")]
         public string Attachment { get; set; } = "";
 
         /// <summary>
         /// ID of the peer in the conversation.
         /// </summary>
-        [JsonProperty("peer_id")]
+        [ApiParameter("peer_id")]
         public int PeerId { get; set; } = 0;
     }
 }

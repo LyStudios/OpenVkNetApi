@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Photos
 {
@@ -10,25 +10,25 @@ namespace OpenVkNetApi.Models.RequestParameters.Photos
         /// <summary>
         /// A JSON string with a list of photos to be saved.
         /// </summary>
-        [JsonProperty("photos_list")]
+        [ApiParameter("photos_list")]
         public string PhotosList { get; set; } = null!;
 
         /// <summary>
         /// The hash required to save the photos.
         /// </summary>
-        [JsonProperty("hash")]
+        [ApiParameter("hash")]
         public string Hash { get; set; } = null!;
 
         /// <summary>
         /// ID of the album to save photos to.
         /// </summary>
-        [JsonProperty("album_id")]
-        public int AlbumId { get; set; } = 0;
+        [ApiParameter("album_id")]
+        public int? AlbumId { get; set; } = 0;
 
         /// <summary>
         /// The caption for the photos.
         /// </summary>
-        [JsonProperty("caption")]
+        [ApiParameter("caption")]
         public string? Caption { get; set; }
     }
 }

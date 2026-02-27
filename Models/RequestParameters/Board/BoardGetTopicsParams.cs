@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Board
 {
@@ -10,43 +10,44 @@ namespace OpenVkNetApi.Models.RequestParameters.Board
         /// <summary>
         /// ID of the community.
         /// </summary>
-        [JsonProperty("group_id")]
+        [ApiParameter("group_id")]
         public int GroupId { get; set; }
 
         /// <summary>
         /// A comma-separated list of topic IDs.
         /// </summary>
-        [JsonProperty("topic_ids")]
+        [ApiParameter("topic_ids")]
         public string TopicIds { get; set; } = "";
 
         /// <summary>
         /// Offset needed to return a specific subset of topics.
         /// </summary>
-        [JsonProperty("offset")]
+        [ApiParameter("offset")]
         public int Offset { get; set; } = 0;
 
         /// <summary>
         /// Number of topics to return.
         /// </summary>
-        [JsonProperty("count")]
+        [ApiParameter("count")]
         public int Count { get; set; } = 10;
 
         /// <summary>
         /// True to return extended information.
         /// </summary>
-        [JsonProperty("extended")]
+        [ApiParameter("extended")]
         public bool Extended { get; set; } = false;
 
         /// <summary>
         /// Whether to return a preview of the topic text.
         /// </summary>
-        [JsonProperty("preview")]
-        public int Preview { get; set; } = 0;
+        [ApiParameter("preview")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool Preview { get; set; } = false;
 
         /// <summary>
         /// The maximum length of the preview text.
         /// </summary>
-        [JsonProperty("preview_length")]
+        [ApiParameter("preview_length")]
         public int PreviewLength { get; set; } = 90;
     }
 }

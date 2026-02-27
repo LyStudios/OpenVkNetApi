@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Account
 {
@@ -11,49 +11,49 @@ namespace OpenVkNetApi.Models.RequestParameters.Account
         /// <summary>
         /// User's general interests.
         /// </summary>
-        [JsonProperty("interests")]
-        public string? Interests { get; set; } = "";
+        [ApiParameter("interests")]
+        public string? Interests { get; set; } = null;
 
         /// <summary>
         /// User's favorite music.
         /// </summary>
-        [JsonProperty("fav_music")]
-        public string? FavMusic { get; set; } = "";
+        [ApiParameter("fav_music")]
+        public string? FavMusic { get; set; } = null;
 
         /// <summary>
         /// User's favorite films.
         /// </summary>
-        [JsonProperty("fav_films")]
-        public string? FavFilms { get; set; } = "";
+        [ApiParameter("fav_films")]
+        public string? FavFilms { get; set; } = null;
 
         /// <summary>
         /// User's favorite TV shows.
         /// </summary>
-        [JsonProperty("fav_shows")]
-        public string? FavShows { get; set; } = "";
+        [ApiParameter("fav_shows")]
+        public string? FavShows { get; set; } = null;
 
         /// <summary>
         /// User's favorite books.
         /// </summary>
-        [JsonProperty("fav_books")]
-        public string? FavBooks { get; set; } = "";
+        [ApiParameter("fav_books")]
+        public string? FavBooks { get; set; } = null;
 
         /// <summary>
         /// User's favorite quote.
         /// </summary>
-        [JsonProperty("fav_quote")]
-        public string? FavQuote { get; set; } = "";
+        [ApiParameter("fav_quote")]
+        public string? FavQuote { get; set; } = null;
 
         /// <summary>
         /// User's favorite games.
         /// </summary>
-        [JsonProperty("fav_games")]
-        public string? FavGames { get; set; } = "";
+        [ApiParameter("fav_games")]
+        public string? FavGames { get; set; } = null;
 
         /// <summary>
         /// Additional information about the user ("About Me").
         /// </summary>
-        [JsonProperty("about")]
-        public string? About { get; set; } = "";
+        [ApiParameter("about")]
+        public string? About { get; set; } = null;
     }
 }

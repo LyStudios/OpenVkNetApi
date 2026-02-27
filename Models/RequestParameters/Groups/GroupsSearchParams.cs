@@ -1,5 +1,5 @@
-using Newtonsoft.Json;
 using OpenVkNetApi.Models.Enums;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Groups
 {
@@ -11,25 +11,25 @@ namespace OpenVkNetApi.Models.RequestParameters.Groups
         /// <summary>
         /// Search query.
         /// </summary>
-        [JsonProperty("q")]
+        [ApiParameter("q")]
         public string Q { get; set; } = null!;
 
         /// <summary>
         /// Offset needed to return a specific subset of groups.
         /// </summary>
-        [JsonProperty("offset")]
+        [ApiParameter("offset")]
         public int Offset { get; set; } = 0;
 
         /// <summary>
         /// Number of groups to return.
         /// </summary>
-        [JsonProperty("count")]
+        [ApiParameter("count")]
         public int Count { get; set; } = 100;
 
         /// <summary>
         /// A list of additional fields to return for each group.
         /// </summary>
-        [JsonProperty("fields")]
+        [ApiParameter("fields")]
         public GroupFields Fields { get; set; } = GroupFields.None;
     }
 }

@@ -18,7 +18,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Audio
         /// The genre ID as a string.
         /// </summary>
         [JsonProperty("genre_str")]
-        public string? GenreStr { get; set; }
+        public string? GenreStr { get; set; } = null;
 
         /// <summary>
         /// Offset for pagination of popular tracks.
@@ -36,6 +36,6 @@ namespace OpenVkNetApi.Models.RequestParameters.Audio
         /// The hash for the request.
         /// </summary>
         [JsonProperty("hash")]
-        public string? Hash { get; set; }
+        public string? Hash { get; set; } = null;
     }
 }

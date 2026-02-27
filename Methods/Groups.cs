@@ -62,10 +62,10 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
         public async Task<int> JoinAsync(int groupId, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["group_id"] = groupId.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("group_id", groupId)
+                .ToDictionary();
+
             return await PostAsync<int>("join", parameters, ct);
         }
 
@@ -77,10 +77,10 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
         public async Task<int> LeaveAsync(int groupId, CancellationToken cancellationToken = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["group_id"] = groupId.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("group_id", groupId)
+                .ToDictionary();
+
             return await PostAsync<int>("leave", parameters, cancellationToken);
         }
 
@@ -114,10 +114,10 @@ namespace OpenVkNetApi.Methods
         /// <returns>A <see cref="GroupSettings"/> object.</returns>
         public async Task<GroupSettings> GetSettingsAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["group_id"] = groupId
-            };
+            var parameters = new RequestParams()
+                .Add("group_id", groupId)
+                .ToDictionary();
+
             return await GetAsync<GroupSettings>("getSettings", parameters, cancellationToken);
         }
 
@@ -130,12 +130,10 @@ namespace OpenVkNetApi.Methods
         /// <returns>1 if the user is a member, 0 otherwise.</returns>
         public async Task<int> IsMemberAsync(string groupId, int userId, CancellationToken cancellationToken = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["group_id"] = groupId,
-                ["user_id"] = userId.ToString(),
-                ["extended"] = "0"
-            };
+            var parameters = new RequestParams()
+                .Add("group_id", groupId)
+                .Add("user_id", userId)
+                .ToDictionary();
 
             return await GetAsync<int>("isMember", parameters, cancellationToken);
         }
@@ -149,12 +147,11 @@ namespace OpenVkNetApi.Methods
         /// <returns>A <see cref="GroupsIsMember"/> object with extended information.</returns>
         public async Task<GroupsIsMember> IsMemberExtendedAsync(string groupId, int userId, CancellationToken cancellationToken = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["group_id"] = groupId,
-                ["user_id"] = userId.ToString(),
-                ["extended"] = "1"
-            };
+            var parameters = new RequestParams()
+                .Add("group_id", groupId)
+                .Add("user_id", userId)
+                .Add("extended", 1)
+                .ToDictionary();
 
             return await GetAsync<GroupsIsMember>("isMember", parameters, cancellationToken);
         }

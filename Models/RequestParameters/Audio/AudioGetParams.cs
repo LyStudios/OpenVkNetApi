@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Audio
 {
@@ -11,67 +11,71 @@ namespace OpenVkNetApi.Models.RequestParameters.Audio
         /// <summary>
         /// The ID of the owner of the audio files.
         /// </summary>
-        [JsonProperty("owner_id")]
+        [ApiParameter("owner_id")]
         public int OwnerId { get; set; } = 0;
         
         /// <summary>
         /// The ID of the album to retrieve audio from.
         /// </summary>
-        [JsonProperty("album_id")]
+        [ApiParameter("album_id")]
         public int AlbumId { get; set; } = 0;
         
         /// <summary>
         /// A comma-separated list of audio IDs to retrieve specific tracks.
         /// </summary>
-        [JsonProperty("audio_ids")]
-        public string? AudioIds { get; set; } = "";
+        [ApiParameter("audio_ids")]
+        public string AudioIds { get; set; } = "";
         
         /// <summary>
         /// Whether to return information about owners (0 or 1).
         /// </summary>
-        [JsonProperty("need_user")]
-        public int NeedUser { get; set; } = 1;
+        [ApiParameter("need_user")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool NeedUser { get; set; } = true;
         
         /// <summary>
         /// Offset for pagination.
         /// </summary>
-        [JsonProperty("offset")]
+        [ApiParameter("offset")]
         public int Offset { get; set; } = 0;
         
         /// <summary>
         /// The number of audio files to return (maximum 2000).
         /// </summary>
-        [JsonProperty("count")]
+        [ApiParameter("count")]
         public int Count { get; set; } = 100;
         
         /// <summary>
         /// Whether to return only uploaded tracks (0 or 1).
         /// </summary>
-        [JsonProperty("uploaded_only")]
-        public int UploadedOnly { get; set; } = 0;
+        [ApiParameter("uploaded_only")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool UploadedOnly { get; set; } = false;
         
         /// <summary>
         /// Whether to return a seed for shuffling.
         /// </summary>
-        [JsonProperty("need_seed")]
-        public int NeedSeed { get; set; } = 0;
-        
+        [ApiParameter("need_seed")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool NeedSeed { get; set; } = false;
+
         /// <summary>
         /// The seed for shuffling the playlist.
         /// </summary>
-        [JsonProperty("shuffle_seed")]
-        public string? ShuffleSeed { get; set; }
+        [ApiParameter("shuffle_seed")]
+        public string? ShuffleSeed { get; set; } = null;
         
         /// <summary>
         /// Whether to shuffle the results (0 or 1).
         /// </summary>
-        [JsonProperty("shuffle")]
-        public int Shuffle { get; set; } = 0;
-        
+        [ApiParameter("shuffle")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool Shuffle { get; set; } = false;
+
         /// <summary>
         /// The hash for the request.
         /// </summary>
-        [JsonProperty("hash")]
-        public string? Hash { get; set; }
+        [ApiParameter("hash")]
+        public string? Hash { get; set; } = null;
     }
 }

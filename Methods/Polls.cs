@@ -30,12 +30,12 @@ namespace OpenVkNetApi.Methods
         /// <returns>A <see cref="PollsGetById"/> object with poll data.</returns>
         public async Task<PollsGetById> GetByIdAsync(int pollId, bool extended = false, UserFields fields = UserFields.None, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["poll_id"] = pollId.ToString(),
-                ["extended"] = extended ? "1" : "0",
-                ["fields"] = EnumHelper.GetEnumFlagsDescription(fields)
-            };
+            var parameters = new RequestParams()
+                .Add("poll_id", pollId)
+                .Add("extended", extended)
+                .Add("fields", EnumHelper.GetEnumFlagsDescription(fields))
+                .ToDictionary();
+
             return await GetAsync<PollsGetById>("getById", parameters, ct);
         }
 
@@ -48,11 +48,11 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
         public async Task<int> AddVoteAsync(int pollId, string answersIds, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["poll_id"] = pollId.ToString(),
-                ["answers_ids"] = answersIds
-            };
+            var parameters = new RequestParams()
+                .Add("poll_id", pollId)
+                .Add("answers_ids", answersIds)
+                .ToDictionary();
+
             return await PostAsync<int>("addVote", parameters, ct);
         }
 
@@ -64,10 +64,10 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
         public async Task<int> DeleteVoteAsync(int pollId, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["poll_id"] = pollId.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("poll_id", pollId)
+                .ToDictionary();
+
             return await PostAsync<int>("deleteVote", parameters, ct);
         }
 

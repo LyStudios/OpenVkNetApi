@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Wall
 {
@@ -10,31 +10,32 @@ namespace OpenVkNetApi.Models.RequestParameters.Wall
         /// <summary>
         /// ID of the post owner.
         /// </summary>
-        [JsonProperty("owner_id")]
+        [ApiParameter("owner_id")]
         public int OwnerId { get; set; }
 
         /// <summary>
         /// ID of the post.
         /// </summary>
-        [JsonProperty("post_id")]
+        [ApiParameter("post_id")]
         public int PostId { get; set; }
 
         /// <summary>
         /// The text of the comment.
         /// </summary>
-        [JsonProperty("message")]
+        [ApiParameter("message")]
         public string Message { get; set; } = "";
 
         /// <summary>
         /// 1 to post the comment on behalf of a group.
         /// </summary>
-        [JsonProperty("from_group")]
-        public int FromGroup { get; set; } = 0;
+        [ApiParameter("from_group")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool FromGroup { get; set; } = false;
 
         /// <summary>
         /// Attachments to the comment.
         /// </summary>
-        [JsonProperty("attachments")]
+        [ApiParameter("attachments")]
         public string Attachments { get; set; } = "";
     }
 }

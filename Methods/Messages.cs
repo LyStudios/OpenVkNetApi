@@ -44,14 +44,14 @@ namespace OpenVkNetApi.Methods
         /// <param name="extended">True to return extended information.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="Collection{Message}"/> of message objects.</returns>
-        public async Task<Collection<Message>> GetByIdAsync(string messageIds, int previewLength = 0, int extended = 0, CancellationToken ct = default)
-        {
-            var parameters = new Dictionary<string, string>
-            {
-                ["message_ids"] = messageIds,
-                ["preview_length"] = previewLength.ToString(),
-                ["extended"] = extended.ToString()
-            };
+        public async Task<Collection<Message>> GetByIdAsync(string messageIds, int previewLength = 0, bool extended = false, CancellationToken ct = default)
+        { 
+            var parameters = new RequestParams()
+                .Add("message_ids", messageIds)
+                .Add("preview_length", previewLength)
+                .Add("extended", extended ? 1 : 0)
+                .ToDictionary();
+
             return await GetAsync<Collection<Message>>("getById", parameters, ct);
         }
 
@@ -79,12 +79,12 @@ namespace OpenVkNetApi.Methods
         /// <param name="deleteForAll">True to delete the messages for all recipients.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="Dictionary<string, int>"/> object with the results of the deletion.</returns>
-        public async Task<Dictionary<string, int>> DeleteAsync(string messageIds, int spam = 0, int deleteForAll = 0, CancellationToken ct = default)
+        public async Task<Dictionary<string, int>> DeleteAsync(string messageIds, bool spam = false, bool deleteForAll = false, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("message_ids", messageIds)
-                .Add("spam", spam)
-                .Add("delete_for_all", deleteForAll)
+                .Add("spam", spam ? 1 : 0)
+                .Add("delete_for_all", deleteForAll ? 1 : 0)
                 .ToDictionary();
             return await PostAsync<Dictionary<string, int>>("delete", parameters, ct);
         }
@@ -97,10 +97,10 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
         public async Task<int> RestoreAsync(int messageId, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["message_id"] = messageId.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("message_id", messageId)
+                .ToDictionary();
+
             return await PostAsync<int>("restore", parameters, ct);
         }
 
@@ -123,14 +123,14 @@ namespace OpenVkNetApi.Methods
         /// <param name="fields">A list of additional profile fields to return.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="MessagesGetConversationsResponse"/> object containing conversations.</returns>
-        public async Task<ExtendedCollection<Conversation>> GetConversationsByIdAsync(string peerIds, int extended = 0, UserFields fields = UserFields.None, CancellationToken ct = default)
+        public async Task<ExtendedCollection<Conversation>> GetConversationsByIdAsync(string peerIds, bool extended = false, UserFields fields = UserFields.None, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["peer_ids"] = peerIds,
-                ["extended"] = extended.ToString(),
-                ["fields"] = EnumHelper.GetEnumFlagsDescription(fields)
-            };
+            var parameters = new RequestParams()
+                .Add("peer_ids", peerIds)
+                .Add("extended", extended ? 1 : 0)
+                .Add("fields", EnumHelper.GetEnumFlagsDescription(fields))
+                .ToDictionary();
+
             return await GetAsync<ExtendedCollection<Conversation>>("getConversationsById", parameters, ct);
         }
 
@@ -166,15 +166,12 @@ namespace OpenVkNetApi.Methods
         /// <returns>A <see cref="LongPollServerInfo"/> object with connection data.</returns>
         public async Task<LongPollServerInfo> GetLongPollServerAsync(int needPts = 1, int lpVersion = 3, int? groupId = null, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["need_pts"] = needPts.ToString(),
-                ["lp_version"] = lpVersion.ToString()
-            };
-            if (groupId.HasValue)
-            {
-                parameters["group_id"] = groupId.Value.ToString();
-            }
+            var parameters = new RequestParams()
+                .Add("need_pts", needPts)
+                .Add("lp_version", lpVersion)
+                .Add("group_id", groupId)
+                .ToDictionary();
+
             return await GetAsync<LongPollServerInfo>("getLongPollServer", parameters, ct);
         }
 

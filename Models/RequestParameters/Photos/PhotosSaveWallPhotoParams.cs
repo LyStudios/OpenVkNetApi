@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Photos
 {
@@ -10,25 +10,25 @@ namespace OpenVkNetApi.Models.RequestParameters.Photos
         /// <summary>
         /// The 'photo' parameter returned by the upload server.
         /// </summary>
-        [JsonProperty("photo")]
+        [ApiParameter("photo")]
         public string Photo { get; set; } = null!;
 
         /// <summary>
         /// The 'hash' parameter returned by the upload server.
         /// </summary>
-        [JsonProperty("hash")]
+        [ApiParameter("hash")]
         public string Hash { get; set; } = null!;
 
         /// <summary>
         /// ID of the group to save the photo to.
         /// </summary>
-        [JsonProperty("group_id")]
+        [ApiParameter("group_id")]
         public int GroupId { get; set; } = 0;
 
         /// <summary>
         /// The caption for the photo.
         /// </summary>
-        [JsonProperty("caption")]
-        public string? Caption { get; set; }
+        [ApiParameter("caption")]
+        public string? Caption { get; set; } = null;
     }
 }

@@ -28,8 +28,10 @@ namespace OpenVkNetApi.Methods
         /// <returns>The user or group ID.</returns>
         public async Task<int> GetIdByMarketingIdAsync(string marketingId, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>();
-            parameters["marketing_id"] = marketingId;
+            var parameters = new RequestParams()
+                .Add("marketing_id", marketingId)
+                .ToDictionary();
+
             return await GetAsync<int>("getIdByMarketingId", parameters, ct);
         }
 
@@ -43,10 +45,12 @@ namespace OpenVkNetApi.Methods
         /// <returns>True if the order is valid, otherwise false.</returns>
         public async Task<bool> VerifyOrderAsync(int appId, float amount, string signature, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>();
-            parameters["app_id"] = appId.ToString();
-            parameters["amount"] = amount.ToString();
-            parameters["signature"] = signature;
+            var parameters = new RequestParams()
+                .Add("app_id", appId)
+                .Add("amount", amount)
+                .Add("signature", signature)
+                .ToDictionary();
+
             return await PostAsync<bool>("verifyOrder", parameters, ct);
         }
     }

@@ -1,9 +1,6 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Reflection;
-using System.Linq;
-using System;
 
 namespace OpenVkNetApi.Utils
 {
@@ -54,7 +51,7 @@ namespace OpenVkNetApi.Utils
                 }
                 else
                 {
-                    dictParameters = ToDictionary(parameters);
+                    dictParameters = RequestParams.FromObject(parameters);
                 }
             }
             return _api.CallApiAsync<T>(fullMethodName, dictParameters, cancellationToken);
@@ -80,63 +77,10 @@ namespace OpenVkNetApi.Utils
                 }
                 else
                 {
-                    dictParameters = ToDictionary(parameters);
+                    dictParameters = RequestParams.FromObject(parameters);
                 }
             }
             return _api.CallApiPostAsync<T>(fullMethodName, dictParameters, cancellationToken);
-        }
-
-        /// <summary>
-        /// Converts an object's properties into a dictionary of string key-value pairs,
-        /// suitable for API request parameters. Handles Newtonsoft.Json.JsonPropertyAttribute for names.
-        /// </summary>
-        /// <param name="obj">The object to convert.</param>
-        /// <returns>A dictionary of parameters.</returns>
-        protected Dictionary<string, string> ToDictionary(object obj)
-        {
-            var dictionary = new Dictionary<string, string>();
-            foreach (var prop in obj.GetType().GetTypeInfo().DeclaredProperties)
-            {
-                var jsonPropertyAttribute = prop.GetCustomAttributes(typeof(Newtonsoft.Json.JsonPropertyAttribute), false)
-                                                .Cast<Newtonsoft.Json.JsonPropertyAttribute>().FirstOrDefault();
-                var key = jsonPropertyAttribute?.PropertyName ?? prop.Name;
-
-                object? propValue = prop.GetValue(obj);
-
-                if (propValue == null)
-                {
-                    continue; // Skip null values
-                }
-
-                // Handle enum flags with Description attributes
-                if (prop.PropertyType.GetTypeInfo().IsEnum && prop.PropertyType.GetTypeInfo().IsDefined(typeof(System.FlagsAttribute), false))
-                {
-                    dictionary[key] = EnumHelper.GetEnumFlagsDescription((Enum)propValue);
-                }
-                else if (prop.PropertyType.GetTypeInfo().IsGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
-                {
-                    // Handle Nullable<T> types
-                    var underlyingType = Nullable.GetUnderlyingType(prop.PropertyType);
-                    if (underlyingType != null && underlyingType.GetTypeInfo().IsEnum && underlyingType.GetTypeInfo().IsDefined(typeof(System.FlagsAttribute), false))
-                    {
-                        dictionary[key] = EnumHelper.GetEnumFlagsDescription((Enum)propValue);
-                    }
-                    else
-                    {
-                        dictionary[key] = propValue.ToString();
-                    }
-                }
-                else if (prop.PropertyType == typeof(bool))
-                {
-                    // Convert bool to "1" or "0"
-                    dictionary[key] = ((bool)propValue) ? "1" : "0";
-                }
-                else
-                {
-                    dictionary[key] = propValue.ToString();
-                }
-            }
-            return dictionary;
         }
     }
 }

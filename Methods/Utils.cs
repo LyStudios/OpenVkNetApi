@@ -37,10 +37,10 @@ namespace OpenVkNetApi.Methods
         /// <returns>A <see cref="UtilsResolveScreenName"/> object with the result.</returns>
         public async Task<UtilsResolveScreenName> ResolveScreenNameAsync(string screenName, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["screen_name"] = screenName
-            };
+            var parameters = new RequestParams()
+                .Add("screen_name", screenName)
+                .ToDictionary();
+
             return await GetAsync<UtilsResolveScreenName>("resolveScreenName", parameters, ct);
         }
 
@@ -52,10 +52,10 @@ namespace OpenVkNetApi.Methods
         /// <returns>A <see cref="User"/> object.</returns>
         public async Task<User> ResolveGuidAsync(string guid, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["guid"] = guid
-            };
+            var parameters = new RequestParams()
+                .Add("guid", guid)
+                .ToDictionary();
+
             return await GetAsync<User>("resolveGuid", parameters, ct);
         }
     }

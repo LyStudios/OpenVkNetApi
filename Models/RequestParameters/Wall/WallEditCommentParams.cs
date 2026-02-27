@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Wall
 {
@@ -10,25 +10,25 @@ namespace OpenVkNetApi.Models.RequestParameters.Wall
         /// <summary>
         /// ID of the comment to edit.
         /// </summary>
-        [JsonProperty("comment_id")]
+        [ApiParameter("comment_id")]
         public int CommentId { get; set; }
 
         /// <summary>
         /// ID of the post owner.
         /// </summary>
-        [JsonProperty("owner_id")]
+        [ApiParameter("owner_id")]
         public int OwnerId { get; set; } = 0;
 
         /// <summary>
         /// The new text of the comment.
         /// </summary>
-        [JsonProperty("message")]
+        [ApiParameter("message")]
         public string Message { get; set; } = "";
 
         /// <summary>
         /// New attachments to the comment.
         /// </summary>
-        [JsonProperty("attachments")]
+        [ApiParameter("attachments")]
         public string Attachments { get; set; } = "";
     }
 }

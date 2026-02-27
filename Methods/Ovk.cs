@@ -49,12 +49,12 @@ namespace OpenVkNetApi.Methods
         /// <returns>An <see cref="OvkAboutInstance"/> object with instance details.</returns>
         public async Task<OvkAboutInstance> AboutInstanceAsync(OvkInstanceFields fields = OvkInstanceFields.None, UserFields adminFields = UserFields.None, GroupFields groupFields = GroupFields.None, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["fields"] = EnumHelper.GetEnumFlagsDescription(fields),
-                ["admin_fields"] = EnumHelper.GetEnumFlagsDescription(adminFields),
-                ["group_fields"] = EnumHelper.GetEnumFlagsDescription(groupFields)
-            };
+            var parameters = new RequestParams()
+                .Add("fields", EnumHelper.GetEnumFlagsDescription(fields))
+                .Add("admin_fields", EnumHelper.GetEnumFlagsDescription(adminFields))
+                .Add("group_fields", EnumHelper.GetEnumFlagsDescription(groupFields))
+                .ToDictionary();
+
             return await GetAsync<OvkAboutInstance>("aboutInstance", parameters, ct);
         }
     }

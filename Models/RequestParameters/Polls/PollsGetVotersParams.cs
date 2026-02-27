@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Polls
 {
@@ -10,25 +10,25 @@ namespace OpenVkNetApi.Models.RequestParameters.Polls
         /// <summary>
         /// The poll ID.
         /// </summary>
-        [JsonProperty("poll_id")]
+        [ApiParameter("poll_id")]
         public int PollId { get; set; }
 
         /// <summary>
         /// The ID of the answer for which to return voters.
         /// </summary>
-        [JsonProperty("answer_ids")]
+        [ApiParameter("answer_ids")]
         public int AnswerIds { get; set; }
 
         /// <summary>
         /// Offset needed to return a specific subset of voters.
         /// </summary>
-        [JsonProperty("offset")]
+        [ApiParameter("offset")]
         public int Offset { get; set; } = 0;
 
         /// <summary>
         /// Number of voters to return.
         /// </summary>
-        [JsonProperty("count")]
+        [ApiParameter("count")]
         public int Count { get; set; } = 6;
     }
 }

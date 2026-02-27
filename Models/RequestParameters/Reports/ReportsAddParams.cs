@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Reports
 {
@@ -10,31 +10,31 @@ namespace OpenVkNetApi.Models.RequestParameters.Reports
         /// <summary>
         /// ID of the object owner.
         /// </summary>
-        [JsonProperty("owner_id")]
+        [ApiParameter("owner_id")]
         public int OwnerId { get; set; } = 0;
 
         /// <summary>
         /// A comment explaining the report.
         /// </summary>
-        [JsonProperty("comment")]
+        [ApiParameter("comment")]
         public string Comment { get; set; } = "";
 
         /// <summary>
         /// The reason for the report (0 - spam, 1 - explicit, 2 - violence, etc.).
         /// </summary>
-        [JsonProperty("reason")]
+        [ApiParameter("reason")]
         public int Reason { get; set; } = 0;
 
         /// <summary>
         /// The type of object being reported (e.g., "post", "comment", "photo").
         /// </summary>
-        [JsonProperty("type")]
+        [ApiParameter("type")]
         public string Type { get; set; } = "";
 
         /// <summary>
         /// The source of the report.
         /// </summary>
-        [JsonProperty("report_source")]
+        [ApiParameter("report_source")]
         public string ReportSource { get; set; } = "";
     }
 }

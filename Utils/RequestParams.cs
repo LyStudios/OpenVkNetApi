@@ -1,56 +1,95 @@
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace OpenVkNetApi.Utils
 {
     /// <summary>
-    /// A convenient builder for parameters of OpenVK API methods.
-    /// Supports chained calls and automatic type conversion.
+    /// A convenient builder and converter for parameters of OpenVK API methods.
     /// </summary>
     public class RequestParams
     {
         private readonly Dictionary<string, string> _parameters = new Dictionary<string, string>();
 
+        // Cache for reflection results to improve performance
+        private static readonly ConcurrentDictionary<Type, List<PropertyInfo>> _propertyCache = new ConcurrentDictionary<Type, List<PropertyInfo>>();
+
         /// <summary>
-        /// Adds a parameter to the request, skipping null and empty string values.
+        /// Adds a parameter to the request. This is for manual building.
         /// </summary>
-        /// <param name="key">The name of the parameter for the API.</param>
-        /// <param name="value">The value of the parameter (automatically converted to string).</param>
-        /// <returns>The current instance for chained calls.</returns>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item><description><c>string</c> — as is (skips empty strings)</description></item>
-        /// <item><description><c>bool</c> — <c>1</c>/<c>0</c></description></item>
-        /// <item><description>Others — <see cref="object.ToString()"/></description></item>
-        /// </list>
-        /// </remarks>
         public RequestParams Add(string key, object? value)
         {
-            if (value == null) return this;
-
-            string strValue;
-            switch (value)
+            if (value != null)
             {
-                case string s:
-                    if (string.IsNullOrEmpty(s)) return this;
-                    strValue = s;
-                    break;
-                case bool b:
-                    strValue = b ? "1" : "0";
-                    break;
-                default:
-                    strValue = value.ToString();
-                    break;
+                _parameters[key] = value.ToString();
             }
-
-            _parameters[key] = strValue;
             return this;
         }
 
         /// <summary>
-        /// Returns a copy of the parameter dictionary for use in an HTTP request.
+        /// Returns a copy of the parameter dictionary.
         /// </summary>
-        /// <returns>A new dictionary of parameters of type <c>Dictionary&lt;string, string&gt;</c>.</returns>
         public Dictionary<string, string> ToDictionary() => new Dictionary<string, string>(_parameters);
+
+        /// <summary>
+        /// Converts an object to a dictionary of parameters using reflection,
+        /// honoring custom ApiParameter attributes.
+        /// </summary>
+        /// <param name="obj">The object to convert.</param>
+        /// <returns>A dictionary of parameters.</returns>
+        public static Dictionary<string, string> FromObject(object obj)
+        {
+            var dictionary = new Dictionary<string, string>();
+            var type = obj.GetType();
+
+            if (!_propertyCache.TryGetValue(type, out var properties))
+            {
+                properties = type.GetTypeInfo().DeclaredProperties
+                                 .Where(p => p.GetCustomAttribute<ApiIgnoreAttribute>() == null)
+                                 .ToList();
+                _propertyCache[type] = properties;
+            }
+
+            foreach (var prop in properties)
+            {
+                var value = prop.GetValue(obj);
+                if (value == null) continue;
+
+                var paramNameAttr = prop.GetCustomAttribute<ApiParameterAttribute>();
+                var key = paramNameAttr?.Name ?? prop.Name;
+
+                var formatAttr = prop.GetCustomAttribute<ApiParameterFormatAttribute>();
+                string stringValue;
+
+                var propTypeInfo = prop.PropertyType.GetTypeInfo();
+                if (propTypeInfo.IsEnum && propTypeInfo.IsDefined(typeof(FlagsAttribute), false))
+                {
+                    stringValue = EnumHelper.GetEnumFlagsDescription((Enum)value);
+                }
+                else
+                {
+                    switch (formatAttr?.Format)
+                    {
+                        case ParameterFormat.IntegerFromBool:
+                            if (value is bool bInt)
+                                stringValue = bInt ? "1" : "0";
+                            else continue;
+                            break;
+                        
+                        default: // Handles .ToString() for most types
+                            stringValue = value.ToString();
+                            break;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(stringValue))
+                {
+                    dictionary[key] = stringValue;
+                }
+            }
+            return dictionary;
+        }
     }
 }

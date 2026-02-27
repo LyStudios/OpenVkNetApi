@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Audio
 {
@@ -11,55 +11,59 @@ namespace OpenVkNetApi.Models.RequestParameters.Audio
         /// <summary>
         /// The search query for audio files.
         /// </summary>
-        [JsonProperty("q")]
+        [ApiParameter("q")]
         public string Query { get; set; } = null!;
         
         /// <summary>
         /// Whether to auto-complete the query (0 or 1).
         /// </summary>
-        [JsonProperty("auto_complete")]
-        public int AutoComplete { get; set; } = 0;
+        [ApiParameter("auto_complete")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool AutoComplete { get; set; } = false;
         
         /// <summary>
         /// Whether to search by lyrics (0 or 1).
         /// </summary>
-        [JsonProperty("lyrics")]
-        public int Lyrics { get; set; } = 0;
+        [ApiParameter("lyrics")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool Lyrics { get; set; } = false;
         
         /// <summary>
         /// Whether to search only for performers (0 or 1).
         /// </summary>
-        [JsonProperty("performer_only")]
-        public int PerformerOnly { get; set; } = 0;
+        [ApiParameter("performer_only")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool PerformerOnly { get; set; } = false;
         
         /// <summary>
         /// The sorting order of the results.
         /// </summary>
-        [JsonProperty("sort")]
+        [ApiParameter("sort")]
         public int Sort { get; set; } = 2;
         
         /// <summary>
         /// Whether to search only among own audio files (0 or 1).
         /// </summary>
-        [JsonProperty("search_own")]
-        public int SearchOwn { get; set; } = 0;
+        [ApiParameter("search_own")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)] 
+        public bool SearchOwn { get; set; } = false;
         
         /// <summary>
         /// Offset for pagination of search results.
         /// </summary>
-        [JsonProperty("offset")]
+        [ApiParameter("offset")]
         public int Offset { get; set; } = 0;
         
         /// <summary>
         /// The number of results to return.
         /// </summary>
-        [JsonProperty("count")]
+        [ApiParameter("count")]
         public int Count { get; set; } = 30;
         
         /// <summary>
         /// The hash for the request.
         /// </summary>
-        [JsonProperty("hash")]
-        public string? Hash { get; set; }
+        [ApiParameter("hash")]
+        public string? Hash { get; set; } = null;
     }
 }

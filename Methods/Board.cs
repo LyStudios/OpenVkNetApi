@@ -39,11 +39,11 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
         public async Task<int> CloseTopicAsync(int groupId, int topicId, CancellationToken cancellationToken = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["group_id"] = groupId.ToString(),
-                ["topic_id"] = topicId.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("group_id", groupId)
+                .Add("topic_id", topicId)
+                .ToDictionary();
+
             return await PostAsync<int>("closeTopic", parameters, cancellationToken);
         }
 
@@ -67,11 +67,11 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
         public async Task<int> DeleteTopicAsync(int groupId, int topicId, CancellationToken cancellationToken = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["group_id"] = groupId.ToString(),
-                ["topic_id"] = topicId.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("group_id", groupId)
+                .Add("topic_id", topicId)
+                .ToDictionary();
+
             return await PostAsync<int>("deleteTopic", parameters, cancellationToken);
         }
 
@@ -85,12 +85,12 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
         public async Task<int> EditTopicAsync(int groupId, int topicId, string title, CancellationToken cancellationToken = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["group_id"] = groupId.ToString(),
-                ["topic_id"] = topicId.ToString(),
-                ["title"] = title
-            };
+            var parameters = new RequestParams()
+                .Add("group_id", groupId)
+                .Add("topic_id", topicId)
+                .Add("title", title)
+                .ToDictionary();
+
             return await PostAsync<int>("editTopic", parameters, cancellationToken);
         }
 
@@ -103,11 +103,11 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
         public async Task<int> FixTopicAsync(int groupId, int topicId, CancellationToken cancellationToken = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["group_id"] = groupId.ToString(),
-                ["topic_id"] = topicId.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("group_id", groupId)
+                .Add("topic_id", topicId)
+                .ToDictionary();
+
             return await PostAsync<int>("fixTopic", parameters, cancellationToken);
         }
 
@@ -142,11 +142,11 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
         public async Task<int> OpenTopicAsync(int groupId, int topicId, CancellationToken cancellationToken = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["group_id"] = groupId.ToString(),
-                ["topic_id"] = topicId.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("group_id", groupId)
+                .Add("topic_id", topicId)
+                .ToDictionary();
+
             return await PostAsync<int>("openTopic", parameters, cancellationToken);
         }
 
@@ -159,11 +159,11 @@ namespace OpenVkNetApi.Methods
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
         public async Task<int> UnfixTopicAsync(int groupId, int topicId, CancellationToken cancellationToken = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["group_id"] = groupId.ToString(),
-                ["topic_id"] = topicId.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("group_id", groupId)
+                .Add("topic_id", topicId)
+                .ToDictionary();
+
             return await PostAsync<int>("unfixTopic", parameters, cancellationToken);
         }
     }

@@ -31,12 +31,12 @@ namespace OpenVkNetApi.Methods
         /// <returns>A <see cref="LikesAdd"/> object with the new total likes count.</returns>
         public async Task<LikesAdd> AddAsync(string type, int ownerId, int itemId, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["type"] = type,
-                ["owner_id"] = ownerId.ToString(),
-                ["item_id"] = itemId.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("type", type)
+                .Add("owner_id", ownerId)
+                .Add("item_id", itemId)
+                .ToDictionary();
+
             return await PostAsync<LikesAdd>("add", parameters, ct);
         }
         
@@ -50,12 +50,12 @@ namespace OpenVkNetApi.Methods
         /// <returns>A <see cref="LikesAdd"/> object with the new total likes count.</returns>
         public async Task<LikesAdd> DeleteAsync(string type, int ownerId, int itemId, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["type"] = type,
-                ["owner_id"] = ownerId.ToString(),
-                ["item_id"] = itemId.ToString()
-            };
+            var parameters = new RequestParams()
+                .Add("type", type)
+                .Add("owner_id", ownerId)
+                .Add("item_id", itemId)
+                .ToDictionary();
+
             return await PostAsync<LikesAdd>("delete", parameters, ct);
         }
 

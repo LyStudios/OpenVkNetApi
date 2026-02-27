@@ -1,5 +1,5 @@
-using Newtonsoft.Json;
 using OpenVkNetApi.Models.Enums;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Wall
 {
@@ -11,49 +11,49 @@ namespace OpenVkNetApi.Models.RequestParameters.Wall
         /// <summary>
         /// ID of the post owner.
         /// </summary>
-        [JsonProperty("owner_id")]
+        [ApiParameter("owner_id")]
         public int OwnerId { get; set; }
 
         /// <summary>
         /// ID of the post.
         /// </summary>
-        [JsonProperty("post_id")]
+        [ApiParameter("post_id")]
         public int PostId { get; set; }
 
         /// <summary>
         /// True to return the 'likes' object.
         /// </summary>
-        [JsonProperty("need_likes")]
+        [ApiParameter("need_likes")]
         public bool NeedLikes { get; set; } = true;
 
         /// <summary>
         /// Offset needed to return a specific subset of comments.
         /// </summary>
-        [JsonProperty("offset")]
+        [ApiParameter("offset")]
         public int Offset { get; set; } = 0;
 
         /// <summary>
         /// Number of comments to return.
         /// </summary>
-        [JsonProperty("count")]
+        [ApiParameter("count")]
         public int Count { get; set; } = 10;
 
         /// <summary>
         /// A list of additional fields to return for each user.
         /// </summary>
-        [JsonProperty("fields")]
+        [ApiParameter("fields")]
         public UserFields Fields { get; set; } = UserFields.None;
 
         /// <summary>
         /// Sort order of comments ("asc" or "desc").
         /// </summary>
-        [JsonProperty("sort")]
+        [ApiParameter("sort")]
         public string Sort { get; set; } = "asc";
 
         /// <summary>
         /// True to return extended information about users who posted comments.
         /// </summary>
-        [JsonProperty("extended")]
+        [ApiParameter("extended")]
         public bool Extended { get; set; } = false;
     }
 }

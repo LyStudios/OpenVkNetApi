@@ -30,11 +30,11 @@ namespace OpenVkNetApi.Methods
         /// <returns>The ID of the created note.</returns>
         public async Task<int> AddAsync(string title, string text, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["title"] = title,
-                ["text"] = text
-            };
+            var parameters = new RequestParams()
+                .Add("title", title)
+                .Add("text", text)
+                .ToDictionary();
+
             return await PostAsync<int>("add", parameters, ct);
         }
         
@@ -81,12 +81,12 @@ namespace OpenVkNetApi.Methods
         /// <returns>A <see cref="Note"/> object.</returns>
         public async Task<Note> GetByIdAsync(int noteId, int ownerId, bool needWiki = false, CancellationToken ct = default)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                ["note_id"] = noteId.ToString(),
-                ["owner_id"] = ownerId.ToString(),
-                ["need_wiki"] = needWiki ? "1" : "0"
-            };
+            var parameters = new RequestParams()
+                .Add("note_id", noteId)
+                .Add("owner_id", ownerId)
+                .Add("need_wiki", needWiki)
+                .ToDictionary();
+
             return await GetAsync<Note>("getById", parameters, ct);
         }
 
