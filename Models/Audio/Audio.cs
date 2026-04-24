@@ -53,7 +53,7 @@ namespace OpenVkNetApi.Models.Audio
         /// The album ID.
         /// </summary>
         [JsonProperty("album_id")]
-        public int? AlbumId { get; set; }
+        public string? AlbumId { get; set; }
         
         /// <summary>
         /// The URL to play the audio file.
