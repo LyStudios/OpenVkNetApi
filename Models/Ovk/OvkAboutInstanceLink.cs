@@ -11,12 +11,12 @@ namespace OpenVkNetApi.Models.Ovk
         /// The URL of the link.
         /// </summary>
         [JsonProperty("url")]
-        public string? Url { get; set; }
+        public string Url { get; set; }
 
         /// <summary>
         /// The title or description of the link.
         /// </summary>
         [JsonProperty("title")]
-        public string? Title { get; set; }
+        public string Title { get; set; }
     }
 }

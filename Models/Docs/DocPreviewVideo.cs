@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 
 namespace OpenVkNetApi.Models.Docs
 {
@@ -11,7 +11,7 @@ namespace OpenVkNetApi.Models.Docs
         /// The video source URL.
         /// </summary>
         [JsonProperty("src")]
-        public string? Src { get; set; }
+        public string Src { get; set; }
 
         /// <summary>
         /// The video width in pixels.

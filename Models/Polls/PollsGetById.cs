@@ -13,6 +13,6 @@ namespace OpenVkNetApi.Models.Polls
         /// A list of user profiles, if 'extended' was set to true.
         /// </summary>
         [JsonProperty("profiles")]
-        public List<User>? Profiles { get; set; }
+        public List<User> Profiles { get; set; }
     }
 }

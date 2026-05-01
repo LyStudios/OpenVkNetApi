@@ -23,13 +23,13 @@ namespace OpenVkNetApi.Models.Notes
         /// The note title.
         /// </summary>
         [JsonProperty("title")]
-        public string? Title { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// The note text.
         /// </summary>
         [JsonProperty("text")]
-        public string? Text { get; set; }
+        public string Text { get; set; }
 
         /// <summary>
         /// The date when the note was created, in Unix time.
@@ -47,6 +47,6 @@ namespace OpenVkNetApi.Models.Notes
         /// The URL to view the note.
         /// </summary>
         [JsonProperty("view_url")]
-        public string? ViewUrl { get; set; }
+        public string ViewUrl { get; set; }
     }
 }

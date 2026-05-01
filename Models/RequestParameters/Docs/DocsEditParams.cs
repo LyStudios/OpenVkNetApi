@@ -23,13 +23,13 @@ namespace OpenVkNetApi.Models.RequestParameters.Docs
         /// The new document title.
         /// </summary>
         [ApiParameter("title")]
-        public string? Title { get; set; } = "";
+        public string Title { get; set; } = "";
 
         /// <summary>
         /// A comma-separated list of new tags for the document.
         /// </summary>
         [ApiParameter("tags")]
-        public string? Tags { get; set; } = "";
+        public string Tags { get; set; } = "";
 
         /// <summary>
         /// The ID of the folder to move the document to.

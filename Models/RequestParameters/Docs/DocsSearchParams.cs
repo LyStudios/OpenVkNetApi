@@ -55,6 +55,6 @@ namespace OpenVkNetApi.Models.RequestParameters.Docs
         /// Tags to filter by.
         /// </summary>
         [ApiParameter("tags")]
-        public string? Tags { get; set; } = null;
+        public string Tags { get; set; } = null;
     }
 }

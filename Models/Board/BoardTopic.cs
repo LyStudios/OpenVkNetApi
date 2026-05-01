@@ -23,7 +23,7 @@ namespace OpenVkNetApi.Models.Board
         /// The topic title.
         /// </summary>
         [JsonProperty("title")]
-        public string? Title { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// The date when the topic was created, in Unix time.

@@ -11,13 +11,13 @@ namespace OpenVkNetApi.Models.Gifts
         /// The name of the gift.
         /// </summary>
         [JsonProperty("name")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// The URL of the gift's image.
         /// </summary>
         [JsonProperty("image")]
-        public string? Image { get; set; }
+        public string Image { get; set; }
 
         /// <summary>
         /// The number of times the gift can still be used.

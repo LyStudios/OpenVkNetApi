@@ -17,18 +17,18 @@ namespace OpenVkNetApi.Models.Gifts
         /// The URL of the 256x256px thumbnail.
         /// </summary>
         [JsonProperty("thumb_256")]
-        public string? Thumb256 { get; set; }
+        public string Thumb256 { get; set; }
 
         /// <summary>
         /// The URL of the 96x96px thumbnail.
         /// </summary>
         [JsonProperty("thumb_96")]
-        public string? Thumb96 { get; set; }
+        public string Thumb96 { get; set; }
 
         /// <summary>
         /// The URL of the 48x48px thumbnail.
         /// </summary>
         [JsonProperty("thumb_48")]
-        public string? Thumb48 { get; set; }
+        public string Thumb48 { get; set; }
     }
 }

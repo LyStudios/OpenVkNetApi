@@ -66,7 +66,7 @@ namespace OpenVkNetApi.Methods
             var result = await PostAsync<JToken>("send", @params, ct);
 
             if (result.Type == JTokenType.Array)
-                return result.ToObject<List<int>>()!;
+                return result.ToObject<List<int>>();
 
             return new List<int> { result.ToObject<int>() };
         }

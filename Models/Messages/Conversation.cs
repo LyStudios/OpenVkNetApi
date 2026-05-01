@@ -13,7 +13,7 @@ namespace OpenVkNetApi.Models.Messages
         /// participating in the conversation.
         /// </summary>
         [JsonProperty("peer")]
-        public ConversationPeer? Peer { get; set; }
+        public ConversationPeer Peer { get; set; }
 
         /// <summary>
         /// The ID of the last message in the conversation.
@@ -40,7 +40,7 @@ namespace OpenVkNetApi.Models.Messages
         /// to order conversations.
         /// </summary>
         [JsonProperty("sort_id")]
-        public SortId? SortId { get; set; }
+        public SortId SortId { get; set; }
 
         /// <summary>
         /// The ID of the last message within the conversation scope
@@ -80,13 +80,13 @@ namespace OpenVkNetApi.Models.Messages
         /// The last message object in the conversation.
         /// </summary>
         [JsonProperty("last_message")]
-        public Message? LastMessage { get; set; }
+        public Message LastMessage { get; set; }
 
         /// <summary>
         /// Contains information about whether the current user
         /// is allowed to send messages to this conversation.
         /// </summary>
         [JsonProperty("can_write")]
-        public ConversationCanWrite? CanWrite { get; set; }
+        public ConversationCanWrite CanWrite { get; set; }
     }
 }

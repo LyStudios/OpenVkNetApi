@@ -28,7 +28,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="accessKey">The access key for the document.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>The ID of the added document.</returns>
-        public async Task<string> AddAsync(int ownerId, int docId, string? accessKey = null, CancellationToken ct = default)
+        public async Task<string> AddAsync(int ownerId, int docId, string accessKey = null, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("owner_id", ownerId)

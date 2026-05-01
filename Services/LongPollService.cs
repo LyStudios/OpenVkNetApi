@@ -18,8 +18,8 @@ namespace OpenVkNetApi.Services
         private readonly OpenVkApi _api;
         private readonly HttpClient _http;
 
-        private LongPollServerInfo? _lp;
-        private CancellationTokenSource? _internalCts;
+        private LongPollServerInfo _lp;
+        private CancellationTokenSource _internalCts;
 
         private readonly HashSet<int> _recentIds = new HashSet<int>();
         private const int MAX_CACHE = 1000;
@@ -32,18 +32,18 @@ namespace OpenVkNetApi.Services
         /// <summary>
         /// Occurs when a new message is received via Long Poll.
         /// </summary>
-        public event EventHandler<NewMessageEventArgs>? OnMessageNew;
+        public event EventHandler<NewMessageEventArgs> OnMessageNew;
         /// <summary>
         /// Occurs when an error is encountered during the Long Poll process.
         /// </summary>
-        public event EventHandler<LongPollErrorEventArgs>? OnError;
+        public event EventHandler<LongPollErrorEventArgs> OnError;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LongPollService"/> class.
         /// </summary>
         /// <param name="api">The OpenVkApi instance to use for API calls.</param>
         /// <param name="client">An optional custom <see cref="HttpClient"/> instance to use. If null, a new one is created.</param>
-        public LongPollService(OpenVkApi api, HttpClient? client = null)
+        public LongPollService(OpenVkApi api, HttpClient client = null)
         {
             _api = api;
             _http = client ?? new HttpClient
@@ -113,22 +113,24 @@ namespace OpenVkNetApi.Services
                     }
 
                     string url =
-                        $"{_lp!.Server}" +
+                        $"{_lp.Server}" +
                         $"?act=a_check" +
                         $"&key={_lp.Key}" +
                         $"&ts={_lp.Ts}" +
                         $"&wait={_wait}" +
                         $"&version={_version}";
 
-                    using var resp = await _http.GetAsync(url, ct);
-                    resp.EnsureSuccessStatusCode();
+                    using (var resp = await _http.GetAsync(url, ct))
+                    {
+                        resp.EnsureSuccessStatusCode();
 
-                    string json = await resp.Content.ReadAsStringAsync();
+                        string json = await resp.Content.ReadAsStringAsync();
 
-                    if (!string.IsNullOrWhiteSpace(json))
-                        await HandleResponseAsync(json, ct);
+                        if (!string.IsNullOrWhiteSpace(json))
+                            await HandleResponseAsync(json, ct);
 
-                    retryDelay = 1000; // if everything is ok, we reset the delay
+                        retryDelay = 1000; // if everything is ok, we reset the delay
+                    }
                 }
                 catch (OperationCanceledException)
                 {
@@ -165,7 +167,7 @@ namespace OpenVkNetApi.Services
                     return;
                 }
 
-                _lp!.Ts = lp.Ts;
+                _lp.Ts = lp.Ts;
 
                 if (lp.Updates != null)
                     ProcessUpdates(lp.Updates);
@@ -191,7 +193,7 @@ namespace OpenVkNetApi.Services
             switch (code)
             {
                 case 1:
-                    _lp!.Ts = newTs;
+                    _lp.Ts = newTs;
                     break;
 
                 case 2:

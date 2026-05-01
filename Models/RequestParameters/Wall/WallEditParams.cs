@@ -35,7 +35,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Wall
         /// Copyright information.
         /// </summary>
         [ApiParameter("copyright")]
-        public string? Copyright { get; set; } = null;
+        public string Copyright { get; set; } = null;
 
         /// <summary>
         /// 1 to mark the post as explicit, -1 to remove explicit flag, 0 to leave unchanged.

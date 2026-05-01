@@ -23,13 +23,13 @@ namespace OpenVkNetApi.Models.Audio
         /// The album title.
         /// </summary>
         [JsonProperty("title")]
-        public string? Title { get; set; }
+        public string Title { get; set; }
         
         /// <summary>
         /// The album description.
         /// </summary>
         [JsonProperty("description")]
-        public string? Description { get; set; }
+        public string Description { get; set; }
         
         /// <summary>
         /// The number of audio tracks in the album.
@@ -83,7 +83,7 @@ namespace OpenVkNetApi.Models.Audio
         /// The URL of the album cover.
         /// </summary>
         [JsonProperty("cover_url")]
-        public string? CoverUrl { get; set; }
+        public string CoverUrl { get; set; }
         
         /// <summary>
         /// Indicates if the album is searchable.

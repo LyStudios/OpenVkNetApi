@@ -11,19 +11,19 @@ namespace OpenVkNetApi.Models.Wall
         /// The domain of the owner's page.
         /// </summary>
         [JsonProperty("domain")]
-        public string? Domain { get; set; }
+        public string Domain { get; set; }
 
         /// <summary>
         /// The URL of the owner's 50px profile photo.
         /// </summary>
         [JsonProperty("photo_50")]
-        public string? Photo50 { get; set; }
+        public string Photo50 { get; set; }
 
         /// <summary>
         /// The name of the owner.
         /// </summary>
         [JsonProperty("name")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Indicates if the owner is verified.

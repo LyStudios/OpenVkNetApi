@@ -19,7 +19,7 @@ namespace OpenVkNetApi.Utils
         /// <summary>
         /// Adds a parameter to the request. This is for manual building.
         /// </summary>
-        public RequestParams Add(string key, object? value)
+        public RequestParams Add(string key, object value)
         {
             if (value != null)
             {

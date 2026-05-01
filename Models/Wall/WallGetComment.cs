@@ -14,7 +14,7 @@ namespace OpenVkNetApi.Models.Wall
         /// A list of comment items.
         /// </summary>
         [JsonProperty("items")]
-        public List<WallComment>? Items { get; set; }
+        public List<WallComment> Items { get; set; }
 
         /// <summary>
         /// Indicates if the current user can post comments.
@@ -38,6 +38,6 @@ namespace OpenVkNetApi.Models.Wall
         /// A list of user profiles related to the comments, if extended information was requested.
         /// </summary>
         [JsonProperty("profiles")]
-        public List<ProfileInfo>? Profiles { get; set; }
+        public List<ProfileInfo> Profiles { get; set; }
     }
 }

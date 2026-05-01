@@ -17,6 +17,6 @@ namespace OpenVkNetApi.Models.Groups
         /// A description of the contact's role or position.
         /// </summary>
         [JsonProperty("desc")]
-        public string? Desc { get; set; }
+        public string Desc { get; set; }
     }
 }

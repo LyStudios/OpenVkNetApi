@@ -11,13 +11,13 @@ namespace OpenVkNetApi.Models.RequestParameters.Photos
         /// The 'photo' parameter returned by the upload server.
         /// </summary>
         [ApiParameter("photo")]
-        public string Photo { get; set; } = null!;
+        public string Photo { get; set; } = null;
 
         /// <summary>
         /// The 'hash' parameter returned by the upload server.
         /// </summary>
         [ApiParameter("hash")]
-        public string Hash { get; set; } = null!;
+        public string Hash { get; set; } = null;
 
         /// <summary>
         /// ID of the group to save the photo to.
@@ -29,6 +29,6 @@ namespace OpenVkNetApi.Models.RequestParameters.Photos
         /// The caption for the photo.
         /// </summary>
         [ApiParameter("caption")]
-        public string? Caption { get; set; } = null;
+        public string Caption { get; set; } = null;
     }
 }

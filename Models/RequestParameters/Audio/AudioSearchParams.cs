@@ -12,7 +12,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Audio
         /// The search query for audio files.
         /// </summary>
         [ApiParameter("q")]
-        public string Query { get; set; } = null!;
+        public string Query { get; set; } = null;
         
         /// <summary>
         /// Whether to auto-complete the query (0 or 1).
@@ -64,6 +64,6 @@ namespace OpenVkNetApi.Models.RequestParameters.Audio
         /// The hash for the request.
         /// </summary>
         [ApiParameter("hash")]
-        public string? Hash { get; set; } = null;
+        public string Hash { get; set; } = null;
     }
 }

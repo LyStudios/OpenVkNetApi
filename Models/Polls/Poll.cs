@@ -78,7 +78,7 @@ namespace OpenVkNetApi.Models.Polls
         /// The poll question.
         /// </summary>
         [JsonProperty("question")]
-        public string? Question { get; set; }
+        public string Question { get; set; }
 
         /// <summary>
         /// The total number of votes in the poll.
@@ -102,13 +102,13 @@ namespace OpenVkNetApi.Models.Polls
         /// A list of answer IDs selected by the current user.
         /// </summary>
         [JsonProperty("answer_ids")]
-        public List<int>? AnswerIds { get; set; }
+        public List<int> AnswerIds { get; set; }
 
         /// <summary>
         /// A list of poll answers.
         /// </summary>
         [JsonProperty("answers")]
-        public List<PollAnswer>? Answers { get; set; }
+        public List<PollAnswer> Answers { get; set; }
 
         /// <summary>
         /// The ID of the poll's author.

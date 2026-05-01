@@ -1,7 +1,7 @@
-﻿namespace OpenVkNetApi.Models.Attachments
+namespace OpenVkNetApi.Models.Attachments
 {
     public sealed class AudioAttachment : Attachment
     {
-        public Audio.Audio Audio { get; set; } = null!;
+        public Audio.Audio Audio { get; set; } = null;
     }
 }

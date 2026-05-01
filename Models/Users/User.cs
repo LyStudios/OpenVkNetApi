@@ -24,7 +24,7 @@ namespace OpenVkNetApi.Models.Users
         /// A string indicating if the account is deactivated (e.g., "deleted", "banned").
         /// </summary>
         [JsonProperty("deactivated")]
-        public string? Deactivated { get; set; }
+        public string Deactivated { get; set; }
 
         /// <summary>
         /// Indicates if the user is currently online.
@@ -48,67 +48,67 @@ namespace OpenVkNetApi.Models.Users
         /// The user's city.
         /// </summary>
         [JsonProperty("city")]
-        public string? City { get; set; }
+        public string City { get; set; }
 
         /// <summary>
         /// The "About Me" section of the user's profile.
         /// </summary>
         [JsonProperty("about")]
-        public string? About { get; set; }
+        public string About { get; set; }
 
         /// <summary>
         /// The user's interests.
         /// </summary>
         [JsonProperty("interests")]
-        public string? Interests { get; set; }
+        public string Interests { get; set; }
 
         /// <summary>
         /// The user's favorite music.
         /// </summary>
         [JsonProperty("music")]
-        public string? Music { get; set; }
+        public string Music { get; set; }
 
         /// <summary>
         /// The user's favorite movies.
         /// </summary>
         [JsonProperty("movies")]
-        public string? Movies { get; set; }
+        public string Movies { get; set; }
 
         /// <summary>
         /// The user's favorite TV shows.
         /// </summary>
         [JsonProperty("tv")]
-        public string? Tv { get; set; }
+        public string Tv { get; set; }
 
         /// <summary>
         /// The user's favorite books.
         /// </summary>
         [JsonProperty("books")]
-        public string? Books { get; set; }
+        public string Books { get; set; }
 
         /// <summary>
         /// The user's favorite quotes.
         /// </summary>
         [JsonProperty("quotes")]
-        public string? Quotes { get; set; }
+        public string Quotes { get; set; }
 
         /// <summary>
         /// The user's favorite games.
         /// </summary>
         [JsonProperty("games")]
-        public string? Games { get; set; }
+        public string Games { get; set; }
 
         /// <summary>
         /// The user's Telegram username.
         /// </summary>
         [JsonProperty("telegram")]
-        public string? Telegram { get; set; }
+        public string Telegram { get; set; }
 
         /// <summary>
         /// The user's email address.
         /// </summary>
         [JsonProperty("email")]
-        public string? Email { get; set; }
+        public string Email { get; set; }
 
         /// <summary>
         /// The user's rating.
@@ -126,67 +126,67 @@ namespace OpenVkNetApi.Models.Users
         /// Information about when the user was last seen online.
         /// </summary>
         [JsonProperty("last_seen")]
-        public LastSeen? LastSeen { get; set; }
+        public LastSeen LastSeen { get; set; }
 
         /// <summary>
         /// Various counters for the user (e.g., friends, followers).
         /// </summary>
         [JsonProperty("counters")]
-        public Counters? Counters { get; set; }
+        public Counters Counters { get; set; }
 
         /// <summary>
         /// URL of the 50x50px profile photo.
         /// </summary>
         [JsonProperty("photo_50")]
-        public string? Photo50 { get; set; }
+        public string Photo50 { get; set; }
 
         /// <summary>
         /// URL of the 100x100px profile photo.
         /// </summary>
         [JsonProperty("photo_100")]
-        public string? Photo100 { get; set; }
+        public string Photo100 { get; set; }
 
         /// <summary>
         /// URL of the original 200px profile photo.
         /// </summary>
         [JsonProperty("photo_200_orig")]
-        public string? Photo200Orig { get; set; }
+        public string Photo200Orig { get; set; }
 
         /// <summary>
         /// URL of the original 400px profile photo.
         /// </summary>
         [JsonProperty("photo_400_orig")]
-        public string? Photo400Orig { get; set; }
+        public string Photo400Orig { get; set; }
 
         /// <summary>
         /// URL of the maximum size profile photo.
         /// </summary>
         [JsonProperty("photo_max")]
-        public string? PhotoMax { get; set; }
+        public string PhotoMax { get; set; }
 
         /// <summary>
         /// URL of the maximum size original profile photo.
         /// </summary>
         [JsonProperty("photo_max_orig")]
-        public string? PhotoMaxOrig { get; set; }
+        public string PhotoMaxOrig { get; set; }
 
         /// <summary>
         /// The user's profile background.
         /// </summary>
         [JsonProperty("background")]
-        public List<string>? Background { get; set; }
+        public List<string> Background { get; set; }
 
         /// <summary>
         /// A list of custom fields in the user's profile.
         /// </summary>
         [JsonProperty("custom_fields")]
-        public List<CustomField>? CustomFields { get; set; }
+        public List<CustomField> CustomFields { get; set; }
 
         /// <summary>
         /// The user's GUID.
         /// </summary>
         [JsonProperty("guid")]
-        public string? Guid { get; set; }
+        public string Guid { get; set; }
 
         /// <summary>
         /// The user's registration date in Unix time.

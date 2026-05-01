@@ -29,7 +29,7 @@ namespace OpenVkNetApi.Models.Video
         public int? CanAdd { get; set; }
 
         [JsonProperty("image")]
-        public List<PhotoSize>? Image { get; set; }
+        public List<PhotoSize> Image { get; set; }
 
         [JsonProperty("width")]
         public int? Width { get; set; }
@@ -56,22 +56,22 @@ namespace OpenVkNetApi.Models.Video
         /// The video title.
         /// </summary>
         [JsonProperty("title")]
-        public string? Title { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// The video description.
         /// </summary>
         [JsonProperty("description")]
-        public string? Description { get; set; }
+        public string Description { get; set; }
 
         [JsonProperty("is_favorite")]
         public bool? IsFavorite { get; set; }
 
         [JsonProperty("files")]
-        public VideoFiles? Files { get; set; }
+        public VideoFiles Files { get; set; }
 
         [JsonProperty("platform")]
-        public object? Platform { get; set; }
+        public object Platform { get; set; }
 
         [JsonProperty("added")]
         public int? Added { get; set; }
@@ -80,16 +80,16 @@ namespace OpenVkNetApi.Models.Video
         public int? Repeat { get; set; }
 
         [JsonProperty("type")]
-        public string? Type { get; set; }
+        public string Type { get; set; }
 
         [JsonProperty("is_processed")]
         public bool? IsProcessed { get; set; }
 
         [JsonProperty("reposts")]
-        public Reposts? Reposts { get; set; }
+        public Reposts Reposts { get; set; }
 
         [JsonProperty("likes")]
-        public Attachments.Likes? Likes { get; set; }
+        public Attachments.Likes Likes { get; set; }
 
         /// <summary>
         /// The video duration in seconds.
@@ -107,7 +107,7 @@ namespace OpenVkNetApi.Models.Video
         /// The URL of the video player.
         /// </summary>
         [JsonProperty("player")]
-        public string? Player { get; set; }
+        public string Player { get; set; }
 
         /// <summary>
         /// The number of views the video has.
@@ -125,18 +125,18 @@ namespace OpenVkNetApi.Models.Video
         /// URL of the 130px wide video thumbnail.
         /// </summary>
         [JsonProperty("photo_130")]
-        public string? Photo130 { get; set; }
+        public string Photo130 { get; set; }
 
         /// <summary>
         /// URL of the 320px wide video thumbnail.
         /// </summary>
         [JsonProperty("photo_320")]
-        public string? Photo320 { get; set; }
+        public string Photo320 { get; set; }
 
         /// <summary>
         /// URL of the 800px wide video thumbnail.
         /// </summary>
         [JsonProperty("photo_800")]
-        public string? Photo800 { get; set; }
+        public string Photo800 { get; set; }
     }
 }

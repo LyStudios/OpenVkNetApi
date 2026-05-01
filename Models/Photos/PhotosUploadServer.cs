@@ -11,7 +11,7 @@ namespace OpenVkNetApi.Models.Photos
         /// The URL to upload the photo to.
         /// </summary>
         [JsonProperty("upload_url")]
-        public string? UploadUrl { get; set; }
+        public string UploadUrl { get; set; }
 
         /// <summary>
         /// The ID of the album where the photo will be saved. Can be null.

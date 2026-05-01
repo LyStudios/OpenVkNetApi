@@ -11,12 +11,12 @@ namespace OpenVkNetApi.Models.Photos
         /// This property is obsolete and always returns null.
         /// </summary>
         [JsonProperty("photo_hash")]
-        public object? PhotoHash { get; set; }
+        public object PhotoHash { get; set; }
 
         /// <summary>
         /// The URL of the saved photo.
         /// </summary>
         [JsonProperty("photo_src")]
-        public string? PhotoSrc { get; set; }
+        public string PhotoSrc { get; set; }
     }
 }

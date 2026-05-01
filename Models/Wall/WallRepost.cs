@@ -23,7 +23,7 @@ namespace OpenVkNetApi.Models.Wall
         /// A pretty ID for the repost (e.g., "owner_id_post_id").
         /// </summary>
         [JsonProperty("pretty_id")]
-        public string? PrettyId { get; set; }
+        public string PrettyId { get; set; }
 
         /// <summary>
         /// The total number of reposts for the original post.

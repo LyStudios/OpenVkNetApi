@@ -1,7 +1,7 @@
-﻿namespace OpenVkNetApi.Models.Attachments
+namespace OpenVkNetApi.Models.Attachments
 {
     public abstract class Attachment
     {
-        public string Type { get; set; } = null!;
+        public string Type { get; set; } = null;
     }
 }

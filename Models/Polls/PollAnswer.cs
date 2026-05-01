@@ -23,7 +23,7 @@ namespace OpenVkNetApi.Models.Polls
         /// The answer text.
         /// </summary>
         [JsonProperty("text")]
-        public string? Text { get; set; }
+        public string Text { get; set; }
 
         /// <summary>
         /// The number of votes for this answer.

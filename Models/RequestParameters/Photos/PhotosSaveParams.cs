@@ -11,13 +11,13 @@ namespace OpenVkNetApi.Models.RequestParameters.Photos
         /// A JSON string with a list of photos to be saved.
         /// </summary>
         [ApiParameter("photos_list")]
-        public string PhotosList { get; set; } = null!;
+        public string PhotosList { get; set; } = null;
 
         /// <summary>
         /// The hash required to save the photos.
         /// </summary>
         [ApiParameter("hash")]
-        public string Hash { get; set; } = null!;
+        public string Hash { get; set; } = null;
 
         /// <summary>
         /// ID of the album to save photos to.
@@ -29,6 +29,6 @@ namespace OpenVkNetApi.Models.RequestParameters.Photos
         /// The caption for the photos.
         /// </summary>
         [ApiParameter("caption")]
-        public string? Caption { get; set; }
+        public string Caption { get; set; }
     }
 }

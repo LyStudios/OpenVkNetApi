@@ -11,7 +11,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Likes
         /// The type of object for which to return likes (e.g., "post", "comment", "photo").
         /// </summary>
         [ApiParameter("type")]
-        public string Type { get; set; } = null!;
+        public string Type { get; set; } = null;
 
         /// <summary>
         /// The ID of the owner of the object.

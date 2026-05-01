@@ -17,7 +17,7 @@ namespace OpenVkNetApi.Models.Messages
         /// The peer's type (e.g., "user", "group", "chat").
         /// </summary>
         [JsonProperty("type")]
-        public string? Type { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// The local ID within a chat.

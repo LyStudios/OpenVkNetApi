@@ -18,7 +18,7 @@ namespace OpenVkNetApi.Utils
         /// </summary>
         /// <param name="code">The error code from the API response.</param>
         /// <param name="message">The text description of the error.</param>
-        public OvkApiException(int code, string? message) : base(message)
+        public OvkApiException(int code, string message) : base(message)
         {
             ErrorCode = code;
         }

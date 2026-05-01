@@ -18,13 +18,13 @@ namespace OpenVkNetApi.Models
         /// A description of the error.
         /// </summary>
         [JsonProperty("error_msg")]
-        public string? ErrorMessage { get; set; }
+        public string ErrorMessage { get; set; }
         
         /// <summary>
         /// The request parameters that caused the error.
         /// </summary>
         [JsonProperty("request_params")]
-        public object? RequestParams { get; set; }
+        public object RequestParams { get; set; }
 
         /// <summary>
         /// Returns a string representation of the API error.

@@ -19,7 +19,7 @@ namespace OpenVkNetApi.Models.Messages
         /// Each update is typically a list of integers and strings.
         /// </summary>
         [JsonProperty("updates")]
-        public List<List<object>>? Updates { get; set; }
+        public List<List<object>> Updates { get; set; }
 
         /// <summary>
         /// Indicates if there was an error with the Long Poll request.

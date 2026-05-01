@@ -10,7 +10,7 @@ namespace OpenVkNetApi.Utils
         public override bool CanConvert(Type objectType)
             => objectType == typeof(BroadcastItem);
 
-        public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var jo = JObject.Load(reader);
 
@@ -33,7 +33,7 @@ namespace OpenVkNetApi.Utils
             return target;
         }
 
-        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             serializer.Serialize(writer, value);
         }

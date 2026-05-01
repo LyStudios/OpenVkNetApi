@@ -18,7 +18,7 @@ namespace OpenVkNetApi.Models.Notifications
         /// The structure can be complex and varies by notification type.
         /// </summary>
         [JsonProperty("feedback")]
-        public object? Feedback { get; set; }
+        public object Feedback { get; set; }
 
         /// <summary>
         /// The notification ID.
@@ -30,6 +30,6 @@ namespace OpenVkNetApi.Models.Notifications
         /// The type of notification (e.g., "comment", "like", "friend_accepted").
         /// </summary>
         [JsonProperty("type")]
-        public string? Type { get; set; }
+        public string Type { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace OpenVkNetApi.Models.Account
         /// The user's country code.
         /// </summary>
         [JsonProperty("country")]
-        public string? Country { get; set; }
+        public string Country { get; set; }
         
         /// <summary>
         /// Indicates if the user is from the European Union.

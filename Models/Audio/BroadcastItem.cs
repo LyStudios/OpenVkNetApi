@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.Audio
@@ -10,6 +10,6 @@ namespace OpenVkNetApi.Models.Audio
         public int Id { get; set; }
 
         [JsonProperty("status_audio")]
-        public Audio? StatusAudio { get; set; }
+        public Audio StatusAudio { get; set; }
     }
 }

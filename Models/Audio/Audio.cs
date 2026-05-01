@@ -11,7 +11,7 @@ namespace OpenVkNetApi.Models.Audio
         /// A unique identifier for the audio file.
         /// </summary>
         [JsonProperty("unique_id")]
-        public string? UniqueId { get; set; }
+        public string UniqueId { get; set; }
         
         /// <summary>
         /// The audio file ID.
@@ -29,13 +29,13 @@ namespace OpenVkNetApi.Models.Audio
         /// The artist's name.
         /// </summary>
         [JsonProperty("artist")]
-        public string? Artist { get; set; }
+        public string Artist { get; set; }
         
         /// <summary>
         /// The track title.
         /// </summary>
         [JsonProperty("title")]
-        public string? Title { get; set; }
+        public string Title { get; set; }
         
         /// <summary>
         /// The duration of the audio file in seconds.
@@ -47,19 +47,19 @@ namespace OpenVkNetApi.Models.Audio
         /// Information about the album.
         /// </summary>
         [JsonProperty("album")]
-        public Album? Album { get; set; }
+        public Album Album { get; set; }
         
         /// <summary>
         /// The album ID.
         /// </summary>
         [JsonProperty("album_id")]
-        public string? AlbumId { get; set; }
+        public string AlbumId { get; set; }
         
         /// <summary>
         /// The URL to play the audio file.
         /// </summary>
         [JsonProperty("url")]
-        public string? Url { get; set; }
+        public string Url { get; set; }
 
         /// <summary>
         /// The number of times the audio has been played.
@@ -71,13 +71,13 @@ namespace OpenVkNetApi.Models.Audio
         /// The manifest for streaming playback.
         /// </summary>
         [JsonProperty("manifest")]
-        public string? Manifest { get; set; }
+        public string Manifest { get; set; }
         
         /// <summary>
         /// Playback keys for the audio file.
         /// </summary>
         [JsonProperty("keys")]
-        public AudioKeys? Keys { get; set; }
+        public AudioKeys Keys { get; set; }
         
         /// <summary>
         /// The genre ID.
@@ -95,7 +95,7 @@ namespace OpenVkNetApi.Models.Audio
         /// The genre name.
         /// </summary>
         [JsonProperty("genre_str")]
-        public string? GenreStr { get; set; }
+        public string GenreStr { get; set; }
         
         /// <summary>
         /// The ID of the user or community that owns the audio file.
@@ -149,6 +149,6 @@ namespace OpenVkNetApi.Models.Audio
         /// Information about the user who uploaded the audio.
         /// </summary>
         [JsonProperty("user")]
-        public AudioUser? User { get; set; }
+        public AudioUser User { get; set; }
     }
 }

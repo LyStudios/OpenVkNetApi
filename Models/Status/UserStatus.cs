@@ -11,12 +11,12 @@ namespace OpenVkNetApi.Models.Status
         /// The text of the user's status.
         /// </summary>
         [JsonProperty("status")]
-        public string? Status { get; set; }
+        public string Status { get; set; }
 
         /// <summary>
         /// The audio file set as the user's status.
         /// </summary>
         [JsonProperty("audio")]
-        public Audio.Audio? Audio { get; set; }
+        public Audio.Audio Audio { get; set; }
     }
 }

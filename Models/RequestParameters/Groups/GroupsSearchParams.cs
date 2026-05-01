@@ -12,7 +12,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Groups
         /// Search query.
         /// </summary>
         [ApiParameter("q")]
-        public string Q { get; set; } = null!;
+        public string Q { get; set; } = null;
 
         /// <summary>
         /// Offset needed to return a specific subset of groups.

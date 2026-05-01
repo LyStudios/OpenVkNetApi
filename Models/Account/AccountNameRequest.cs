@@ -17,18 +17,18 @@ namespace OpenVkNetApi.Models.Account
         /// The status of the request.
         /// </summary>
         [JsonProperty("status")]
-        public string? Status { get; set; }
+        public string Status { get; set; }
         
         /// <summary>
         /// The requested first name.
         /// </summary>
         [JsonProperty("first_name")]
-        public string? FirstName { get; set; }
+        public string FirstName { get; set; }
 
         /// <summary>
         /// The requested last name.
         /// </summary>
         [JsonProperty("last_name")]
-        public string? LastName { get; set; }
+        public string LastName { get; set; }
     }
 }

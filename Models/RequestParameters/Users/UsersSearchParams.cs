@@ -12,7 +12,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Users
         /// Search query.
         /// </summary>
         [ApiParameter("q")]
-        public string Q { get; set; } = null!;
+        public string Q { get; set; } = null;
 
         /// <summary>
         /// A list of additional fields to return for each user.

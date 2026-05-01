@@ -56,32 +56,32 @@ namespace OpenVkNetApi.Models.Messages
         /// The title of the message (used primarily in chat conversations).
         /// </summary>
         [JsonProperty("title")]
-        public string? Title { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// The message body (legacy field, may duplicate <see cref="Text"/>).
         /// </summary>
         [JsonProperty("body")]
-        public string? Body { get; set; }
+        public string Body { get; set; }
 
         /// <summary>
         /// The text content of the message.
         /// </summary>
         [JsonProperty("text")]
-        public string? Text { get; set; }
+        public string Text { get; set; }
 
         /// <summary>
         /// A collection of attachments associated with the message
         /// (photos, videos, documents, audio, etc.).
         /// </summary>
         [JsonProperty("attachments")]
-        public List<Attachment>? Attachments { get; set; }
+        public List<Attachment> Attachments { get; set; }
 
         /// <summary>
         /// A collection of forwarded messages attached to this message.
         /// </summary>
         [JsonProperty("fwd_messages")]
-        public List<Message>? ForwardedMessages { get; set; }
+        public List<Message> ForwardedMessages { get; set; }
 
         /// <summary>
         /// Indicates whether the message contains emoji.

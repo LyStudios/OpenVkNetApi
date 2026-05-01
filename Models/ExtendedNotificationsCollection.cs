@@ -15,12 +15,12 @@ namespace OpenVkNetApi.Models
         /// A list of user profiles mentioned in the notifications.
         /// </summary>
         [JsonProperty("profiles")]
-        public List<ProfileInfo>? Profiles { get; set; }
+        public List<ProfileInfo> Profiles { get; set; }
 
         /// <summary>
         /// A list of group profiles mentioned in the notifications.
         /// </summary>
         [JsonProperty("groups")]
-        public List<Group>? Groups { get; set; }
+        public List<Group> Groups { get; set; }
     }
 }

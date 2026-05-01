@@ -12,7 +12,7 @@ namespace OpenVkNetApi.Models
         /// The access token used for making authorized requests.
         /// </summary>
         [JsonProperty("access_token")]
-        public string? AccessToken { get; set; }
+        public string AccessToken { get; set; }
 
         /// <summary>
         /// The lifetime of the token in seconds.
@@ -36,6 +36,6 @@ namespace OpenVkNetApi.Models
         /// A secret key, if returned by the server.
         /// </summary>
         [JsonProperty("secret")]
-        public string? Secret { get; set; }
+        public string Secret { get; set; }
     }
 }

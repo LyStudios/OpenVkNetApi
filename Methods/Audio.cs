@@ -28,7 +28,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="needUser">Whether to return information about the users who uploaded the audio.</param>
         /// <param name="cancellationToken">A cancellation token for the operation.</param>
         /// <returns>A <see cref="Collection{Audio}"/> of audio objects.</returns>
-        public async Task<Collection<Models.Audio.Audio>> GetByIdAsync(string audios, string? hash = null, bool needUser = false, CancellationToken cancellationToken = default)
+        public async Task<Collection<Models.Audio.Audio>> GetByIdAsync(string audios, string hash = null, bool needUser = false, CancellationToken cancellationToken = default)
         {
             var parameters = new RequestParams()
                 .Add("audios", audios)
@@ -178,7 +178,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="hash">A specific hash value.</param>
         /// <param name="cancellationToken">A cancellation token for the operation.</param>
         /// <returns>A <see cref="Collection{BroadcastItem}"/> of broadcast items.</returns>
-        public async Task<Collection<BroadcastItem>> GetBroadcastListAsync(string filter = "all", bool inactive = false, string? hash = null, CancellationToken cancellationToken = default)
+        public async Task<Collection<BroadcastItem>> GetBroadcastListAsync(string filter = "all", bool inactive = false, string hash = null, CancellationToken cancellationToken = default)
         {
             var parameters = new RequestParams()
                 .Add("filter", filter)
@@ -270,7 +270,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID, if creating for a group.</param>
         /// <param name="cancellationToken">A cancellation token for the operation.</param>
         /// <returns>The ID of the created album.</returns>
-        public async Task<int> AddAlbumAsync(string title, string? description = null, int groupId = 0, CancellationToken cancellationToken = default)
+        public async Task<int> AddAlbumAsync(string title, string description = null, int groupId = 0, CancellationToken cancellationToken = default)
         {
             var parameters = new RequestParams()
                 .Add("title", title)
@@ -289,7 +289,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="description">The new album description (optional).</param>
         /// <param name="cancellationToken">A cancellation token for the operation.</param>
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
-        public async Task<int> EditAlbumAsync(int albumId, string? title = null, string? description = null, CancellationToken cancellationToken = default)
+        public async Task<int> EditAlbumAsync(int albumId, string title = null, string description = null, CancellationToken cancellationToken = default)
         {
             var parameters = new RequestParams()
                 .Add("album_id", albumId)

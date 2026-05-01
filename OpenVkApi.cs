@@ -30,7 +30,7 @@ namespace OpenVkNetApi
         /// <summary>
         /// The authorization token used for API requests.
         /// </summary>
-        public string? AccessToken { get; private set; }
+        public string AccessToken { get; private set; }
 
         /// <summary>
         /// Provides methods for working with audio.
@@ -152,7 +152,7 @@ namespace OpenVkNetApi
         /// </summary>
         /// <param name="baseUrl">The base URL of the API.</param>
         /// <param name="httpClient">An optional custom <see cref="HttpClient"/> instance.</param>
-        public OpenVkApi(string baseUrl, HttpClient? httpClient = null)
+        public OpenVkApi(string baseUrl, HttpClient httpClient = null)
         {
             _baseUrl = baseUrl.TrimEnd('/');
             HttpClient = httpClient ?? new HttpClient();
@@ -209,21 +209,21 @@ namespace OpenVkNetApi
         public async Task<Auth> AuthorizeAsync(
             string username,
             string password,
-            string? clientName = "OpenVkNetApi",
-            string? twoFactorCode = null,
+            string clientName = "OpenVkNetApi",
+            string twoFactorCode = null,
             CancellationToken ct = default)
         {
             var url = $"{_baseUrl}/token";
-            var values = new List<KeyValuePair<string, string?>>
+            var values = new List<KeyValuePair<string, string>>
             {
-                new KeyValuePair<string, string?>("username", username),
-                new KeyValuePair<string, string?>("password", password),
-                new KeyValuePair<string, string?>("grant_type", "password"),
-                new KeyValuePair<string, string?>("client_name", clientName ?? "OpenVkNetApi")
+                new KeyValuePair<string, string>("username", username),
+                new KeyValuePair<string, string>("password", password),
+                new KeyValuePair<string, string>("grant_type", "password"),
+                new KeyValuePair<string, string>("client_name", clientName ?? "OpenVkNetApi")
             };
 
             if (!string.IsNullOrEmpty(twoFactorCode))
-                values.Add(new KeyValuePair<string, string?>("code", twoFactorCode));
+                values.Add(new KeyValuePair<string, string>("code", twoFactorCode));
 
             HttpResponseMessage response;
 
@@ -271,7 +271,7 @@ namespace OpenVkNetApi
         /// <param name="parameters">Request parameters.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A result of type <typeparamref name="T"/>.</returns>
-        internal Task<T> CallApiAsync<T>(string method, Dictionary<string, string>? parameters = null, CancellationToken ct = default)
+        internal Task<T> CallApiAsync<T>(string method, Dictionary<string, string> parameters = null, CancellationToken ct = default)
             => CallApiInternalAsync<T>(HttpMethod.Get, method, parameters, ct);
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace OpenVkNetApi
         /// <param name="parameters">Request parameters.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A result of type <typeparamref name="T"/>.</returns>
-        internal Task<T> CallApiPostAsync<T>(string method, Dictionary<string, string>? parameters = null, CancellationToken ct = default)
+        internal Task<T> CallApiPostAsync<T>(string method, Dictionary<string, string> parameters = null, CancellationToken ct = default)
             => CallApiInternalAsync<T>(HttpMethod.Post, method, parameters, ct);
 
         /// <summary>
@@ -297,7 +297,7 @@ namespace OpenVkNetApi
         /// <exception cref="InvalidOperationException">Thrown if the API is not authorized.</exception>
         /// <exception cref="HttpRequestException">Thrown if the request fails to send.</exception>
         /// <exception cref="OvkApiException">Thrown if the server returns an API error or an invalid response.</exception>
-        private async Task<T> CallApiInternalAsync<T>(HttpMethod httpMethod, string method, Dictionary<string, string>? parameters, CancellationToken ct)
+        private async Task<T> CallApiInternalAsync<T>(HttpMethod httpMethod, string method, Dictionary<string, string> parameters, CancellationToken ct)
         {
             if (string.IsNullOrEmpty(AccessToken))
                 throw new InvalidOperationException("API is not authorized. Call AuthorizeAsync() first.");
@@ -356,7 +356,7 @@ namespace OpenVkNetApi
         /// </summary>
         /// <param name="json">The JSON response string.</param>
         /// <returns>An <see cref="ApiError"/> object, or null if parsing fails.</returns>
-        private static ApiError? TryParseApiError(string json)
+        private static ApiError TryParseApiError(string json)
         {
             try
             {

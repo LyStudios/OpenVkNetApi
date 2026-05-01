@@ -23,6 +23,6 @@ namespace OpenVkNetApi.Models.Docs
         /// The name of the document type.
         /// </summary>
         [JsonProperty("name")]
-        public string Name { get; set; } = null!;
+        public string Name { get; set; } = null;
     }
 }

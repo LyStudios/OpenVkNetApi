@@ -17,18 +17,18 @@ namespace OpenVkNetApi.Models.Audio
         /// The URL of the user's profile photo.
         /// </summary>
         [JsonProperty("photo")]
-        public string? Photo { get; set; }
+        public string Photo { get; set; }
         
         /// <summary>
         /// The user's full name.
         /// </summary>
         [JsonProperty("name")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
         
         /// <summary>
         /// The user's name in the genitive case.
         /// </summary>
         [JsonProperty("name_gen")]
-        public string? NameGen { get; set; }
+        public string NameGen { get; set; }
     }
 }

@@ -30,13 +30,13 @@ namespace OpenVkNetApi.Models.Photos
         /// The album title.
         /// </summary>
         [JsonProperty("title")]
-        public string? Title { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// The album description.
         /// </summary>
         [JsonProperty("description")]
-        public string? Description { get; set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// The date when the album was created, in Unix time.
@@ -66,7 +66,7 @@ namespace OpenVkNetApi.Models.Photos
         /// The URL of the album's thumbnail.
         /// </summary>
         [JsonProperty("thumb_src")]
-        public string? ThumbSrc { get; set; }
+        public string ThumbSrc { get; set; }
 
         [JsonProperty("privacy_comment")]
         public int? PrivacyComment { get; set; }
@@ -81,6 +81,6 @@ namespace OpenVkNetApi.Models.Photos
         /// A list of available thumbnail sizes for the album cover.
         /// </summary>
         [JsonProperty("sizes")]
-        public List<PhotoSize>? Sizes { get; set; }
+        public List<PhotoSize> Sizes { get; set; }
     }
 }

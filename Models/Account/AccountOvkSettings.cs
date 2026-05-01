@@ -18,7 +18,7 @@ namespace OpenVkNetApi.Models.Account
         /// The theme or style used by the user.
         /// </summary>
         [JsonProperty("style")]
-        public string? Style { get; set; }
+        public string Style { get; set; }
         
         /// <summary>
         /// Indicates if the rating is shown.
@@ -36,12 +36,12 @@ namespace OpenVkNetApi.Models.Account
         /// The post view style (e.g., classic/microblog).
         /// </summary>
         [JsonProperty("post_view")]
-        public string? PostView { get; set; }
+        public string PostView { get; set; }
         
         /// <summary>
         /// The user's default main page (e.g., newsfeed/profile).
         /// </summary>
         [JsonProperty("main_page")]
-        public string? MainPage { get; set; }
+        public string MainPage { get; set; }
     }
 }

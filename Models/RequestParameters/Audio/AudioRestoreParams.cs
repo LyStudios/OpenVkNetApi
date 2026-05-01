@@ -30,6 +30,6 @@ namespace OpenVkNetApi.Models.RequestParameters.Audio
         /// The hash for the request.
         /// </summary>
         [ApiParameter("hash")]
-        public string? Hash { get; set; } = null;
+        public string Hash { get; set; } = null;
     }
 }

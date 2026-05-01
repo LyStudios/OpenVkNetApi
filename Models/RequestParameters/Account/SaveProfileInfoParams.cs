@@ -69,6 +69,6 @@ namespace OpenVkNetApi.Models.RequestParameters.Account
         /// The user's Telegram username (without the '@' symbol).
         /// </summary>
         [ApiParameter("telegram")]
-        public string? Telegram { get; set; } = null;
+        public string Telegram { get; set; } = null;
     }
 }

@@ -24,19 +24,19 @@ namespace OpenVkNetApi.Models.RequestParameters.Audio
         /// The new artist name.
         /// </summary>
         [ApiParameter("artist")]
-        public string? Artist { get; set; } = null;
+        public string Artist { get; set; } = null;
 
         /// <summary>
         /// The new track title.
         /// </summary>
         [ApiParameter("title")]
-        public string? Title { get; set; } = null;
+        public string Title { get; set; } = null;
 
         /// <summary>
         /// The lyrics text.
         /// </summary>
         [ApiParameter("text")]
-        public string? Text { get; set; } = null;
+        public string Text { get; set; } = null;
 
         /// <summary>
         /// The numerical genre ID.
@@ -48,7 +48,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Audio
         /// The genre name string.
         /// </summary>
         [ApiParameter("genre_str")]
-        public string? GenreStr { get; set; } = null;
+        public string GenreStr { get; set; } = null;
         
         /// <summary>
         /// Whether to exclude the record from search results (0 or 1).

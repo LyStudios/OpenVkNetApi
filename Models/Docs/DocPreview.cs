@@ -11,12 +11,12 @@ namespace OpenVkNetApi.Models.Docs
         /// Photo preview data.
         /// </summary>
         [JsonProperty("photo")]
-        public DocPreviewPhoto? Photo { get; set; }
+        public DocPreviewPhoto Photo { get; set; }
 
         /// <summary>
         /// Video preview data.
         /// </summary>
         [JsonProperty("video")]
-        public DocPreviewVideo? Video { get; set; }
+        public DocPreviewVideo Video { get; set; }
     }
 }

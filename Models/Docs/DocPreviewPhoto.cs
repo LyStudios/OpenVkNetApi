@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using OpenVkNetApi.Models.Photos;
 using System.Collections.Generic;
 
@@ -13,6 +13,6 @@ namespace OpenVkNetApi.Models.Docs
         /// A list of available photo sizes.
         /// </summary>
         [JsonProperty("sizes")]
-        public List<PhotoSize>? Sizes { get; set; }
+        public List<PhotoSize> Sizes { get; set; }
     }
 }

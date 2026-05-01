@@ -19,6 +19,6 @@ namespace OpenVkNetApi.Models.Account
         /// Information about a name change request, if one was created.
         /// </summary>
         [JsonProperty("name_request")]
-        public AccountNameRequest? NameRequest { get; set; }
+        public AccountNameRequest NameRequest { get; set; }
     }
 }

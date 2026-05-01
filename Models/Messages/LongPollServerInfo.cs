@@ -11,13 +11,13 @@ namespace OpenVkNetApi.Models.Messages
         /// Long Poll key.
         /// </summary>
         [JsonProperty("key")]
-        public string? Key { get; set; }
+        public string Key { get; set; }
 
         /// <summary>
         /// Long Poll server URL.
         /// </summary>
         [JsonProperty("server")]
-        public string? Server { get; set; }
+        public string Server { get; set; }
 
         /// <summary>
         /// Timestamp for the Long Poll request. This is 'ts' from the server-side, and corresponds to 'new_pts' in history.

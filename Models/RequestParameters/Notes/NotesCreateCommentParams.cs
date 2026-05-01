@@ -23,7 +23,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Notes
         /// The text of the comment.
         /// </summary>
         [ApiParameter("message")]
-        public string Message { get; set; } = null!;
+        public string Message { get; set; } = null;
 
         /// <summary>
         /// Attachments to the comment.

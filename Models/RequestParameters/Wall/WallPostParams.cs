@@ -11,7 +11,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Wall
         /// ID of the user or community wall to post to.
         /// </summary>
         [ApiParameter("owner_id")]
-        public string OwnerId { get; set; } = null!;
+        public string OwnerId { get; set; } = null;
 
         /// <summary>
         /// The text of the post.

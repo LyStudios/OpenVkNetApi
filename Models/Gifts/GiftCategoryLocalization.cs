@@ -11,12 +11,12 @@ namespace OpenVkNetApi.Models.Gifts
         /// The localized name.
         /// </summary>
         [JsonProperty("name")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// The localized description.
         /// </summary>
         [JsonProperty("desc")]
-        public string? Description { get; set; }
+        public string Description { get; set; }
     }
 }

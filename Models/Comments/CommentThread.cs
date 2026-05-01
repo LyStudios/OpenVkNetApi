@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace OpenVkNetApi.Models.Comments
@@ -18,7 +18,7 @@ namespace OpenVkNetApi.Models.Comments
         /// A list of nested comments.
         /// </summary>
         [JsonProperty("items")]
-        public List<object>? Items { get; set; }
+        public List<object> Items { get; set; }
 
         /// <summary>
         /// Indicates if the current user can post comments in this thread.

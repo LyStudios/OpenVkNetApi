@@ -16,11 +16,11 @@ namespace OpenVkNetApi.Models.Users
         /// The name of the custom field.
         /// </summary>
         [JsonProperty("name")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// The text value of the custom field.
         /// </summary>
         [JsonProperty("text")]
-        public string? Text { get; set; }
+        public string Text { get; set; }
     }
 }

@@ -17,12 +17,12 @@ namespace OpenVkNetApi.Models.Ovk
         /// The authentication method used, if authorized.
         /// </summary>
         [JsonProperty("auth_with")]
-        public string? AuthWith { get; set; }
+        public string AuthWith { get; set; }
 
         /// <summary>
         /// The version of the API.
         /// </summary>
         [JsonProperty("version")]
-        public string? Version { get; set; }
+        public string Version { get; set; }
     }
 }

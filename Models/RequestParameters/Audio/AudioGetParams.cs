@@ -63,7 +63,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Audio
         /// The seed for shuffling the playlist.
         /// </summary>
         [ApiParameter("shuffle_seed")]
-        public string? ShuffleSeed { get; set; } = null;
+        public string ShuffleSeed { get; set; } = null;
         
         /// <summary>
         /// Whether to shuffle the results (0 or 1).
@@ -76,6 +76,6 @@ namespace OpenVkNetApi.Models.RequestParameters.Audio
         /// The hash for the request.
         /// </summary>
         [ApiParameter("hash")]
-        public string? Hash { get; set; } = null;
+        public string Hash { get; set; } = null;
     }
 }

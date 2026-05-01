@@ -26,19 +26,19 @@ namespace OpenVkNetApi.Models.Account
         /// The verification status message.
         /// </summary>
         [JsonProperty("verification_status")]
-        public string? VerificationStatus { get; set; }
+        public string VerificationStatus { get; set; }
         
         /// <summary>
         /// The user's home town.
         /// </summary>
         [JsonProperty("home_town")]
-        public string? HomeTown { get; set; }
+        public string HomeTown { get; set; }
         
         /// <summary>
         /// The user's phone number.
         /// </summary>
         [JsonProperty("phone")]
-        public string? Phone { get; set; }
+        public string Phone { get; set; }
         
         /// <summary>
         /// The user's relationship status.
@@ -50,6 +50,6 @@ namespace OpenVkNetApi.Models.Account
         /// The audio file set as the user's status.
         /// </summary>
         [JsonProperty("audio_status")]
-        public Audio.Audio? AudioStatus { get; set; }
+        public Audio.Audio AudioStatus { get; set; }
     }
 }

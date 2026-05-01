@@ -18,6 +18,6 @@ namespace OpenVkNetApi.Models.Wall
         /// A stack of parent comment IDs for replies. Currently always empty in PHP.
         /// </summary>
         [JsonProperty("parents_stack")]
-        public List<object>? ParentsStack { get; set; }
+        public List<object> ParentsStack { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 
 namespace OpenVkNetApi.Models.Photos
 {
@@ -11,9 +11,9 @@ namespace OpenVkNetApi.Models.Photos
         public int Width { get; set; }
 
         [JsonProperty("type")]
-        public string? Type { get; set; }
+        public string Type { get; set; }
 
         [JsonProperty("url")]
-        public string? Url { get; set; }
+        public string Url { get; set; }
     }
 }

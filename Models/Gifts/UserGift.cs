@@ -17,7 +17,7 @@ namespace OpenVkNetApi.Models.Gifts
         /// A message included with the gift.
         /// </summary>
         [JsonProperty("message")]
-        public string? Message { get; set; }
+        public string Message { get; set; }
 
         /// <summary>
         /// The date when the gift was sent, in Unix time.
@@ -29,6 +29,6 @@ namespace OpenVkNetApi.Models.Gifts
         /// The gift object.
         /// </summary>
         [JsonProperty("gift")]
-        public Gift? Gift { get; set; }
+        public Gift Gift { get; set; }
     }
 }

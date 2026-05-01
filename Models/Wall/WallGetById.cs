@@ -14,18 +14,18 @@ namespace OpenVkNetApi.Models.Wall
         /// A list of wall posts.
         /// </summary>
         [JsonProperty("items")]
-        public List<WallPost>? Items { get; set; }
+        public List<WallPost> Items { get; set; }
 
         /// <summary>
         /// A list of user profiles related to the posts, if extended information was requested.
         /// </summary>
         [JsonProperty("profiles")]
-        public List<ProfileInfo>? Profiles { get; set; }
+        public List<ProfileInfo> Profiles { get; set; }
 
         /// <summary>
         /// A list of group profiles related to the posts, if extended information was requested.
         /// </summary>
         [JsonProperty("groups")]
-        public List<Group>? Groups { get; set; }
+        public List<Group> Groups { get; set; }
     }
 }

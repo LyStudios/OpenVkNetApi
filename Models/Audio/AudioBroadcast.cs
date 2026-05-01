@@ -17,13 +17,13 @@ namespace OpenVkNetApi.Models.Audio
         /// The name of the broadcasting user or community.
         /// </summary>
         [JsonProperty("name")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
         
         /// <summary>
         /// The screen name of the broadcasting user or community.
         /// </summary>
         [JsonProperty("screen_name")]
-        public string? ScreenName { get; set; }
+        public string ScreenName { get; set; }
         
         /// <summary>
         /// Indicates if the community is closed.
@@ -35,7 +35,7 @@ namespace OpenVkNetApi.Models.Audio
         /// The type of the broadcasting entity (e.g., "user", "group").
         /// </summary>
         [JsonProperty("type")]
-        public string? Type { get; set; }
+        public string Type { get; set; }
         
         /// <summary>
         /// Indicates if the current user is a member of the broadcasting community.
@@ -59,6 +59,6 @@ namespace OpenVkNetApi.Models.Audio
         /// The audio file currently being broadcast.
         /// </summary>
         [JsonProperty("status_audio")]
-        public Audio? StatusAudio { get; set; }
+        public Audio StatusAudio { get; set; }
     }
 }

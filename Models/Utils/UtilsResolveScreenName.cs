@@ -17,6 +17,6 @@ namespace OpenVkNetApi.Models.Utils
         /// The type of the resolved object ("user", "group", or "application").
         /// </summary>
         [JsonProperty("type")]
-        public string? Type { get; set; }
+        public string Type { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace OpenVkNetApi.Models.Docs
         /// The document title.
         /// </summary>
         [JsonProperty("title")]
-        public string? Title { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// The file size in bytes.
@@ -36,13 +36,13 @@ namespace OpenVkNetApi.Models.Docs
         /// The file extension.
         /// </summary>
         [JsonProperty("ext")]
-        public string? Extension { get; set; }
+        public string Extension { get; set; }
 
         /// <summary>
         /// The URL of the document.
         /// </summary>
         [JsonProperty("url")]
-        public string? Url { get; set; }
+        public string Url { get; set; }
 
         /// <summary>
         /// The date when the document was uploaded, in Unix time.
@@ -84,18 +84,18 @@ namespace OpenVkNetApi.Models.Docs
         /// The access key for the document.
         /// </summary>
         [JsonProperty("access_key")]
-        public string? AccessKey { get; set; }
+        public string AccessKey { get; set; }
         
         /// <summary>
         /// The preview data for the document.
         /// </summary>
         [JsonProperty("preview")]
-        public DocPreview? Preview { get; set; }
+        public DocPreview Preview { get; set; }
 
         /// <summary>
         /// A list of tags for the document.
         /// </summary>
         [JsonProperty("tags")]
-        public List<string>? Tags { get; set; }
+        public List<string> Tags { get; set; }
     }
 }

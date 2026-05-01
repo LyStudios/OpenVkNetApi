@@ -36,13 +36,13 @@ namespace OpenVkNetApi.Models.Comments
         /// Information about the comment thread.
         /// </summary>
         [JsonProperty("thread")]
-        public CommentThread? Thread { get; set; }
+        public CommentThread Thread { get; set; }
 
         /// <summary>
         /// Information about likes on the comment.
         /// </summary>
         [JsonProperty("likes")]
-        public WallPostLikes? Likes { get; set; }
+        public WallPostLikes Likes { get; set; }
 
         /// <summary>
         /// Indicates if the comment is from the post author.

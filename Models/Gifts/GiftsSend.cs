@@ -29,6 +29,6 @@ namespace OpenVkNetApi.Models.Gifts
         /// An error message, if the operation failed.
         /// </summary>
         [JsonProperty("error")]
-        public string? Error { get; set; }
+        public string Error { get; set; }
     }
 }

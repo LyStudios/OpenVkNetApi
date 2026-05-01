@@ -106,7 +106,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="caption">The caption for the photo.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A list of the uploaded <see cref="Photo"/> objects.</returns>
-        public async Task<List<Photo>> UploadWallPhotoAsync(Stream photoStream, string fileName, int? groupId = null, string? caption = null, CancellationToken ct = default)
+        public async Task<List<Photo>> UploadWallPhotoAsync(Stream photoStream, string fileName, int? groupId = null, string caption = null, CancellationToken ct = default)
         {
             if (string.IsNullOrEmpty(_api.AccessToken))
                 throw new System.InvalidOperationException("API is not authorized. Call AuthorizeAsync() first.");
@@ -116,11 +116,11 @@ namespace OpenVkNetApi.Methods
             if (string.IsNullOrEmpty(uploadServerInfo.UploadUrl))
                 throw new OvkApiException(-1, "Failed to get wall upload URL.");
 
-            var uploadData = await UploadAsync(uploadServerInfo.UploadUrl!, photoStream, fileName, false, ct);
+            var uploadData = await UploadAsync(uploadServerInfo.UploadUrl, photoStream, fileName, false, ct);
 
             return await SaveWallPhotoAsync(new PhotosSaveWallPhotoParams
             {
-                Photo = uploadData.Photo!,
+                Photo = uploadData.Photo,
                 Hash = uploadData.Hash,
                 GroupId = groupId ?? 0,
                 Caption = caption
@@ -144,9 +144,9 @@ namespace OpenVkNetApi.Methods
             if (string.IsNullOrEmpty(uploadServerInfo.UploadUrl))
                 throw new OvkApiException(-1, "Failed to get owner photo upload URL.");
 
-            var uploadData = await UploadAsync(uploadServerInfo.UploadUrl!, photoStream, fileName, false, ct);
+            var uploadData = await UploadAsync(uploadServerInfo.UploadUrl, photoStream, fileName, false, ct);
 
-            return await SaveOwnerPhotoAsync(uploadData.Photo!, uploadData.Hash, ct);
+            return await SaveOwnerPhotoAsync(uploadData.Photo, uploadData.Hash, ct);
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="caption">The caption for the photo.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A collection of the uploaded <see cref="Photo"/> objects.</returns>
-        public async Task<Collection<Photo>> UploadAlbumPhotoAsync(Stream photoStream, string fileName, int? albumId, string? caption = null, CancellationToken ct = default)
+        public async Task<Collection<Photo>> UploadAlbumPhotoAsync(Stream photoStream, string fileName, int? albumId, string caption = null, CancellationToken ct = default)
         {
             if (string.IsNullOrEmpty(_api.AccessToken))
                 throw new System.InvalidOperationException("API is not authorized. Call AuthorizeAsync() first.");
@@ -190,11 +190,11 @@ namespace OpenVkNetApi.Methods
             if (string.IsNullOrEmpty(uploadServerInfo.UploadUrl))
                 throw new OvkApiException(-1, "Failed to get album upload URL.");
 
-            var uploadData = await UploadAsync(uploadServerInfo.UploadUrl!, photoStream, fileName, true, ct);
+            var uploadData = await UploadAsync(uploadServerInfo.UploadUrl, photoStream, fileName, true, ct);
 
             return await SaveAsync(new PhotosSaveParams
             {
-                PhotosList = uploadData.PhotosList!,
+                PhotosList = uploadData.PhotosList,
                 Hash = uploadData.Hash,
                 AlbumId = albumId,
                 Caption = caption
@@ -209,7 +209,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="caption">Optional caption for the photos.</param>
         /// <param name="ct">Cancellation token.</param>
         /// <returns>A collection of uploaded <see cref="Photo"/> objects.</returns>
-        public async Task<Collection<Photo>> UploadAlbumPhotosAsync(IEnumerable<Tuple<Stream, string>> photos, int? albumId, string? caption = null, CancellationToken ct = default)
+        public async Task<Collection<Photo>> UploadAlbumPhotosAsync(IEnumerable<Tuple<Stream, string>> photos, int? albumId, string caption = null, CancellationToken ct = default)
         {
             if (string.IsNullOrEmpty(_api.AccessToken))
                 throw new InvalidOperationException("API is not authorized. Call AuthorizeAsync() first.");
@@ -244,7 +244,7 @@ namespace OpenVkNetApi.Methods
 
                 return await SaveAsync(new PhotosSaveParams
                 {
-                    PhotosList = uploadData.PhotosList!,
+                    PhotosList = uploadData.PhotosList,
                     Hash = uploadData.Hash,
                     AlbumId = albumId,
                     Caption = caption
@@ -453,7 +453,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="photoId">The photo ID (if deleting a single photo).</param>
         /// <param name="photos">A comma-separated list of photo IDs (if deleting multiple photos).</param>
         /// <param name="ct">A cancellation token for the operation.</param>
-        public async Task<int> DeleteAsync(int? ownerId = null, int? photoId = null, string? photos = null, CancellationToken ct = default)
+        public async Task<int> DeleteAsync(int? ownerId = null, int? photoId = null, string photos = null, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("owner_id", ownerId)

@@ -17,13 +17,13 @@ namespace OpenVkNetApi.Models.RequestParameters.Board
         /// The title of the topic.
         /// </summary>
         [ApiParameter("title")]
-        public string Title { get; set; } = null!;
+        public string Title { get; set; } = null;
 
         /// <summary>
         /// The text content of the topic.
         /// </summary>
         [ApiParameter("text")]
-        public string? Text { get; set; } = null;
+        public string Text { get; set; } = null;
 
         /// <summary>
         /// True if the topic is created on behalf of the group.

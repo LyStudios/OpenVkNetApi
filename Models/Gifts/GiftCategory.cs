@@ -12,13 +12,13 @@ namespace OpenVkNetApi.Models.Gifts
         /// The category name.
         /// </summary>
         [JsonProperty("name")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// The category description.
         /// </summary>
         [JsonProperty("description")]
-        public string? Description { get; set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// The category ID.
@@ -30,12 +30,12 @@ namespace OpenVkNetApi.Models.Gifts
         /// The URL of the category's thumbnail.
         /// </summary>
         [JsonProperty("thumbnail")]
-        public string? Thumbnail { get; set; }
+        public string Thumbnail { get; set; }
 
         /// <summary>
         /// A dictionary of localizations for the category.
         /// </summary>
         [JsonProperty("localizations")]
-        public Dictionary<string, GiftCategoryLocalization>? Localizations { get; set; }
+        public Dictionary<string, GiftCategoryLocalization> Localizations { get; set; }
     }
 }

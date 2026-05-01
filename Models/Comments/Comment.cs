@@ -32,20 +32,20 @@ namespace OpenVkNetApi.Models.Comments
         /// The text of the comment.
         /// </summary>
         [JsonProperty("text")]
-        public string? Text { get; set; }
+        public string Text { get; set; }
 
         /// <summary>
         /// A list of attachments to the comment.
         /// </summary>
         [JsonProperty("attachments")]
         [JsonConverter(typeof(AttachmentJsonConverter))]
-        public List<Attachment>? Attachments { get; set; }
+        public List<Attachment> Attachments { get; set; }
 
         /// <summary>
         /// A stack of parent comment IDs for replies.
         /// </summary>
         [JsonProperty("parents_stack")]
-        public List<object>? ParentsStack { get; set; }
+        public List<object> ParentsStack { get; set; }
 
         /// <summary>
         /// Indicates if the current user has liked this comment (1 for yes, 0 for no).

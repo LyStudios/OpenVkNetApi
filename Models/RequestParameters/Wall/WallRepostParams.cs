@@ -12,7 +12,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Wall
         /// The object to repost in the format 'owner_id_item_id'.
         /// </summary>
         [ApiParameter("object")]
-        public string Object { get; set; } = null!;
+        public string Object { get; set; } = null;
 
         /// <summary>
         /// A message to include with the repost.

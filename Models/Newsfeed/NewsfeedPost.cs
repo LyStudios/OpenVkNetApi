@@ -35,6 +35,6 @@ namespace OpenVkNetApi.Models.Newsfeed
         /// The text content of the post.
         /// </summary>
         [JsonProperty("text")]
-        public string? Text { get; set; }
+        public string Text { get; set; }
     }
 }

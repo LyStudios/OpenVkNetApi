@@ -19,6 +19,6 @@ namespace OpenVkNetApi.Models.Polls
         /// A list of users who voted for this answer.
         /// </summary>
         [JsonProperty("users")]
-        public List<User>? Users { get; set; }
+        public List<User> Users { get; set; }
     }
 }

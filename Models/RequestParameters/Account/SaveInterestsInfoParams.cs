@@ -12,48 +12,48 @@ namespace OpenVkNetApi.Models.RequestParameters.Account
         /// User's general interests.
         /// </summary>
         [ApiParameter("interests")]
-        public string? Interests { get; set; } = null;
+        public string Interests { get; set; } = null;
 
         /// <summary>
         /// User's favorite music.
         /// </summary>
         [ApiParameter("fav_music")]
-        public string? FavMusic { get; set; } = null;
+        public string FavMusic { get; set; } = null;
 
         /// <summary>
         /// User's favorite films.
         /// </summary>
         [ApiParameter("fav_films")]
-        public string? FavFilms { get; set; } = null;
+        public string FavFilms { get; set; } = null;
 
         /// <summary>
         /// User's favorite TV shows.
         /// </summary>
         [ApiParameter("fav_shows")]
-        public string? FavShows { get; set; } = null;
+        public string FavShows { get; set; } = null;
 
         /// <summary>
         /// User's favorite books.
         /// </summary>
         [ApiParameter("fav_books")]
-        public string? FavBooks { get; set; } = null;
+        public string FavBooks { get; set; } = null;
 
         /// <summary>
         /// User's favorite quote.
         /// </summary>
         [ApiParameter("fav_quote")]
-        public string? FavQuote { get; set; } = null;
+        public string FavQuote { get; set; } = null;
 
         /// <summary>
         /// User's favorite games.
         /// </summary>
         [ApiParameter("fav_games")]
-        public string? FavGames { get; set; } = null;
+        public string FavGames { get; set; } = null;
 
         /// <summary>
         /// Additional information about the user ("About Me").
         /// </summary>
         [ApiParameter("about")]
-        public string? About { get; set; } = null;
+        public string About { get; set; } = null;
     }
 }

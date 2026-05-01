@@ -20,24 +20,24 @@ namespace OpenVkNetApi.Models.Newsfeed
         /// A list of banned users and/or communities.
         /// </summary>
         [JsonProperty("items")]
-        public List<object>? Items { get; set; }
+        public List<object> Items { get; set; }
 
         /// <summary>
         /// A list of banned groups.
         /// </summary>
         [JsonProperty("groups")]
-        public List<Group>? Groups { get; set; }
+        public List<Group> Groups { get; set; }
 
         /// <summary>
         /// A list of banned user IDs.
         /// </summary>
         [JsonProperty("members")]
-        public List<int>? Members { get; set; }
+        public List<int> Members { get; set; }
 
         /// <summary>
         /// A list of user profiles related to the banned items.
         /// </summary>
         [JsonProperty("profiles")]
-        public List<User>? Profiles { get; set; }
+        public List<User> Profiles { get; set; }
     }
 }

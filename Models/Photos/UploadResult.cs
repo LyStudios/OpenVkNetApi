@@ -11,18 +11,18 @@ namespace OpenVkNetApi.Models.Photos
         /// A string representation of the uploaded photo, used for single-file uploads.
         /// </summary>
         [JsonProperty("photo")]
-        public string? Photo { get; set; }
+        public string Photo { get; set; }
 
         /// <summary>
         /// A JSON string representing a list of uploaded photos, used for multi-file uploads.
         /// </summary>
         [JsonProperty("photos_list")]
-        public string? PhotosList { get; set; }
+        public string PhotosList { get; set; }
 
         /// <summary>
         /// A hash string required to save the uploaded photo(s).
         /// </summary>
         [JsonProperty("hash")]
-        public string Hash { get; set; } = null!;
+        public string Hash { get; set; } = null;
     }
 }

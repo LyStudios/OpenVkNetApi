@@ -12,6 +12,6 @@ namespace OpenVkNetApi.Models
         /// The starting point for the next page of results.
         /// </summary>
         [JsonProperty("next_from")]
-        public string? NextFrom { get; set; }
+        public string NextFrom { get; set; }
     }
 }

@@ -15,18 +15,18 @@ namespace OpenVkNetApi.Models.Board
         /// The list of comment items.
         /// </summary>
         [JsonProperty("items")]
-        public List<BoardComment>? Items { get; set; }
+        public List<BoardComment> Items { get; set; }
 
         /// <summary>
         /// A list of user profiles for the authors of the comments.
         /// </summary>
         [JsonProperty("profiles")]
-        public List<User>? Profiles { get; set; }
+        public List<User> Profiles { get; set; }
 
         /// <summary>
         /// A list of group profiles for the authors of the comments.
         /// </summary>
         [JsonProperty("groups")]
-        public List<Group>? Groups { get; set; }
+        public List<Group> Groups { get; set; }
     }
 }

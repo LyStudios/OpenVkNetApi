@@ -17,13 +17,13 @@ namespace OpenVkNetApi.Models.Groups
         /// The group name.
         /// </summary>
         [JsonProperty("name")]
-        public string Name { get; set; } = null!;
+        public string Name { get; set; } = null;
 
         /// <summary>
         /// The group's screen name (short address).
         /// </summary>
         [JsonProperty("screen_name")]
-        public string ScreenName { get; set; } = null!;
+        public string ScreenName { get; set; } = null;
 
         /// <summary>
         /// Indicates if the group is closed (private).

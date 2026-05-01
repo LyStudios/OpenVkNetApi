@@ -17,25 +17,25 @@ namespace OpenVkNetApi.Models.RequestParameters.Groups
         /// The new group title.
         /// </summary>
         [ApiParameter("title")]
-        public string? Title { get; set; } = null;
+        public string Title { get; set; } = null;
 
         /// <summary>
         /// The new group description.
         /// </summary>
         [ApiParameter("description")]
-        public string? Description { get; set; } = null;
+        public string Description { get; set; } = null;
 
         /// <summary>
         /// The new group screen name (short address).
         /// </summary>
         [ApiParameter("screen_name")]
-        public string? ScreenName { get; set; } = null;
+        public string ScreenName { get; set; } = null;
 
         /// <summary>
         /// The new group website.
         /// </summary>
         [ApiParameter("website")]
-        public string? Website { get; set; } = null;
+        public string Website { get; set; } = null;
 
         /// <summary>
         /// Wall settings (0 - off, 1 - open, 2 - limited, 3 - closed). Default is -1 (no change).

@@ -12,6 +12,6 @@ namespace OpenVkNetApi.Models.Audio
         /// A seed value for shuffling the playlist.
         /// </summary>
         [JsonProperty("shuffle_seed")]
-        public string? ShuffleSeed { get; set; }
+        public string ShuffleSeed { get; set; }
     }
 }

@@ -8,11 +8,11 @@ namespace OpenVkNetApi.Utils
 {
     public class AttachmentJsonConverter : JsonConverter<List<Attachment>>
     {
-        public override void WriteJson(JsonWriter writer, List<Attachment>? value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, List<Attachment> value, JsonSerializer serializer)
         {
             var array = new JArray();
 
-            foreach (var att in value!)
+            foreach (var att in value)
             {
                 var obj = new JObject
                 {
@@ -25,7 +25,7 @@ namespace OpenVkNetApi.Utils
             array.WriteTo(writer);
         }
 
-        public override List<Attachment>? ReadJson(JsonReader reader, Type objectType, List<Attachment>? existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override List<Attachment> ReadJson(JsonReader reader, Type objectType, List<Attachment> existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             if (reader.TokenType != JsonToken.StartArray) return new List<Attachment>();
 
@@ -37,16 +37,31 @@ namespace OpenVkNetApi.Utils
                 var type = token["type"]?.ToString();
                 if (type == null) continue;
 
-                Attachment? attachment = type switch
+                Attachment attachment;
+                switch (type)
                 {
-                    "photo" => token["photo"]?.ToObject<PhotoAttachment>(serializer),
-                    "video" => token["video"]?.ToObject<VideoAttachment>(serializer),
-                    "doc" => token["doc"]?.ToObject<DocumentAttachment>(serializer),
-                    "audio" => token["audio"]?.ToObject<AudioAttachment>(serializer),
-                    "note" => token["note"]?.ToObject<NoteAttachment>(serializer),
-                    "poll" => token["poll"]?.ToObject<PollAttachment>(serializer),
-                    _ => new UnknownAttachment { Type = type, Raw = (JObject)token }
-                };
+                    case "photo":
+                        attachment = token["photo"]?.ToObject<PhotoAttachment>(serializer);
+                        break;
+                    case "video":
+                        attachment = token["video"]?.ToObject<VideoAttachment>(serializer);
+                        break;
+                    case "doc":
+                        attachment = token["doc"]?.ToObject<DocumentAttachment>(serializer);
+                        break;
+                    case "audio":
+                        attachment = token["audio"]?.ToObject<AudioAttachment>(serializer);
+                        break;
+                    case "note":
+                        attachment = token["note"]?.ToObject<NoteAttachment>(serializer);
+                        break;
+                    case "poll":
+                        attachment = token["poll"]?.ToObject<PollAttachment>(serializer);
+                        break;
+                    default:
+                        attachment = new UnknownAttachment { Type = type, Raw = (JObject)token };
+                        break;
+                }
 
                 if (attachment != null)
                     result.Add(attachment);

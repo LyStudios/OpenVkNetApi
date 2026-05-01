@@ -39,10 +39,10 @@ namespace OpenVkNetApi.Utils
         /// <param name="parameters">An object containing the request parameters.</param>
         /// <param name="cancellationToken">A cancellation token for the operation.</param>
         /// <returns>The deserialized API response of type <typeparamref name="T"/>.</returns>
-        protected Task<T> GetAsync<T>(string method, object? parameters = null, CancellationToken cancellationToken = default)
+        protected Task<T> GetAsync<T>(string method, object parameters = null, CancellationToken cancellationToken = default)
         {
             var fullMethodName = method.Contains(".") ? method : $"{_category}.{method}";
-            Dictionary<string, string>? dictParameters = null;
+            Dictionary<string, string> dictParameters = null;
             if (parameters != null)
             {
                 if (parameters is Dictionary<string, string> existingDict)
@@ -65,10 +65,10 @@ namespace OpenVkNetApi.Utils
         /// <param name="parameters">An object containing the request parameters.</param>
         /// <param name="cancellationToken">A cancellation token for the operation.</param>
         /// <returns>The deserialized API response of type <typeparamref name="T"/>.</returns>
-        protected Task<T> PostAsync<T>(string method, object? parameters = null, CancellationToken cancellationToken = default)
+        protected Task<T> PostAsync<T>(string method, object parameters = null, CancellationToken cancellationToken = default)
         {
             var fullMethodName = method.Contains(".") ? method : $"{_category}.{method}";
-            Dictionary<string, string>? dictParameters = null;
+            Dictionary<string, string> dictParameters = null;
             if (parameters != null)
             {
                 if (parameters is Dictionary<string, string> existingDict)

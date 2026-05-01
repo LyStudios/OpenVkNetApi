@@ -13,13 +13,13 @@ namespace OpenVkNetApi.Models.RequestParameters.Polls
         /// The poll question.
         /// </summary>
         [ApiParameter("question")]
-        public string Question { get; set; } = null!;
+        public string Question { get; set; } = null;
 
         /// <summary>
         /// A list of answer options. Will be serialized to JSON for the API.
         /// </summary>
         [ApiIgnore]
-        public IEnumerable<string> Answers { get; set; } = null!;
+        public IEnumerable<string> Answers { get; set; } = null;
 
         /// <summary>
         /// A JSON string representing an array of answer options.

@@ -23,13 +23,13 @@ namespace OpenVkNetApi.Models.RequestParameters.Photos
         /// New album title.
         /// </summary>
         [ApiParameter("title")]
-        public string? Title { get; set; } = null;
+        public string Title { get; set; } = null;
 
         /// <summary>
         /// New album description.
         /// </summary>
         [ApiParameter("description")]
-        public string? Description { get; set; } = null;
+        public string Description { get; set; } = null;
 
         /// <summary>
         /// Privacy settings for the album.

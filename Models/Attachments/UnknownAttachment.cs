@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace OpenVkNetApi.Models.Attachments
 {
     public sealed class UnknownAttachment : Attachment
     {
-        public JObject? Raw { get; set; }
+        public JObject Raw { get; set; }
     }
 }

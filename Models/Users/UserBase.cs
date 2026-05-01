@@ -17,12 +17,12 @@ namespace OpenVkNetApi.Models.Users
         /// The user's first name.
         /// </summary>
         [JsonProperty("first_name")]
-        public string? FirstName { get; set; }
+        public string FirstName { get; set; }
 
         /// <summary>
         /// The user's last name.
         /// </summary>
         [JsonProperty("last_name")]
-        public string? LastName { get; set; }
+        public string LastName { get; set; }
     }
 }

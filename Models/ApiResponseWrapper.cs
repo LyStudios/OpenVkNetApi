@@ -13,6 +13,6 @@ namespace OpenVkNetApi.Models
         /// The API response data (the main content of the request).
         /// </summary>
         [JsonProperty("response")]
-        public T Response { get; set; } = default!;
+        public T Response { get; set; } = default;
     }
 }

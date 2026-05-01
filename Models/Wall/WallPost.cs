@@ -38,19 +38,19 @@ namespace OpenVkNetApi.Models.Wall
         /// The type of the post (e.g., "post", "copy", "reply").
         /// </summary>
         [JsonProperty("post_type")]
-        public string? PostType { get; set; }
+        public string PostType { get; set; }
 
         /// <summary>
         /// The text content of the post.
         /// </summary>
         [JsonProperty("text")]
-        public string? Text { get; set; }
+        public string Text { get; set; }
 
         /// <summary>
         /// A list of previous posts in the copy history (for reposts).
         /// </summary>
         [JsonProperty("copy_history")]
-        public List<WallPost>? CopyHistory { get; set; }
+        public List<WallPost> CopyHistory { get; set; }
 
         /// <summary>
         /// Indicates if the current user can edit the post.
@@ -99,37 +99,37 @@ namespace OpenVkNetApi.Models.Wall
         /// </summary>
         [JsonProperty("attachments")]
         [JsonConverter(typeof(AttachmentJsonConverter))]
-        public List<Attachment>? Attachments { get; set; }
+        public List<Attachment> Attachments { get; set; }
 
         /// <summary>
         /// Information about the source of the post.
         /// </summary>
         [JsonProperty("post_source")]
-        public object? PostSource { get; set; }
+        public object PostSource { get; set; }
 
         /// <summary>
         /// Information about comments on the post.
         /// </summary>
         [JsonProperty("comments")]
-        public WallPostComments? Comments { get; set; }
+        public WallPostComments Comments { get; set; }
 
         /// <summary>
         /// Information about likes on the post.
         /// </summary>
         [JsonProperty("likes")]
-        public WallPostLikes? Likes { get; set; }
+        public WallPostLikes Likes { get; set; }
 
         /// <summary>
         /// Information about reposts of the post.
         /// </summary>
         [JsonProperty("reposts")]
-        public WallPostReposts? Reposts { get; set; }
+        public WallPostReposts Reposts { get; set; }
 
         /// <summary>
         /// Copyright information for the post.
         /// </summary>
         [JsonProperty("copyright")]
-        public object? Copyright { get; set; }
+        public object Copyright { get; set; }
 
         /// <summary>
         /// The ID of the user who signed the post (if applicable).
@@ -147,7 +147,7 @@ namespace OpenVkNetApi.Models.Wall
         /// Geographic information attached to the post.
         /// </summary>
         [JsonProperty("geo")]
-        public object? Geo { get; set; }
+        public object Geo { get; set; }
     }
 
     /// <summary>
