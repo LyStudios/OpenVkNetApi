@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Newtonsoft.Json;
 using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Polls
@@ -14,10 +16,17 @@ namespace OpenVkNetApi.Models.RequestParameters.Polls
         public string Question { get; set; } = null!;
 
         /// <summary>
+        /// A list of answer options. Will be serialized to JSON for the API.
+        /// </summary>
+        [ApiIgnore]
+        public IEnumerable<string> Answers { get; set; } = null!;
+
+        /// <summary>
         /// A JSON string representing an array of answer options.
+        /// Internal property for API communication.
         /// </summary>
         [ApiParameter("add_answers")]
-        public string AddAnswers { get; set; } = null!;
+        public string AddAnswers => JsonConvert.SerializeObject(Answers);
 
         /// <summary>
         /// True to disable unvoting.

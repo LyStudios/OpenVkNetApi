@@ -43,14 +43,14 @@ namespace OpenVkNetApi.Methods
         /// Adds the current user's vote to a poll.
         /// </summary>
         /// <param name="pollId">The poll ID.</param>
-        /// <param name="answersIds">A comma-separated list of answer IDs.</param>
+        /// <param name="answerIds">A list of answer IDs to vote for.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
-        public async Task<int> AddVoteAsync(int pollId, string answersIds, CancellationToken ct = default)
+        public async Task<int> AddVoteAsync(int pollId, IEnumerable<int> answerIds, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("poll_id", pollId)
-                .Add("answers_ids", answersIds)
+                .Add("answers_ids", string.Join(",", answerIds))
                 .ToDictionary();
 
             return await PostAsync<int>("addVote", parameters, ct);
