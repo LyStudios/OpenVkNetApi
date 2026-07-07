@@ -30,7 +30,8 @@ jobs:
 
       - name: Build & Pack
         run: |
-          dotnet pack --configuration Release --output ./nupkg
+          dotnet build --configuration Release
+          dotnet pack --configuration Release --output ./nupkg --no-build
 
       - name: NuGet Login
         uses: NuGet/login@v1
