@@ -29,6 +29,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Photos
         /// True if the comment is published on behalf of a group.
         /// </summary>
         [ApiParameter("from_group")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
         public bool FromGroup { get; set; } = false;
     }
 }

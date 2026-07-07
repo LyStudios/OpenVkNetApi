@@ -18,7 +18,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Newsfeed
         /// The value from which to start returning posts for pagination.
         /// </summary>
         [ApiParameter("start_from")]
-        public int StartFrom { get; set; } = 0;
+        public string StartFrom { get; set; } = "0";
 
         /// <summary>
         /// Unix timestamp to start returning posts from.
@@ -57,5 +57,12 @@ namespace OpenVkNetApi.Models.RequestParameters.Newsfeed
         [ApiParameter("forGodSakePleaseDoNotReportAboutMyOnlineActivity")]
         [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
         public bool ForGodSakePleaseDoNotReportAboutMyOnlineActivity { get; set; } = false;
+
+        /// <summary>
+        /// 1 to return posts from community/user walls that the user is not subscribed to.
+        /// </summary>
+        [ApiParameter("with_alien_wall_posts")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool WithAlienWallPosts { get; set; } = false;
     }
 }

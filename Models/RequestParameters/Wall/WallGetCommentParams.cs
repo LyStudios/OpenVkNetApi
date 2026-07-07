@@ -24,6 +24,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Wall
         /// 1 to return extended information about users.
         /// </summary>
         [ApiParameter("extended")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
         public bool Extended { get; set; } = false;
 
         /// <summary>

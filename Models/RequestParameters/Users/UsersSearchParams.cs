@@ -60,6 +60,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Users
         /// True to return only online users.
         /// </summary>
         [ApiParameter("online")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
         public bool Online { get; set; } = false;
 
         /// <summary>

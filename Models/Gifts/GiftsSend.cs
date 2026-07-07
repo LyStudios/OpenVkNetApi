@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.Gifts
 {
@@ -8,10 +9,11 @@ namespace OpenVkNetApi.Models.Gifts
     public class GiftsSend
     {
         /// <summary>
-        /// Indicates if the operation was successful (1 for yes, 0 for no).
+        /// Indicates if the operation was successful.
         /// </summary>
         [JsonProperty("success")]
-        public int Success { get; set; }
+        [JsonConverter(typeof(BoolToIntConverter))]
+        public bool Success { get; set; }
 
         /// <summary>
         /// The ID of the recipient user.

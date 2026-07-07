@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.Photos
 {
@@ -65,13 +66,13 @@ namespace OpenVkNetApi.Models.Photos
         /// Gets or sets the original photo width in pixels.
         /// </summary>
         [JsonProperty("width")]
-        public int Width { get; set; }
+        public int? Width { get; set; }
 
         /// <summary>
         /// Gets or sets the original photo height in pixels.
         /// </summary>
         [JsonProperty("height")]
-        public int Height { get; set; }
+        public int? Height { get; set; }
 
         /// <summary>
         /// URL of the 75px thumbnail copy.
@@ -165,28 +166,42 @@ namespace OpenVkNetApi.Models.Photos
         public OriginalPhoto OriginalPhoto { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of likes on the photo.
+        /// Gets or sets the likes information on the photo.
         /// </summary>
         [JsonProperty("likes")]
-        public int? Likes { get; set; }
+        public PhotoLikes Likes { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of comments on the photo.
+        /// Gets or sets the comments information on the photo.
         /// </summary>
         [JsonProperty("comments")]
-        public int? Comments { get; set; }
+        public PhotoComments Comments { get; set; }
 
         /// <summary>
-        /// Indicates whether the current user can comment on the photo (1 = yes, 0 = no).
+        /// Indicates whether the current user can comment on the photo.
         /// </summary>
         [JsonProperty("can_comment")]
-        public int CanComment { get; set; }
+        [JsonConverter(typeof(BoolToIntConverter))]
+        public bool? CanComment { get; set; }
 
         /// <summary>
-        /// Indicates whether the current user can repost the photo (1 = yes, 0 = no).
+        /// Indicates whether the current user can repost the photo.
         /// </summary>
         [JsonProperty("can_repost")]
-        public int CanRepost { get; set; }
+        [JsonConverter(typeof(BoolToIntConverter))]
+        public bool? CanRepost { get; set; }
+
+        /// <summary>
+        /// Indicates if the photo has tags (true = yes, false = no).
+        /// </summary>
+        [JsonProperty("has_tags")]
+        public bool? HasTags { get; set; }
+
+        /// <summary>
+        /// The text description of the photo.
+        /// </summary>
+        [JsonProperty("text")]
+        public string Text { get; set; }
 
         /// <summary>
         /// Collection of available photo sizes with URLs and dimensions.

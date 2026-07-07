@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.Account
 {
@@ -9,9 +10,10 @@ namespace OpenVkNetApi.Models.Account
     public class AccountSaveInterests
     {
         /// <summary>
-        /// Indicates if the information was changed (1 for yes, 0 for no).
+        /// Indicates if the information was changed.
         /// </summary>
         [JsonProperty("changed")]
-        public int Changed { get; set; }
+        [JsonConverter(typeof(BoolToIntConverter))]
+        public bool Changed { get; set; }
     }
 }

@@ -84,7 +84,7 @@ namespace OpenVkNetApi.Methods
             var parameters = new RequestParams()
                 .Add("note_id", noteId)
                 .Add("owner_id", ownerId)
-                .Add("need_wiki", needWiki)
+                .Add("need_wiki", needWiki ? 1 : 0)
                 .ToDictionary();
 
             return await GetAsync<Note>("getById", parameters, ct);
@@ -99,6 +99,21 @@ namespace OpenVkNetApi.Methods
         public async Task<Collection<NoteComment>> GetCommentsAsync(NotesGetCommentsParams @params, CancellationToken ct = default)
         {
             return await GetAsync<Collection<NoteComment>>("getComments", @params, ct);
+        }
+
+        /// <summary>
+        /// Deletes a note.
+        /// </summary>
+        /// <param name="noteId">The note ID.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>An integer representing the API's success code (usually 1 on success).</returns>
+        public async Task<int> DeleteAsync(int noteId, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("note_id", noteId)
+                .ToDictionary();
+
+            return await PostAsync<int>("delete", parameters, ct);
         }
     }
 }

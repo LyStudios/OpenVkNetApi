@@ -35,18 +35,21 @@ namespace OpenVkNetApi.Models.RequestParameters.Photos
         /// True to return system albums.
         /// </summary>
         [ApiParameter("need_system")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
         public bool NeedSystem { get; set; } = true;
 
         /// <summary>
         /// True to return album covers.
         /// </summary>
         [ApiParameter("need_covers")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
         public bool NeedCovers { get; set; } = true;
 
         /// <summary>
         /// True to return photo sizes.
         /// </summary>
         [ApiParameter("photo_sizes")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
         public bool PhotoSizes { get; set; } = false;
     }
 }

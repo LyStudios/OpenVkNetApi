@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.Wall
 {
@@ -8,10 +9,11 @@ namespace OpenVkNetApi.Models.Wall
     public class WallRepost
     {
         /// <summary>
-        /// Indicates if the repost operation was successful (1 for success).
+        /// Indicates if the repost operation was successful.
         /// </summary>
         [JsonProperty("success")]
-        public int Success { get; set; }
+        [JsonConverter(typeof(BoolToIntConverter))]
+        public bool Success { get; set; }
 
         /// <summary>
         /// The ID of the created repost.

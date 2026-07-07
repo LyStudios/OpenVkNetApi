@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using OpenVkNetApi.Models;
 using OpenVkNetApi.Models.Notifications;
@@ -35,6 +36,21 @@ namespace OpenVkNetApi.Methods
         public async Task<int> MarkAsViewedAsync()
         {
             return await PostAsync<int>("markAsViewed");
+        }
+
+        /// <summary>
+        /// Fetches new notifications.
+        /// </summary>
+        /// <param name="lastId">The ID of the last processed notification.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>A <see cref="NotificationsFetch"/> object.</returns>
+        public async Task<NotificationsFetch> FetchAsync(string lastId = "0", CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("last_id", lastId)
+                .ToDictionary();
+
+            return await GetAsync<NotificationsFetch>("fetch", parameters, ct);
         }
     }
 }

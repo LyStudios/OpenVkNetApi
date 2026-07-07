@@ -29,12 +29,14 @@ namespace OpenVkNetApi.Models.RequestParameters.Photos
         /// True to return extended information about photos.
         /// </summary>
         [ApiParameter("extended")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
         public bool Extended { get; set; } = false;
 
         /// <summary>
         /// True to return photo sizes.
         /// </summary>
         [ApiParameter("photo_sizes")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
         public bool PhotoSizes { get; set; } = false;
 
         /// <summary>

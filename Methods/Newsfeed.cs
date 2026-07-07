@@ -23,27 +23,37 @@ namespace OpenVkNetApi.Methods
         /// Returns the current user's newsfeed.
         /// </summary>
         /// <param name="params">Parameters for the request.</param>
-        public async Task<NewsfeedCollection<NewsfeedPost>> GetAsync(NewsfeedGetParams @params)
+        public async Task<NewsfeedCollection<Post>> GetAsync(NewsfeedGetParams @params)
         {
-            return await GetAsync<NewsfeedCollection<NewsfeedPost>>("get", @params);
+            return await GetAsync<NewsfeedCollection<Post>>("get", @params);
         }
 
         /// <summary>
         /// Returns the global newsfeed.
         /// </summary>
         /// <param name="params">Parameters for the request.</param>
-        public async Task<NewsfeedCollection<NewsfeedPost>> GetGlobalAsync(NewsfeedGetGlobalParams @params)
+        public async Task<NewsfeedCollection<Post>> GetGlobalAsync(NewsfeedGetGlobalParams @params)
         {
-            return await GetAsync<NewsfeedCollection<NewsfeedPost>>("getGlobal", @params);
+            return await GetAsync<NewsfeedCollection<Post>>("getGlobal", @params);
+        }
+
+        /// <summary>
+        /// Returns recommended posts.
+        /// Alias of <see cref="GetGlobalAsync"/>.
+        /// </summary>
+        /// <param name="params">Parameters for the request.</param>
+        public async Task<NewsfeedCollection<Post>> GetRecommendedAsync(NewsfeedGetGlobalParams @params)
+        {
+            return await GetAsync<NewsfeedCollection<Post>>("getRecommended", @params);
         }
 
         /// <summary>
         /// Returns a newsfeed filtered by a specific type.
         /// </summary>
         /// <param name="params">Parameters for the request, including the type.</param>
-        public async Task<NewsfeedCollection<NewsfeedPost>> GetByTypeAsync(NewsfeedGetByTypeParams @params)
+        public async Task<NewsfeedCollection<Post>> GetByTypeAsync(NewsfeedGetByTypeParams @params)
         {
-            return await GetAsync<NewsfeedCollection<NewsfeedPost>>("getByType", @params);
+            return await GetAsync<NewsfeedCollection<Post>>("getByType", @params);
         }
 
         /// <summary>

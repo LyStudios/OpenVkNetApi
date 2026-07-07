@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.Groups
 {
@@ -8,33 +9,38 @@ namespace OpenVkNetApi.Models.Groups
     public class GroupsIsMember
     {
         /// <summary>
-        /// Indicates if the user is a member of the group (1 for yes, 0 for no).
+        /// Indicates if the user is a member of the group.
         /// </summary>
         [JsonProperty("member")]
-        public int Member { get; set; }
+        [JsonConverter(typeof(BoolToIntConverter))]
+        public bool Member { get; set; }
 
         /// <summary>
-        /// Indicates if the user has a pending join request (1 for yes, 0 for no).
+        /// Indicates if the user has a pending join request.
         /// </summary>
         [JsonProperty("request")]
-        public int Request { get; set; }
+        [JsonConverter(typeof(BoolToIntConverter))]
+        public bool Request { get; set; }
 
         /// <summary>
-        /// Indicates if the user has a pending invitation to the group (1 for yes, 0 for no).
+        /// Indicates if the user has a pending invitation to the group.
         /// </summary>
         [JsonProperty("invitation")]
-        public int Invitation { get; set; }
+        [JsonConverter(typeof(BoolToIntConverter))]
+        public bool Invitation { get; set; }
 
         /// <summary>
         /// Indicates if the current user can invite others to the group.
         /// </summary>
         [JsonProperty("can_invite")]
-        public int CanInvite { get; set; }
+        [JsonConverter(typeof(BoolToIntConverter))]
+        public bool CanInvite { get; set; }
 
         /// <summary>
         /// Indicates if the current user can recall an invitation.
         /// </summary>
         [JsonProperty("can_recall")]
-        public int CanRecall { get; set; }
+        [JsonConverter(typeof(BoolToIntConverter))]
+        public bool CanRecall { get; set; }
     }
 }

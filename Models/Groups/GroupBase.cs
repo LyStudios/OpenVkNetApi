@@ -29,12 +29,12 @@ namespace OpenVkNetApi.Models.Groups
         /// Indicates if the group is closed (private).
         /// </summary>
         [JsonProperty("is_closed")]
-        public bool IsClosed { get; set; }
+        public bool? IsClosed { get; set; }
 
         /// <summary>
         /// Indicates if the current user can access the closed group.
         /// </summary>
         [JsonProperty("can_access_closed")]
-        public bool CanAccessClosed { get; set; }
+        public bool? CanAccessClosed { get; set; }
     }
 }

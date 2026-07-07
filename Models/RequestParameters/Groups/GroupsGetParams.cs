@@ -36,6 +36,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Groups
         /// True to return only online members (0 or 1).
         /// </summary>
         [ApiParameter("online")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
         public bool Online { get; set; } = false;
 
         /// <summary>
@@ -43,5 +44,12 @@ namespace OpenVkNetApi.Models.RequestParameters.Groups
         /// </summary>
         [ApiParameter("filter")]
         public string Filter { get; set; } = "groups";
+
+        /// <summary>
+        /// 1 to return extended information about groups.
+        /// </summary>
+        [ApiParameter("extended")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool Extended { get; set; } = false;
     }
 }

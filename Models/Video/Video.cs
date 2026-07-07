@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using OpenVkNetApi.Models;
 using OpenVkNetApi.Models.Attachments;
 using OpenVkNetApi.Models.Photos;
 using System.Collections.Generic;
@@ -86,10 +87,10 @@ namespace OpenVkNetApi.Models.Video
         public bool? IsProcessed { get; set; }
 
         [JsonProperty("reposts")]
-        public Reposts Reposts { get; set; }
+        public RepostsInfo Reposts { get; set; }
 
         [JsonProperty("likes")]
-        public Attachments.Likes Likes { get; set; }
+        public LikesInfo Likes { get; set; }
 
         /// <summary>
         /// The video duration in seconds.

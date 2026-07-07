@@ -60,5 +60,17 @@ namespace OpenVkNetApi.Models.Board
         /// </summary>
         [JsonProperty("is_fixed")]
         public bool IsFixed { get; set; }
+
+        /// <summary>
+        /// The first comment text preview.
+        /// </summary>
+        [JsonProperty("first_comment")]
+        public string FirstComment { get; set; }
+
+        /// <summary>
+        /// The last comment text preview.
+        /// </summary>
+        [JsonProperty("last_comment")]
+        public string LastComment { get; set; }
     }
 }

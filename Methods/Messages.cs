@@ -109,10 +109,10 @@ namespace OpenVkNetApi.Methods
         /// </summary>
         /// <param name="params">Parameters for the request.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
-        /// <returns>A <see cref="MessagesGetConversationsResponse"/> object containing conversations.</returns>
-        public async Task<ExtendedCollection<Conversation>> GetConversationsAsync(MessagesGetConversationsParams @params, CancellationToken ct = default)
+        /// <returns>A <see cref="ExtendedCollection<ConversationAndMessage>"/> object containing conversations.</returns>
+        public async Task<ExtendedCollection<ConversationAndMessage>> GetConversationsAsync(MessagesGetConversationsParams @params, CancellationToken ct = default)
         {
-            return await GetAsync<ExtendedCollection<Conversation>>("getConversations", @params, ct);
+            return await GetAsync<ExtendedCollection<ConversationAndMessage>>("getConversations", @params, ct);
         }
 
         /// <summary>
@@ -184,6 +184,25 @@ namespace OpenVkNetApi.Methods
         public async Task<int> EditAsync(MessagesEditParams @params, CancellationToken ct = default)
         {
             return await PostAsync<int>("edit", @params, ct);
+        }
+
+        /// <summary>
+        /// Sends activity status (e.g., typing) to a conversation peer.
+        /// </summary>
+        /// <param name="userId">The ID of the user (deprecated/alias for peerId).</param>
+        /// <param name="type">The type of activity (currently only "typing" is supported).</param>
+        /// <param name="peerId">The ID of the peer conversation.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>An integer representing the API's success code (usually 1 on success).</returns>
+        public async Task<int> SetActivityAsync(int userId = 0, string type = "typing", int peerId = 0, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("user_id", userId)
+                .Add("type", type)
+                .Add("peer_id", peerId)
+                .ToDictionary();
+
+            return await PostAsync<int>("setActivity", parameters, ct);
         }
     }
 }

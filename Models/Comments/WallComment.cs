@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using OpenVkNetApi.Models;
 using OpenVkNetApi.Models.Wall;
 
 namespace OpenVkNetApi.Models.Comments
@@ -42,7 +43,7 @@ namespace OpenVkNetApi.Models.Comments
         /// Information about likes on the comment.
         /// </summary>
         [JsonProperty("likes")]
-        public WallPostLikes Likes { get; set; }
+        public LikesInfo Likes { get; set; }
 
         /// <summary>
         /// Indicates if the comment is from the post author.

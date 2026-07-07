@@ -48,15 +48,17 @@ namespace OpenVkNetApi.Models.Comments
         public List<object> ParentsStack { get; set; }
 
         /// <summary>
-        /// Indicates if the current user has liked this comment (1 for yes, 0 for no).
+        /// Indicates if the current user has liked this comment.
         /// </summary>
         [JsonProperty("user_likes")]
-        public int? UserLikes { get; set; }
+        [JsonConverter(typeof(BoolToIntConverter))]
+        public bool? UserLikes { get; set; }
 
         /// <summary>
         /// Indicates if the current user can like this comment.
         /// </summary>
         [JsonProperty("can_like")]
+        [JsonConverter(typeof(BoolToIntConverter))]
         public bool? CanLike { get; set; }
     }
 }

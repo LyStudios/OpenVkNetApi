@@ -90,5 +90,11 @@ namespace OpenVkNetApi.Models.Audio
         /// </summary>
         [JsonProperty("searchable")]
         public bool Searchable { get; set; }
+
+        /// <summary>
+        /// The cover thumbnail information of the audio album/playlist.
+        /// </summary>
+        [JsonProperty("thumb")]
+        public PlaylistThumb Thumb { get; set; }
     }
 }

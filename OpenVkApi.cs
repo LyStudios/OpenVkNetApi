@@ -154,8 +154,19 @@ namespace OpenVkNetApi
         /// <param name="httpClient">An optional custom <see cref="HttpClient"/> instance.</param>
         public OpenVkApi(string baseUrl, HttpClient httpClient = null)
         {
-            _baseUrl = baseUrl.TrimEnd('/');
+            _baseUrl = baseUrl.Trim().TrimEnd('/');
             HttpClient = httpClient ?? new HttpClient();
+
+            try
+            {
+                HttpClient.DefaultRequestHeaders.CacheControl = new System.Net.Http.Headers.CacheControlHeaderValue
+                {
+                    NoCache = true,
+                    NoStore = true
+                };
+                HttpClient.DefaultRequestHeaders.IfModifiedSince = DateTimeOffset.UtcNow;
+            }
+            catch { }
 
             Account = new Account(this);
             Audio = new Audio(this);
@@ -242,8 +253,14 @@ namespace OpenVkNetApi
 
             string json = await response.Content.ReadAsStringAsync();
 
-            if (string.IsNullOrWhiteSpace(json) || json.TrimStart().StartsWith("<"))
-                throw new OvkApiException(-1, "Server returned non-JSON response");
+            if (string.IsNullOrWhiteSpace(json) || json.TrimStart().StartsWith("<") || !response.IsSuccessStatusCode)
+            {
+                var snippet = string.IsNullOrEmpty(json) ? "empty" : (json.Length > 500 ? json.Substring(0, 500) : json);
+                if (!response.IsSuccessStatusCode && !json.TrimStart().StartsWith("{"))
+                {
+                    throw new OvkApiException(-1, string.Format("Server error (HTTP {0}) at {1}: {2}", (int)response.StatusCode, url, snippet));
+                }
+            }
 
             if (!response.IsSuccessStatusCode)
             {
@@ -302,53 +319,108 @@ namespace OpenVkNetApi
             if (string.IsNullOrEmpty(AccessToken))
                 throw new InvalidOperationException("API is not authorized. Call AuthorizeAsync() first.");
 
-            string url = $"{_baseUrl}/method/{method}?access_token={AccessToken}";
-            HttpResponseMessage response;
-            string json;
+            string cleanBase = _baseUrl.Trim().TrimEnd('/');
+            string cleanMethod = method.Trim();
+            string cleanToken = AccessToken.Trim();
 
-            try
+            // Если метод уже содержит /method/, не добавляем его
+            string methodPath = cleanMethod;
+            if (!cleanBase.Contains("/method") && !cleanMethod.Contains("method/"))
             {
-                if (httpMethod == HttpMethod.Get && parameters != null)
+                methodPath = "method/" + cleanMethod;
+            }
+
+            System.Text.StringBuilder urlBuilder = new System.Text.StringBuilder();
+            urlBuilder.Append(cleanBase);
+            urlBuilder.Append("/");
+            urlBuilder.Append(methodPath);
+            urlBuilder.Append("?access_token=");
+            urlBuilder.Append(Uri.EscapeDataString(cleanToken));
+
+            if (httpMethod == HttpMethod.Get && parameters != null)
+            {
+                foreach (var p in parameters)
                 {
-                    foreach (var p in parameters)
-                        url += $"&{p.Key}={Uri.EscapeDataString(p.Value)}";
-                    response = await HttpClient.GetAsync(url, ct);
+                    urlBuilder.Append("&");
+                    urlBuilder.Append(p.Key.Trim());
+                    urlBuilder.Append("=");
+                    urlBuilder.Append(Uri.EscapeDataString(p.Value ?? ""));
                 }
-                else
+            }
+
+            string url = urlBuilder.ToString();
+            
+            int maxAttempts = 3;
+            int attempt = 0;
+
+            while (true)
+            {
+                attempt++;
+                HttpResponseMessage response = null;
+                string json = null;
+
+                try
                 {
-                    var content = parameters != null ? new FormUrlEncodedContent(parameters) : null;
-                    response = await HttpClient.PostAsync(url, content, ct);
+                    if (httpMethod == HttpMethod.Get)
+                    {
+                        response = await HttpClient.GetAsync(url, ct);
+                    }
+                    else
+                    {
+                        var content = parameters != null ? new FormUrlEncodedContent(parameters) : null;
+                        response = await HttpClient.PostAsync(url, content, ct);
+                    }
+
+                    json = await response.Content.ReadAsStringAsync();
+                }
+                catch (OperationCanceledException)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    if (attempt >= maxAttempts)
+                        throw new HttpRequestException(string.Format("Failed to send {0} request to {1} after {2} attempts", httpMethod, url, attempt), ex);
+                    
+                    await Task.Delay(1000 * attempt, ct);
+                    continue;
                 }
 
-                json = await response.Content.ReadAsStringAsync();
+                bool isRetryableStatus = response.StatusCode == System.Net.HttpStatusCode.NotFound || 
+                                       (int)response.StatusCode >= 500;
+
+                if (string.IsNullOrWhiteSpace(json) || json.TrimStart().StartsWith("<") || !response.IsSuccessStatusCode)
+                {
+                    var snippet = string.IsNullOrEmpty(json) ? "empty" : (json.Length > 500 ? json.Substring(0, 500) : json);
+                    
+                    if (isRetryableStatus && attempt < maxAttempts)
+                    {
+                        await Task.Delay(1000 * attempt, ct);
+                        continue;
+                    }
+
+                    if (!response.IsSuccessStatusCode && !json.TrimStart().StartsWith("{"))
+                    {
+                        throw new OvkApiException(-1, string.Format("Server error (HTTP {0}) at {1}: {2}", (int)response.StatusCode, url, snippet));
+                    }
+                }
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var err = TryParseApiError(json);
+                    throw new OvkApiException(err?.ErrorCode ?? (int)response.StatusCode, err?.ErrorMessage ?? response.ReasonPhrase);
+                }
+
+                var apiError = TryParseApiError(json);
+                if (apiError != null && apiError.ErrorCode != 0)
+                    throw new OvkApiException(apiError.ErrorCode, apiError.ErrorMessage ?? "Unknown API error");
+
+                var wrapper = JsonConvert.DeserializeObject<ApiResponseWrapper<T>>(json);
+                if (wrapper == null || wrapper.Response == null)
+                    throw new OvkApiException(-1, "Server returned empty response");
+
+                return wrapper.Response;
             }
-            catch (OperationCanceledException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                throw new HttpRequestException($"Failed to send {httpMethod} request", ex);
-            }
-
-            if (string.IsNullOrWhiteSpace(json) || json.TrimStart().StartsWith("<"))
-                throw new OvkApiException(-1, "Server returned non-JSON response");
-
-            if (!response.IsSuccessStatusCode)
-            {
-                var err = TryParseApiError(json);
-                throw new OvkApiException(err?.ErrorCode ?? (int)response.StatusCode, err?.ErrorMessage ?? response.ReasonPhrase);
-            }
-
-            var apiError = TryParseApiError(json);
-            if (apiError != null && apiError.ErrorCode != 0)
-                throw new OvkApiException(apiError.ErrorCode, apiError.ErrorMessage ?? "Unknown API error");
-
-            var wrapper = JsonConvert.DeserializeObject<ApiResponseWrapper<T>>(json);
-            if (wrapper == null || wrapper.Response == null)
-                throw new OvkApiException(-1, "Server returned empty response");
-
-            return wrapper.Response;
         }
 
         /// <summary>

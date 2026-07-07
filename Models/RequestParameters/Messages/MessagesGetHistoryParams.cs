@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using OpenVkNetApi.Models.Enums;
 using OpenVkNetApi.Utils;
 
@@ -12,31 +11,31 @@ namespace OpenVkNetApi.Models.RequestParameters.Messages
         /// <summary>
         /// Offset for pagination.
         /// </summary>
-        [JsonProperty("offset")]
+        [ApiParameter("offset")]
         public int Offset { get; set; } = 0;
 
         /// <summary>
         /// Number of messages to return.
         /// </summary>
-        [JsonProperty("count")]
+        [ApiParameter("count")]
         public int Count { get; set; } = 20;
 
         /// <summary>
         /// User ID. Use 'peer_id' instead if possible.
         /// </summary>
-        [JsonProperty("user_id")]
+        [ApiParameter("user_id")]
         public int UserId { get; set; } = -1;
 
         /// <summary>
         /// Peer ID.
         /// </summary>
-        [JsonProperty("peer_id")]
+        [ApiParameter("peer_id")]
         public int PeerId { get; set; } = -1;
 
         /// <summary>
         /// Start message ID. Messages will be returned starting from this ID.
         /// </summary>
-        [JsonProperty("start_message_id")]
+        [ApiParameter("start_message_id")]
         public int StartMessageId { get; set; } = 0;
 
         /// <summary>
@@ -56,7 +55,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Messages
         /// <summary>
         /// A list of additional fields to return for each user.
         /// </summary>
-        [JsonProperty("fields")]
+        [ApiParameter("fields")]
         public UserFields Fields { get; set; } = UserFields.None;
     }
 }

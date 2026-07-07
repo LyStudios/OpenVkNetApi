@@ -78,9 +78,9 @@ namespace OpenVkNetApi.Models.Photos
         public int? CommentsDisabled { get; set; }
 
         /// <summary>
-        /// A list of available thumbnail sizes for the album cover.
+        /// A dictionary of available thumbnail sizes for the album cover.
         /// </summary>
         [JsonProperty("sizes")]
-        public List<PhotoSize> Sizes { get; set; }
+        public Dictionary<string, PhotoSize> Sizes { get; set; }
     }
 }

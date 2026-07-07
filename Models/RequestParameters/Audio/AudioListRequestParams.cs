@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Audio
 {
@@ -11,31 +11,31 @@ namespace OpenVkNetApi.Models.RequestParameters.Audio
         /// <summary>
         /// The genre ID.
         /// </summary>
-        [JsonProperty("genre_id")]
+        [ApiParameter("genre_id")]
         public int? GenreId { get; set; } = null;
 
         /// <summary>
         /// The genre ID as a string.
         /// </summary>
-        [JsonProperty("genre_str")]
+        [ApiParameter("genre_str")]
         public string GenreStr { get; set; } = null;
 
         /// <summary>
         /// Offset for pagination of popular tracks.
         /// </summary>
-        [JsonProperty("offset")]
+        [ApiParameter("offset")]
         public int Offset { get; set; } = 0;
 
         /// <summary>
         /// The number of audio files to return.
         /// </summary>
-        [JsonProperty("count")]
+        [ApiParameter("count")]
         public int Count { get; set; } = 100;
 
         /// <summary>
         /// The hash for the request.
         /// </summary>
-        [JsonProperty("hash")]
+        [ApiParameter("hash")]
         public string Hash { get; set; } = null;
     }
 }

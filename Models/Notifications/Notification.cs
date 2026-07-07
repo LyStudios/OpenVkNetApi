@@ -31,5 +31,11 @@ namespace OpenVkNetApi.Models.Notifications
         /// </summary>
         [JsonProperty("type")]
         public string Type { get; set; }
+
+        /// <summary>
+        /// Information about the parent object (e.g. post, photo, video) for the notification.
+        /// </summary>
+        [JsonProperty("parent")]
+        public object Parent { get; set; }
     }
 }

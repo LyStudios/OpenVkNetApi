@@ -174,15 +174,15 @@ namespace OpenVkNetApi.Methods
         /// Gets a list of broadcasted audio files.
         /// </summary>
         /// <param name="filter">The filter to apply (e.g., "all").</param>
-        /// <param name="inactive">Whether to include inactive broadcasts.</param>
+        /// <param name="active">Whether to include only active broadcasts (1) or all (0).</param>
         /// <param name="hash">A specific hash value.</param>
         /// <param name="cancellationToken">A cancellation token for the operation.</param>
         /// <returns>A <see cref="Collection{BroadcastItem}"/> of broadcast items.</returns>
-        public async Task<Collection<BroadcastItem>> GetBroadcastListAsync(string filter = "all", bool inactive = false, string hash = null, CancellationToken cancellationToken = default)
+        public async Task<Collection<BroadcastItem>> GetBroadcastListAsync(string filter = "all", bool active = false, string hash = null, CancellationToken cancellationToken = default)
         {
             var parameters = new RequestParams()
                 .Add("filter", filter)
-                .Add("inactive", inactive ? 1 : 0)
+                .Add("active", active ? 1 : 0)
                 .Add("hash", hash)
                 .ToDictionary();
             return await GetAsync<Collection<BroadcastItem>>("getBroadcastList", parameters, cancellationToken);
@@ -316,16 +316,21 @@ namespace OpenVkNetApi.Methods
         /// </summary>
         /// <param name="albumId">The destination album ID.</param>
         /// <param name="audioIds">A comma-separated list of audio IDs to move.</param>
+        /// <param name="doLink">Whether to only link (instead of copying/moving completely).</param>
         /// <param name="cancellationToken">A cancellation token for the operation.</param>
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
-        public async Task<int> MoveToAlbumAsync(int albumId, string audioIds, CancellationToken cancellationToken = default)
+        public async Task<int> MoveToAlbumAsync(int albumId, string audioIds, bool? doLink = null, CancellationToken cancellationToken = default)
         {
             var parameters = new RequestParams()
                 .Add("album_id", albumId)
-                .Add("audio_ids", audioIds)
-                .ToDictionary();
+                .Add("audio_ids", audioIds);
 
-            return await GetAsync<int>("moveToAlbum", parameters, cancellationToken: cancellationToken);
+            if (doLink.HasValue)
+            {
+                parameters.Add("do_link", doLink.Value ? 1 : 0);
+            }
+
+            return await GetAsync<int>("moveToAlbum", parameters.ToDictionary(), cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -386,6 +391,45 @@ namespace OpenVkNetApi.Methods
                 .Add("id", albumId)
                 .ToDictionary();
             return await GetAsync<int>("unBookmarkAlbum", parameters, cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of audio playlists for a user or community.
+        /// Alias of <see cref="GetAlbumsAsync"/>.
+        /// </summary>
+        /// <param name="params">Parameters for the request.</param>
+        /// <param name="cancellationToken">A cancellation token for the operation.</param>
+        /// <returns>A <see cref="Collection{Album}"/> of audio playlists.</returns>
+        public async Task<Collection<Album>> GetPlaylistsAsync(AudioGetAlbumsParams @params, CancellationToken cancellationToken = default)
+        {
+            return await GetAsync<Collection<Album>>("getPlaylists", @params, cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns information about an audio playlist by its owner ID and playlist ID.
+        /// </summary>
+        /// <param name="ownerId">The owner's ID.</param>
+        /// <param name="playlistId">The playlist's ID.</param>
+        /// <param name="cancellationToken">A cancellation token for the operation.</param>
+        /// <returns>An <see cref="Album"/> object.</returns>
+        public async Task<Album> GetPlaylistByIdAsync(int ownerId = 0, int playlistId = 0, CancellationToken cancellationToken = default)
+        {
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .Add("playlist_id", playlistId)
+                .ToDictionary();
+
+            return await GetAsync<Album>("getPlaylistById", parameters, cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Subscribes to the audio queue.
+        /// </summary>
+        /// <param name="cancellationToken">A cancellation token for the operation.</param>
+        /// <returns>An <see cref="AudioQueueSubscription"/> object.</returns>
+        public async Task<AudioQueueSubscription> SubscribeToQueueAsync(CancellationToken cancellationToken = default)
+        {
+            return await GetAsync<AudioQueueSubscription>("subscribeToQueue", cancellationToken: cancellationToken);
         }
     }
 }

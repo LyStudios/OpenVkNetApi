@@ -20,28 +20,23 @@ namespace OpenVkNetApi.Utils
         /// <returns>A comma-separated string of descriptions or enum member names.</returns>
         public static string GetEnumFlagsDescription<T>(T enumValue) where T : Enum
         {
-            if (enumValue.Equals(default(T))) // Handle None or default value
-            {
-                return "";
-            }
-
             var type = enumValue.GetType();
             var result = new StringBuilder();
-            var enumValues = Enum.GetValues(type).Cast<T>().ToList();
+            var enumValues = Enum.GetValues(type);
 
-            foreach (var value in enumValues)
+            foreach (Enum value in enumValues)
             {
-                if (value.Equals(default(T))) continue; // Skip None or default value itself
+                long valLong = Convert.ToInt64(value);
+                if (valLong == 0) continue; // Skip None / zero values
 
                 if (enumValue.HasFlag(value))
                 {
                     if (result.Length > 0)
-                    {
                         result.Append(",");
-                    }
-                    var field = type.GetTypeInfo().GetDeclaredField(value.ToString());
-                    var attributes = field?.GetCustomAttributes(typeof(DescriptionAttribute), false);
-                    var description = attributes != null && attributes.Any() ? ((DescriptionAttribute)attributes.First()).Description : value.ToString().ToLower();
+
+                    var field = type.GetRuntimeField(value.ToString());
+                    var attributes = field.GetCustomAttributes(typeof(DescriptionAttribute), false);
+                    var description = attributes.Any() ? ((DescriptionAttribute)attributes.First()).Description : value.ToString().ToLower();
                     result.Append(description);
                 }
             }

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenVkNetApi.Models.RequestParameters.Wall;
@@ -142,10 +141,10 @@ namespace OpenVkNetApi.Methods
         /// </summary>
         /// <param name="params">Parameters for the edit operation.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
-        /// <returns>A <see cref="WallEdit"/> object with the result.</returns>
-        public async Task<WallEdit> EditAsync(WallEditParams @params, CancellationToken ct = default)
+        /// <returns>A <see cref="WallPostId"/> object with the result.</returns>
+        public async Task<WallPostId> EditAsync(WallEditParams @params, CancellationToken ct = default)
         {
-            return await PostAsync<WallEdit>("edit", @params, ct);
+            return await PostAsync<WallPostId>("edit", @params, ct);
         }
 
         /// <summary>

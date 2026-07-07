@@ -24,7 +24,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Newsfeed
         /// The value from which to start returning posts for pagination.
         /// </summary>
         [ApiParameter("start_from")]
-        public int StartFrom { get; set; } = 0;
+        public string StartFrom { get; set; } = "0";
 
         /// <summary>
         /// Unix timestamp to start returning posts from.

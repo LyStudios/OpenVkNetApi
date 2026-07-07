@@ -14,7 +14,7 @@ namespace OpenVkNetApi.Models.Wall
         /// A list of wall posts.
         /// </summary>
         [JsonProperty("items")]
-        public List<WallPost> Items { get; set; }
+        public List<Post> Items { get; set; }
 
         /// <summary>
         /// A list of user profiles related to the posts, if extended information was requested.

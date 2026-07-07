@@ -30,25 +30,25 @@ namespace OpenVkNetApi.Models.Users
         /// Indicates if the user is currently online.
         /// </summary>
         [JsonProperty("online")]
-        public int? Online { get; set; }
+        public bool? Online { get; set; }
 
         /// <summary>
         /// Indicates if the user's profile is verified.
         /// </summary>
         [JsonProperty("verified")]
-        public int? Verified { get; set; }
+        public bool? Verified { get; set; }
 
         /// <summary>
         /// Indicates if the user has a profile photo.
         /// </summary>
         [JsonProperty("has_photo")]
-        public int? HasPhoto { get; set; }
+        public bool? HasPhoto { get; set; }
 
         /// <summary>
         /// The user's city.
         /// </summary>
         [JsonProperty("city")]
-        public string City { get; set; }
+        public City City { get; set; }
 
         /// <summary>
         /// The "About Me" section of the user's profile.
@@ -204,12 +204,12 @@ namespace OpenVkNetApi.Models.Users
         /// Indicates if the user is blacklisted.
         /// </summary>
         [JsonProperty("blacklisted")]
-        public int? Blacklisted { get; set; }
+        public bool? Blacklisted { get; set; }
 
         /// <summary>
         /// Indicates if the user is blacklisted by the current user.
         /// </summary>
         [JsonProperty("blacklisted_by_me")]
-        public int? BlacklistedByMe { get; set; }       
+        public bool? BlacklistedByMe { get; set; }       
     }
 }

@@ -395,8 +395,8 @@ namespace OpenVkNetApi.Methods
         {
             var parameters = new RequestParams()
                 .Add("photos", photos)
-                .Add("extended", extended)
-                .Add("photo_sizes", photoSizes)
+                .Add("extended", extended ? 1 : 0)
+                .Add("photo_sizes", photoSizes ? 1 : 0)
                 .ToDictionary();
 
             return await GetAsync<List<Photo>>("getById", parameters, ct);

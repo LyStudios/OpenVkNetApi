@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using OpenVkNetApi.Models;
 
 namespace OpenVkNetApi.Models.Wall
 {
@@ -35,7 +36,7 @@ namespace OpenVkNetApi.Models.Wall
         /// Geographic information about the post.
         /// </summary>
         [JsonProperty("geo")]
-        public WallNearbyPostGeo Geo { get; set; }
+        public Geo Geo { get; set; }
 
         /// <summary>
         /// The distance to the post from the current location.

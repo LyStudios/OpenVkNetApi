@@ -50,6 +50,17 @@ namespace OpenVkNetApi.Services
             {
                 Timeout = TimeSpan.FromSeconds(70) // > wait
             };
+
+            try
+            {
+                _http.DefaultRequestHeaders.CacheControl = new System.Net.Http.Headers.CacheControlHeaderValue
+                {
+                    NoCache = true,
+                    NoStore = true
+                };
+                _http.DefaultRequestHeaders.IfModifiedSince = DateTimeOffset.UtcNow;
+            }
+            catch { }
         }
 
         /// <summary>
@@ -120,14 +131,29 @@ namespace OpenVkNetApi.Services
                         $"&wait={_wait}" +
                         $"&version={_version}";
 
+                    System.Diagnostics.Debug.WriteLine("[LongPoll] Polling URL: " + url);
+
+                    var sw = System.Diagnostics.Stopwatch.StartNew();
                     using (var resp = await _http.GetAsync(url, ct))
                     {
+                        sw.Stop();
                         resp.EnsureSuccessStatusCode();
 
                         string json = await resp.Content.ReadAsStringAsync();
 
                         if (!string.IsNullOrWhiteSpace(json))
+                        {
+                            // If the request returns immediately (e.g. < 1s) and is a structured JSON (not []),
+                            // discard it (server cache not expired), wait for wait_time seconds, and repeat (Step 5 of the rule)
+                            if (sw.ElapsedMilliseconds < 1000 && json.TrimStart().StartsWith("{") && !json.Contains("\"failed\""))
+                            {
+                                System.Diagnostics.Debug.WriteLine(string.Format("[LongPoll] Returned immediately ({0}ms). Server cache not expired. Waiting {1}s...", sw.ElapsedMilliseconds, _wait));
+                                await Task.Delay(_wait * 1000, ct);
+                                continue;
+                            }
+
                             await HandleResponseAsync(json, ct);
+                        }
 
                         retryDelay = 1000; // if everything is ok, we reset the delay
                     }
@@ -312,7 +338,6 @@ namespace OpenVkNetApi.Services
         public void Dispose()
         {
             Stop();
-            _internalCts?.Dispose();
             _http.Dispose();
         }
     }

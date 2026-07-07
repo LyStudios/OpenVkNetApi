@@ -32,7 +32,7 @@ namespace OpenVkNetApi.Methods
         {
             var parameters = new RequestParams()
                 .Add("poll_id", pollId)
-                .Add("extended", extended)
+                .Add("extended", extended ? 1 : 0)
                 .Add("fields", EnumHelper.GetEnumFlagsDescription(fields))
                 .ToDictionary();
 
@@ -50,7 +50,7 @@ namespace OpenVkNetApi.Methods
         {
             var parameters = new RequestParams()
                 .Add("poll_id", pollId)
-                .Add("answers_ids", string.Join(",", answerIds))
+                .Add("answer_ids", string.Join(",", answerIds))
                 .ToDictionary();
 
             return await PostAsync<int>("addVote", parameters, ct);
@@ -76,10 +76,10 @@ namespace OpenVkNetApi.Methods
         /// </summary>
         /// <param name="params">Parameters for the request.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
-        /// <returns>A <see cref="PollsGetVoters"/> object containing a list of voters.</returns>
-        public async Task<PollsGetVoters> GetVotersAsync(PollsGetVotersParams @params, CancellationToken ct = default)
+        /// <returns>A list of <see cref="PollsGetVoters"/> objects containing voters for each option.</returns>
+        public async Task<List<PollsGetVoters>> GetVotersAsync(PollsGetVotersParams @params, CancellationToken ct = default)
         {
-            return await GetAsync<PollsGetVoters>("getVoters", @params, ct);
+            return await GetAsync<List<PollsGetVoters>>("getVoters", @params, ct);
         }
 
         /// <summary>

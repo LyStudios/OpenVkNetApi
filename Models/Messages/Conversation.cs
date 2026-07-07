@@ -77,16 +77,16 @@ namespace OpenVkNetApi.Models.Messages
         public bool Important { get; set; }
 
         /// <summary>
-        /// The last message object in the conversation.
-        /// </summary>
-        [JsonProperty("last_message")]
-        public Message LastMessage { get; set; }
-
-        /// <summary>
         /// Contains information about whether the current user
         /// is allowed to send messages to this conversation.
         /// </summary>
         [JsonProperty("can_write")]
         public ConversationCanWrite CanWrite { get; set; }
+
+        /// <summary>
+        /// The number of unread messages in the conversation.
+        /// </summary>
+        [JsonProperty("unread_count")]
+        public int UnreadCount { get; set; }
     }
 }

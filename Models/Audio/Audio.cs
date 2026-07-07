@@ -106,8 +106,8 @@ namespace OpenVkNetApi.Models.Audio
         /// <summary>
         /// The lyrics ID, if available.
         /// </summary>
-        [JsonProperty("lyrics")]
-        public int? Lyrics { get; set; }
+        [JsonProperty("lyrics_id")]
+        public int? LyricsId { get; set; }
 
         /// <summary>
         /// Indicates if the audio file has been added to the current user's collection.

@@ -68,5 +68,12 @@ namespace OpenVkNetApi.Models.RequestParameters.Wall
         /// </summary>
         [ApiParameter("place_name")]
         public string PlaceName { get; set; } = "";
+
+        /// <summary>
+        /// 1 if the post is explicit/NSFW, 0 otherwise.
+        /// </summary>
+        [ApiParameter("explicit")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool Explicit { get; set; } = false;
     }
 }

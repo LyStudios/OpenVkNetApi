@@ -32,18 +32,21 @@ namespace OpenVkNetApi.Models.RequestParameters.Polls
         /// True to disable unvoting.
         /// </summary>
         [ApiParameter("disable_unvote")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
         public bool DisableUnvote { get; set; } = false;
 
         /// <summary>
         /// True to make the poll anonymous.
         /// </summary>
         [ApiParameter("is_anonymous")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
         public bool IsAnonymous { get; set; } = false;
 
         /// <summary>
         /// True to allow multiple answers.
         /// </summary>
         [ApiParameter("is_multiple")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
         public bool IsMultiple { get; set; } = false;
 
         /// <summary>

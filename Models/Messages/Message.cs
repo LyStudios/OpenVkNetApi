@@ -24,6 +24,13 @@ namespace OpenVkNetApi.Models.Messages
         public int UserId { get; set; }
 
         /// <summary>
+        /// The peer identifier (user ID, chat ID, or community ID)
+        /// associated with the message.
+        /// </summary>
+        [JsonProperty("peer_id")]
+        public int PeerId { get; set; }
+
+        /// <summary>
         /// The identifier of the user or community that sent the message.
         /// </summary>
         [JsonProperty("from_id")]
@@ -75,6 +82,7 @@ namespace OpenVkNetApi.Models.Messages
         /// (photos, videos, documents, audio, etc.).
         /// </summary>
         [JsonProperty("attachments")]
+        [JsonConverter(typeof(OpenVkNetApi.Utils.AttachmentJsonConverter))]
         public List<Attachment> Attachments { get; set; }
 
         /// <summary>
@@ -106,6 +114,6 @@ namespace OpenVkNetApi.Models.Messages
         /// A unique identifier used to prevent duplicate message sending.
         /// </summary>
         [JsonProperty("random_id")]
-        public int RandomId { get; set; }
+        public int? RandomId { get; set; }
     }
 }

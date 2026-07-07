@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.Likes
 {
@@ -8,15 +9,17 @@ namespace OpenVkNetApi.Models.Likes
     public class LikesIsLiked
     {
         /// <summary>
-        /// Indicates if the user has liked the object (1 for yes, 0 for no).
+        /// Indicates if the user has liked the object.
         /// </summary>
         [JsonProperty("liked")]
-        public int Liked { get; set; }
+        [JsonConverter(typeof(BoolToIntConverter))]
+        public bool Liked { get; set; }
 
         /// <summary>
-        /// Indicates if the user has reposted the object (1 for yes, 0 for no).
+        /// Indicates if the user has reposted the object.
         /// </summary>
         [JsonProperty("copied")]
-        public int Copied { get; set; }
+        [JsonConverter(typeof(BoolToIntConverter))]
+        public bool Copied { get; set; }
     }
 }

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using OpenVkNetApi.Models.Attachments;
 using OpenVkNetApi.Utils;
 
-namespace OpenVkNetApi.Models.Wall
+namespace OpenVkNetApi.Models
 {
     /// <summary>
-    /// Represents a wall post.
+    /// Represents a post on a wall or in the newsfeed.
     /// </summary>
-    public class WallPost
+    public class Post
     {
         /// <summary>
         /// The post ID.
@@ -23,7 +23,7 @@ namespace OpenVkNetApi.Models.Wall
         public int FromId { get; set; }
 
         /// <summary>
-        /// The ID of the owner of the wall.
+        /// The ID of the owner of the wall or post.
         /// </summary>
         [JsonProperty("owner_id")]
         public int OwnerId { get; set; }
@@ -50,49 +50,49 @@ namespace OpenVkNetApi.Models.Wall
         /// A list of previous posts in the copy history (for reposts).
         /// </summary>
         [JsonProperty("copy_history")]
-        public List<WallPost> CopyHistory { get; set; }
+        public List<Post> CopyHistory { get; set; }
 
         /// <summary>
         /// Indicates if the current user can edit the post.
         /// </summary>
         [JsonProperty("can_edit")]
-        public bool CanEdit { get; set; }
+        public bool? CanEdit { get; set; }
 
         /// <summary>
         /// Indicates if the current user can delete the post.
         /// </summary>
         [JsonProperty("can_delete")]
-        public bool CanDelete { get; set; }
+        public bool? CanDelete { get; set; }
 
         /// <summary>
         /// Indicates if the current user can pin the post.
         /// </summary>
         [JsonProperty("can_pin")]
-        public bool CanPin { get; set; }
+        public bool? CanPin { get; set; }
 
         /// <summary>
         /// Indicates if the current user can archive the post.
         /// </summary>
         [JsonProperty("can_archive")]
-        public bool CanArchive { get; set; }
+        public bool? CanArchive { get; set; }
 
         /// <summary>
         /// Indicates if the post is archived.
         /// </summary>
         [JsonProperty("is_archived")]
-        public bool IsArchived { get; set; }
+        public bool? IsArchived { get; set; }
 
         /// <summary>
         /// Indicates if the post is pinned.
         /// </summary>
         [JsonProperty("is_pinned")]
-        public bool IsPinned { get; set; }
+        public bool? IsPinned { get; set; }
 
         /// <summary>
         /// Indicates if the post contains explicit content.
         /// </summary>
         [JsonProperty("is_explicit")]
-        public bool IsExplicit { get; set; }
+        public bool? IsExplicit { get; set; }
 
         /// <summary>
         /// A list of attachments to the post (e.g., photos, videos, documents).
@@ -111,19 +111,19 @@ namespace OpenVkNetApi.Models.Wall
         /// Information about comments on the post.
         /// </summary>
         [JsonProperty("comments")]
-        public WallPostComments Comments { get; set; }
+        public CommentsInfo Comments { get; set; }
 
         /// <summary>
         /// Information about likes on the post.
         /// </summary>
         [JsonProperty("likes")]
-        public WallPostLikes Likes { get; set; }
+        public LikesInfo Likes { get; set; }
 
         /// <summary>
         /// Information about reposts of the post.
         /// </summary>
         [JsonProperty("reposts")]
-        public WallPostReposts Reposts { get; set; }
+        public RepostsInfo Reposts { get; set; }
 
         /// <summary>
         /// Copyright information for the post.
@@ -135,84 +135,36 @@ namespace OpenVkNetApi.Models.Wall
         /// The ID of the user who signed the post (if applicable).
         /// </summary>
         [JsonProperty("signer_id")]
-        public int? SignerId { get; set; }
+        public object SignerId { get; set; }
 
         /// <summary>
-        /// Indicates if this is the final post in a series (e.g., for multipart posts).
+        /// Indicates if this is the final post in a series.
         /// </summary>
         [JsonProperty("final_post")]
-        public int? FinalPost { get; set; }
+        public object FinalPost { get; set; }
 
         /// <summary>
         /// Geographic information attached to the post.
         /// </summary>
         [JsonProperty("geo")]
-        public object Geo { get; set; }
-    }
-
-    /// <summary>
-    /// Represents comment information for a wall post.
-    /// </summary>
-    public class WallPostComments
-    {
-        /// <summary>
-        /// The total number of comments.
-        /// </summary>
-        [JsonProperty("count")]
-        public int Count { get; set; }
+        public Geo Geo { get; set; }
 
         /// <summary>
-        /// Indicates if the current user can post comments.
+        /// The type of newsfeed item (usually "post").
         /// </summary>
-        [JsonProperty("can_post")]
-        public int CanPost { get; set; }
-    }
-
-    /// <summary>
-    /// Represents like information for a wall post.
-    /// </summary>
-    public class WallPostLikes
-    {
-        /// <summary>
-        /// The total number of likes.
-        /// </summary>
-        [JsonProperty("count")]
-        public int Count { get; set; }
+        [JsonProperty("type")]
+        public string Type { get; set; }
 
         /// <summary>
-        /// Indicates if the current user has liked this post (1 for yes, 0 for no).
+        /// The ID of the news source (user or community).
         /// </summary>
-        [JsonProperty("user_likes")]
-        public int UserLikes { get; set; }
+        [JsonProperty("source_id")]
+        public int? SourceId { get; set; }
 
         /// <summary>
-        /// Indicates if the current user can like this post (1 for yes, 0 for no).
+        /// Alternate or legacy post ID.
         /// </summary>
-        [JsonProperty("can_like")]
-        public int CanLike { get; set; }
-
-        /// <summary>
-        /// Indicates if the current user can publish this like (1 for yes, 0 for no).
-        /// </summary>
-        [JsonProperty("can_publish")]
-        public int CanPublish { get; set; }
-    }
-
-    /// <summary>
-    /// Represents repost information for a wall post.
-    /// </summary>
-    public class WallPostReposts
-    {
-        /// <summary>
-        /// The total number of reposts.
-        /// </summary>
-        [JsonProperty("count")]
-        public int Count { get; set; }
-
-        /// <summary>
-        /// Indicates if the current user has reposted this post (1 for yes, 0 for no).
-        /// </summary>
-        [JsonProperty("user_reposted")]
-        public int UserReposted { get; set; }
+        [JsonProperty("post_id")]
+        public int? PostId { get; set; }
     }
 }

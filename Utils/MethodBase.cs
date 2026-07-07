@@ -41,7 +41,7 @@ namespace OpenVkNetApi.Utils
         /// <returns>The deserialized API response of type <typeparamref name="T"/>.</returns>
         protected Task<T> GetAsync<T>(string method, object parameters = null, CancellationToken cancellationToken = default)
         {
-            var fullMethodName = method.Contains(".") ? method : $"{_category}.{method}";
+            var fullMethodName = method.Contains(".") ? method : string.Format("{0}.{1}", _category, method);
             Dictionary<string, string> dictParameters = null;
             if (parameters != null)
             {
@@ -67,7 +67,7 @@ namespace OpenVkNetApi.Utils
         /// <returns>The deserialized API response of type <typeparamref name="T"/>.</returns>
         protected Task<T> PostAsync<T>(string method, object parameters = null, CancellationToken cancellationToken = default)
         {
-            var fullMethodName = method.Contains(".") ? method : $"{_category}.{method}";
+            var fullMethodName = method.Contains(".") ? method : string.Format("{0}.{1}", _category, method);
             Dictionary<string, string> dictParameters = null;
             if (parameters != null)
             {

@@ -18,19 +18,19 @@ namespace OpenVkNetApi.Models.Groups
         /// Indicates if the current user is a member of the group.
         /// </summary>
         [JsonProperty("is_member")]
-        public int? IsMember { get; set; }
+        public bool? IsMember { get; set; }
 
         /// <summary>
         /// Indicates if the group is verified.
         /// </summary>
         [JsonProperty("verified")]
-        public int? Verified { get; set; }
+        public bool? Verified { get; set; }
 
         /// <summary>
         /// Indicates if the group has a profile photo.
         /// </summary>
         [JsonProperty("has_photo")]
-        public int? HasPhoto { get; set; }
+        public bool? HasPhoto { get; set; }
 
         /// <summary>
         /// The URL of the 50x50px profile photo.
@@ -79,5 +79,11 @@ namespace OpenVkNetApi.Models.Groups
         /// </summary>
         [JsonProperty("can_post")]
         public bool? CanPost { get; set; }
+
+        /// <summary>
+        /// The real negative ID of the community.
+        /// </summary>
+        [JsonProperty("real_id")]
+        public int? RealId { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using OpenVkNetApi.Models;
 using OpenVkNetApi.Models.Gifts;
 using OpenVkNetApi.Models.RequestParameters.Gifts;
 using OpenVkNetApi.Utils;
@@ -26,8 +27,8 @@ namespace OpenVkNetApi.Methods
         /// <param name="count">The number of gifts to return.</param>
         /// <param name="offset">The offset for pagination.</param>
         /// <param name="cancellationToken">A cancellation token for the operation.</param>
-        /// <returns>A list of <see cref="UserGift"/> objects.</returns>
-        public async Task<List<UserGift>> GetAsync(int userId = 0, int count = 10, int offset = 0, CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="Collection{UserGift}"/> of gift objects.</returns>
+        public async Task<Collection<UserGift>> GetAsync(int userId = 0, int count = 10, int offset = 0, CancellationToken cancellationToken = default)
         {
             var parameters = new RequestParams()
                 .Add("user_id", userId)
@@ -35,7 +36,7 @@ namespace OpenVkNetApi.Methods
                 .Add("offset", offset)
                 .ToDictionary();
 
-            return await GetAsync<List<UserGift>>("get", parameters, cancellationToken);
+            return await GetAsync<Collection<UserGift>>("get", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -59,7 +60,7 @@ namespace OpenVkNetApi.Methods
         public async Task<List<GiftCategory>> GetCategoriesAsync(bool extended = false, int page = 1, CancellationToken cancellationToken = default)
         {
             var parameters = new RequestParams()
-                .Add("extended", extended)
+                .Add("extended", extended ? 1 : 0)
                 .Add("page", page)
                 .ToDictionary();
 

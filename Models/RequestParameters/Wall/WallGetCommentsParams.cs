@@ -24,6 +24,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Wall
         /// True to return the 'likes' object.
         /// </summary>
         [ApiParameter("need_likes")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
         public bool NeedLikes { get; set; } = true;
 
         /// <summary>
@@ -54,6 +55,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Wall
         /// True to return extended information about users who posted comments.
         /// </summary>
         [ApiParameter("extended")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
         public bool Extended { get; set; } = false;
     }
 }

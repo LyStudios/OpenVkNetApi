@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.Account
 {
@@ -10,11 +11,12 @@ namespace OpenVkNetApi.Models.Account
     public class AccountSaveProfile
     {
         /// <summary>
-        /// Indicates if the profile information was changed (1 for yes, 0 for no).
+        /// Indicates if the profile information was changed.
         /// </summary>
         [JsonProperty("changed")]
-        public int Changed { get; set; }
-        
+        [JsonConverter(typeof(BoolToIntConverter))]
+        public bool Changed { get; set; }
+
         /// <summary>
         /// Information about a name change request, if one was created.
         /// </summary>

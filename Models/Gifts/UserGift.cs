@@ -8,6 +8,18 @@ namespace OpenVkNetApi.Models.Gifts
     public class UserGift
     {
         /// <summary>
+        /// The gift instance ID.
+        /// </summary>
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
+        /// <summary>
+        /// The privacy level of the gift.
+        /// </summary>
+        [JsonProperty("privacy")]
+        public int Privacy { get; set; }
+
+        /// <summary>
         /// The ID of the user who sent the gift.
         /// </summary>
         [JsonProperty("from_id")]
