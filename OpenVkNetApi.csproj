@@ -1,9 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard1.1</TargetFramework>
     <LangVersion>7.3</LangVersion>
-    <Version>0.4.0</Version>
+    <MinVerTagPrefix>v</MinVerTagPrefix>
+    <MinVerMinimumMajorMinor>0.5</MinVerMinimumMajorMinor>
     <Title>OpenVkNetApi</Title>
     <Authors>LyStudios, LeenzeryDev</Authors>
     <Description>A Client for the OpenVK API, written in C#/.NET</Description>
@@ -13,6 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="MinVer" Version="5.0.0" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>
