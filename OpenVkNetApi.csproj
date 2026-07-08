@@ -10,11 +10,16 @@
     <Description>A Client for the OpenVK API, written in C#/.NET</Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<CheckNotRecommendedTargetFramework>false</CheckNotRecommendedTargetFramework>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="MinVer" Version="5.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>
