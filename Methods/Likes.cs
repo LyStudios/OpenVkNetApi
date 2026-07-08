@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenVkNetApi.Models;
@@ -39,7 +38,7 @@ namespace OpenVkNetApi.Methods
 
             return await PostAsync<LikesAdd>("add", parameters, ct);
         }
-        
+
         /// <summary>
         /// Removes a 'like' from an object.
         /// </summary>

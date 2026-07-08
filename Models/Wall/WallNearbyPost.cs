@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using OpenVkNetApi.Models;
 
 namespace OpenVkNetApi.Models.Wall
 {

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using OpenVkNetApi.Models;
 using OpenVkNetApi.Models.Newsfeed;

@@ -5,7 +5,6 @@ using OpenVkNetApi.Models.RequestParameters.Users;
 using System.Threading;
 using OpenVkNetApi.Models;
 using OpenVkNetApi.Models.Users;
-using OpenVkNetApi.Models.Enums;
 
 namespace OpenVkNetApi.Methods
 {

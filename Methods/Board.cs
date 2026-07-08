@@ -1,6 +1,5 @@
 using OpenVkNetApi.Utils;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using System.Threading;
 using OpenVkNetApi.Models.Board;
 using OpenVkNetApi.Models.RequestParameters.Board;

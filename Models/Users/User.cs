@@ -135,18 +135,6 @@ namespace OpenVkNetApi.Models.Users
         public Counters Counters { get; set; }
 
         /// <summary>
-        /// URL of the 50x50px profile photo.
-        /// </summary>
-        [JsonProperty("photo_50")]
-        public string Photo50 { get; set; }
-
-        /// <summary>
-        /// URL of the 100x100px profile photo.
-        /// </summary>
-        [JsonProperty("photo_100")]
-        public string Photo100 { get; set; }
-
-        /// <summary>
         /// URL of the original 200px profile photo.
         /// </summary>
         [JsonProperty("photo_200_orig")]

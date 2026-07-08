@@ -13,6 +13,9 @@ namespace OpenVkNetApi.Models.Users
         [JsonProperty("id")]
         public long Id { get; set; }
 
+        [JsonProperty("uid")]
+        private long Uid { set { Id = value; } }
+
         /// <summary>
         /// The user's first name.
         /// </summary>

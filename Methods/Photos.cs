@@ -126,7 +126,7 @@ namespace OpenVkNetApi.Methods
                 Caption = caption
             }, ct);
         }
-        
+
         /// <summary>
         /// Uploads a new profile or group avatar.
         /// </summary>
@@ -138,7 +138,7 @@ namespace OpenVkNetApi.Methods
         public async Task<PhotosSaveOwnerPhoto> UploadOwnerPhotoAsync(Stream photoStream, string fileName, int? ownerId = null, CancellationToken ct = default)
         {
             if (string.IsNullOrEmpty(_api.AccessToken))
-                throw new System.InvalidOperationException("API is not authorized. Call AuthorizeAsync() first.");
+                throw new InvalidOperationException("API is not authorized. Call AuthorizeAsync() first.");
 
             var uploadServerInfo = await GetOwnerPhotoUploadServerAsync(ownerId, ct);
             if (string.IsNullOrEmpty(uploadServerInfo.UploadUrl))
@@ -185,7 +185,7 @@ namespace OpenVkNetApi.Methods
         {
             if (string.IsNullOrEmpty(_api.AccessToken))
                 throw new System.InvalidOperationException("API is not authorized. Call AuthorizeAsync() first.");
-            
+
             var uploadServerInfo = await GetUploadServerAsync(albumId, ct);
             if (string.IsNullOrEmpty(uploadServerInfo.UploadUrl))
                 throw new OvkApiException(-1, "Failed to get album upload URL.");
@@ -319,7 +319,7 @@ namespace OpenVkNetApi.Methods
 
             return await GetAsync<PhotosUploadServer>("getUploadServer", parameters, ct);
         }
-        
+
         /// <summary>
         /// Saves photos after successful upload.
         /// </summary>
@@ -347,7 +347,7 @@ namespace OpenVkNetApi.Methods
 
             return await PostAsync<Album>("createAlbum", parameters, ct);
         }
-        
+
         /// <summary>
         /// Edits a photo album.
         /// </summary>

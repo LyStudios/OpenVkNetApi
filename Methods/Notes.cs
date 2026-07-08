@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenVkNetApi.Models;
@@ -37,7 +36,7 @@ namespace OpenVkNetApi.Methods
 
             return await PostAsync<int>("add", parameters, ct);
         }
-        
+
         /// <summary>
         /// Creates a new comment on a note.
         /// </summary>

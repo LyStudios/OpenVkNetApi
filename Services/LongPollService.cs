@@ -34,6 +34,10 @@ namespace OpenVkNetApi.Services
         /// </summary>
         public event EventHandler<NewMessageEventArgs> OnMessageNew;
         /// <summary>
+        /// Occurs when a user starts typing a message in a conversation.
+        /// </summary>
+        public event EventHandler<UserTypingEventArgs> OnUserTyping;
+        /// <summary>
         /// Occurs when an error is encountered during the Long Poll process.
         /// </summary>
         public event EventHandler<LongPollErrorEventArgs> OnError;
@@ -247,6 +251,28 @@ namespace OpenVkNetApi.Services
 
                 if (!int.TryParse(u[0]?.ToString(), out int type))
                     continue;
+
+                if (type == 61)
+                {
+                    int userId = SafeInt(u, 1);
+                    if (userId > 0)
+                    {
+                        OnUserTyping?.Invoke(this, new UserTypingEventArgs(userId, userId));
+                    }
+                    continue;
+                }
+
+                if (type == 62)
+                {
+                    int userId = SafeInt(u, 1);
+                    int chatId = SafeInt(u, 2);
+                    if (userId > 0 && chatId > 0)
+                    {
+                        int peerId = 2000000000 + chatId;
+                        OnUserTyping?.Invoke(this, new UserTypingEventArgs(userId, peerId, chatId));
+                    }
+                    continue;
+                }
 
                 if (type != 4) continue; // only new messages
 

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenVkNetApi.Models.Ovk;
@@ -38,7 +37,7 @@ namespace OpenVkNetApi.Methods
         {
             return await GetAsync<OvkTest>("test", null, ct);
         }
-        
+
         /// <summary>
         /// Returns information about the OpenVK instance.
         /// </summary>

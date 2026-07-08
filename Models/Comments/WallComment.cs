@@ -1,6 +1,4 @@
 using Newtonsoft.Json;
-using OpenVkNetApi.Models;
-using OpenVkNetApi.Models.Wall;
 
 namespace OpenVkNetApi.Models.Comments
 {

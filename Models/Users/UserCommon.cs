@@ -48,5 +48,29 @@ namespace OpenVkNetApi.Models.Users
         /// </summary>
         [JsonProperty("photo_200")]
         public string Photo200 { get; set; }
+
+        /// <summary>
+        /// URL of the 50x50px profile photo.
+        /// </summary>
+        [JsonProperty("photo_50")]
+        public string Photo50 { get; set; }
+
+        /// <summary>
+        /// URL of the 100x100px profile photo.
+        /// </summary>
+        [JsonProperty("photo_100")]
+        public string Photo100 { get; set; }
+
+        /// <summary>
+        /// URL of the general profile photo.
+        /// </summary>
+        [JsonProperty("photo")]
+        public string Photo { get; set; }
+
+        /// <summary>
+        /// URL of the medium-sized profile photo.
+        /// </summary>
+        [JsonProperty("photo_medium_rec")]
+        public string PhotoMediumRec { get; set; }
     }
 }

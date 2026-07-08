@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Models.RequestParameters.Wall

@@ -6,13 +6,28 @@ using System.Collections.Generic;
 
 namespace OpenVkNetApi.Utils
 {
+    /// <summary>
+    /// Custom JSON converter for handling polymorphic lists of <see cref="Attachment"/> objects.
+    /// Manages serialization and deserialization based on the "type" field of each attachment.
+    /// </summary>
     public class AttachmentJsonConverter : JsonConverter
     {
+        /// <summary>
+        /// Determines whether this converter can convert the specified object type.
+        /// </summary>
+        /// <param name="objectType">The type of the object to convert.</param>
+        /// <returns><c>true</c> if the type is a list of attachments; otherwise, <c>false</c>.</returns>
         public override bool CanConvert(Type objectType)
         {
             return objectType == typeof(List<Attachment>);
         }
 
+        /// <summary>
+        /// Writes the JSON representation of the attachment list.
+        /// </summary>
+        /// <param name="writer">The JSON writer to write to.</param>
+        /// <param name="value">The list of attachments to serialize.</param>
+        /// <param name="serializer">The calling serializer.</param>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             var list = value as List<Attachment>;
@@ -63,6 +78,14 @@ namespace OpenVkNetApi.Utils
             array.WriteTo(writer);
         }
 
+        /// <summary>
+        /// Reads the JSON representation of the attachment list and deserializes it into typed attachment objects.
+        /// </summary>
+        /// <param name="reader">The JSON reader to read from.</param>
+        /// <param name="objectType">The target object type.</param>
+        /// <param name="existingValue">The existing value of the object being read.</param>
+        /// <param name="serializer">The calling serializer.</param>
+        /// <returns>A list of deserialized <see cref="Attachment"/> objects.</returns>
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             if (reader.TokenType != JsonToken.StartArray) return new List<Attachment>();

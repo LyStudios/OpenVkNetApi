@@ -8,11 +8,24 @@ namespace OpenVkNetApi.Utils
     /// </summary>
     public class BoolToIntConverter : JsonConverter
     {
+        /// <summary>
+        /// Determines whether this converter can convert the specified object type.
+        /// </summary>
+        /// <param name="objectType">The type of the object to convert.</param>
+        /// <returns><c>true</c> if the type is a boolean or nullable boolean; otherwise, <c>false</c>.</returns>
         public override bool CanConvert(Type objectType)
         {
             return objectType == typeof(bool) || objectType == typeof(bool?);
         }
 
+        /// <summary>
+        /// Reads the JSON representation of the boolean value, converting 1/0 or "1"/"0" to C# boolean.
+        /// </summary>
+        /// <param name="reader">The JSON reader to read from.</param>
+        /// <param name="objectType">The target object type.</param>
+        /// <param name="existingValue">The existing value of the object being read.</param>
+        /// <param name="serializer">The calling serializer.</param>
+        /// <returns>The deserialized boolean value.</returns>
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             if (reader.TokenType == JsonToken.Null)
@@ -47,6 +60,12 @@ namespace OpenVkNetApi.Utils
             return false;
         }
 
+        /// <summary>
+        /// Writes the JSON representation of the boolean value as 1 or 0.
+        /// </summary>
+        /// <param name="writer">The JSON writer to write to.</param>
+        /// <param name="value">The boolean value to serialize.</param>
+        /// <param name="serializer">The calling serializer.</param>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             if (value == null)

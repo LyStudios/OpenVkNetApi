@@ -172,7 +172,7 @@ namespace OpenVkNetApi.Methods
                 .Add("group_id", groupId)
                 .ToDictionary();
 
-            return await GetAsync<LongPollServerInfo>("getLongPollServer", parameters, ct);
+            return await PostAsync<LongPollServerInfo>("getLongPollServer", parameters, ct);
         }
 
         /// <summary>

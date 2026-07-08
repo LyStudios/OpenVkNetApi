@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using OpenVkNetApi.Models.Users;
 
 namespace OpenVkNetApi.Models.Polls

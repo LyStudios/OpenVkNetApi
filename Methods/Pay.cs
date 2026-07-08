@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenVkNetApi.Utils;
@@ -16,7 +15,7 @@ namespace OpenVkNetApi.Methods
         /// </summary>
         /// <param name="api">An API instance to make requests with.</param>
         public Pay(OpenVkApi api) : base(api, "pay") { }
-        
+
         // This namespace seems to be highly custom and might not be fully implemented in all OpenVK instances.
         // Documentation is based on observed usage.
 

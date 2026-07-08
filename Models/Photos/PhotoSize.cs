@@ -31,9 +31,15 @@ namespace OpenVkNetApi.Models.Photos
         [JsonProperty("height")]
         public int? Height { get; set; }
 
+        /// <summary>
+        /// Indicates whether the image has been cropped.
+        /// </summary>
         [JsonProperty("crop")]
         public bool? Crop { get; set; }
 
+        /// <summary>
+        /// Indicates whether the image includes padding.
+        /// </summary>
         [JsonProperty("with_padding")]
         public int? WithPadding { get; set; }
     }
