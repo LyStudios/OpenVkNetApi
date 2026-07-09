@@ -5,6 +5,7 @@ namespace OpenVkNetApi.Models.Video
     /// <summary>
     /// Represents the files structure containing links to video streams of different qualities.
     /// </summary>
+    [JsonConverter(typeof(VideoFilesConverter))]
     public class VideoFiles
     {
         /// <summary>
