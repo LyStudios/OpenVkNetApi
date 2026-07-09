@@ -60,6 +60,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="cancellationToken">A cancellation token for the operation.</param>
         /// <returns>A <see cref="Collection{Audio}"/> of recommended audio objects.</returns>
         /// <remarks>May return an empty list if not implemented on the server.</remarks>
+        [AllowAnonymous]
         public async Task<Collection<Models.Audio.Audio>> GetRecommendationsAsync(CancellationToken cancellationToken = default)
         {
             return await GetAsync<Collection<Models.Audio.Audio>>("getRecommendations", cancellationToken: cancellationToken);
@@ -412,6 +413,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="playlistId">The playlist's ID.</param>
         /// <param name="cancellationToken">A cancellation token for the operation.</param>
         /// <returns>An <see cref="Album"/> object.</returns>
+        [AllowAnonymous]
         public async Task<Album> GetPlaylistByIdAsync(int ownerId = 0, int playlistId = 0, CancellationToken cancellationToken = default)
         {
             var parameters = new RequestParams()
@@ -427,6 +429,7 @@ namespace OpenVkNetApi.Methods
         /// </summary>
         /// <param name="cancellationToken">A cancellation token for the operation.</param>
         /// <returns>An <see cref="AudioQueueSubscription"/> object.</returns>
+        [AllowAnonymous]
         public async Task<AudioQueueSubscription> SubscribeToQueueAsync(CancellationToken cancellationToken = default)
         {
             return await GetAsync<AudioQueueSubscription>("subscribeToQueue", cancellationToken: cancellationToken);

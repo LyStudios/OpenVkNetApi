@@ -38,6 +38,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="params">Parameters for the request.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A list of <see cref="Group"/> objects.</returns>
+        [AllowAnonymous]
         public async Task<List<Group>> GetByIdAsync(GroupsGetByIdParams @params, CancellationToken ct = default)
         {
             return await GetAsync<List<Group>>("getById", @params, ct);
@@ -49,6 +50,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="params">Search parameters.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="Collection{Group}"/> of found group objects.</returns>
+        [AllowAnonymous]
         public async Task<Collection<Group>> SearchAsync(GroupsSearchParams @params, CancellationToken ct = default)
         {
             return await GetAsync<Collection<Group>>("search", @params, ct);

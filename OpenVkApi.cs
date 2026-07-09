@@ -316,14 +316,15 @@ namespace OpenVkNetApi
         /// <exception cref="OvkApiException">Thrown if the server returns an API error or an invalid response.</exception>
         private async Task<T> CallApiInternalAsync<T>(HttpMethod httpMethod, string method, Dictionary<string, string> parameters, CancellationToken ct)
         {
-            if (string.IsNullOrEmpty(AccessToken))
-                throw new InvalidOperationException("API is not authorized. Call AuthorizeAsync() first.");
+            string cleanMethod = method.Trim();
+            bool requireAuth = !AllowAnonymousAttribute.IsAnonymous(cleanMethod);
+
+            if (requireAuth && string.IsNullOrEmpty(AccessToken))
+                throw new InvalidOperationException(string.Format("API is not authorized. Method '{0}' requires authorization. Call AuthorizeAsync() first.", cleanMethod));
 
             string cleanBase = _baseUrl.Trim().TrimEnd('/');
-            string cleanMethod = method.Trim();
-            string cleanToken = AccessToken.Trim();
+            string cleanToken = AccessToken?.Trim() ?? "";
 
-            // Если метод уже содержит /method/, не добавляем его
             string methodPath = cleanMethod;
             if (!cleanBase.Contains("/method") && !cleanMethod.Contains("method/"))
             {
@@ -334,14 +335,21 @@ namespace OpenVkNetApi
             urlBuilder.Append(cleanBase);
             urlBuilder.Append("/");
             urlBuilder.Append(methodPath);
-            urlBuilder.Append("?access_token=");
-            urlBuilder.Append(Uri.EscapeDataString(cleanToken));
+
+            bool hasParams = false;
+            if (!string.IsNullOrEmpty(cleanToken))
+            {
+                urlBuilder.Append("?access_token=");
+                urlBuilder.Append(Uri.EscapeDataString(cleanToken));
+                hasParams = true;
+            }
 
             if (httpMethod == HttpMethod.Get && parameters != null)
             {
                 foreach (var p in parameters)
                 {
-                    urlBuilder.Append("&");
+                    urlBuilder.Append(hasParams ? "&" : "?");
+                    hasParams = true;
                     urlBuilder.Append(p.Key.Trim());
                     urlBuilder.Append("=");
                     urlBuilder.Append(Uri.EscapeDataString(p.Value ?? ""));
@@ -349,7 +357,7 @@ namespace OpenVkNetApi
             }
 
             string url = urlBuilder.ToString();
-            
+
             int maxAttempts = 3;
             int attempt = 0;
 
@@ -381,18 +389,18 @@ namespace OpenVkNetApi
                 {
                     if (attempt >= maxAttempts)
                         throw new HttpRequestException(string.Format("Failed to send {0} request to {1} after {2} attempts", httpMethod, url, attempt), ex);
-                    
+
                     await Task.Delay(1000 * attempt, ct);
                     continue;
                 }
 
-                bool isRetryableStatus = response.StatusCode == System.Net.HttpStatusCode.NotFound || 
+                bool isRetryableStatus = response.StatusCode == System.Net.HttpStatusCode.NotFound ||
                                        (int)response.StatusCode >= 500;
 
                 if (string.IsNullOrWhiteSpace(json) || json.TrimStart().StartsWith("<") || !response.IsSuccessStatusCode)
                 {
                     var snippet = string.IsNullOrEmpty(json) ? "empty" : (json.Length > 500 ? json.Substring(0, 500) : json);
-                    
+
                     if (isRetryableStatus && attempt < maxAttempts)
                     {
                         await Task.Delay(1000 * attempt, ct);

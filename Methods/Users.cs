@@ -26,6 +26,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="params">Parameters for the request.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A list of <see cref="User"/> objects.</returns>
+        [AllowAnonymous]
         public async Task<List<User>> GetAsync(UsersGetParams @params, CancellationToken ct = default)
         {
             return await GetAsync<List<User>>("get", @params, ct);
@@ -48,6 +49,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="params">Search parameters.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="Collection{User}"/> of found user objects.</returns>
+        [AllowAnonymous]
         public async Task<Collection<User>> SearchAsync(UsersSearchParams @params, CancellationToken ct = default)
         {
             return await GetAsync<Collection<User>>("search", @params, ct);

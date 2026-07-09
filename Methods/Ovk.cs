@@ -23,6 +23,7 @@ namespace OpenVkNetApi.Methods
         /// </summary>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A string representing the API version.</returns>
+        [AllowAnonymous]
         public async Task<string> VersionAsync(CancellationToken ct = default)
         {
             return await GetAsync<string>("version", null, ct);
@@ -33,6 +34,7 @@ namespace OpenVkNetApi.Methods
         /// </summary>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An <see cref="OvkTest"/> object.</returns>
+        [AllowAnonymous]
         public async Task<OvkTest> TestAsync(CancellationToken ct = default)
         {
             return await GetAsync<OvkTest>("test", null, ct);
@@ -46,6 +48,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupFields">A set of fields to return for group profiles.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An <see cref="OvkAboutInstance"/> object with instance details.</returns>
+        [AllowAnonymous]
         public async Task<OvkAboutInstance> AboutInstanceAsync(OvkInstanceFields fields = OvkInstanceFields.None, UserFields adminFields = UserFields.None, GroupFields groupFields = GroupFields.None, CancellationToken ct = default)
         {
             var parameters = new RequestParams()

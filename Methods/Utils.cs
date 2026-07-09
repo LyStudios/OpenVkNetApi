@@ -23,6 +23,7 @@ namespace OpenVkNetApi.Methods
         /// </summary>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>The server time in Unix format.</returns>
+        [AllowAnonymous]
         public async Task<long> GetServerTimeAsync(CancellationToken ct = default)
         {
             return await GetAsync<long>("getServerTime", null, ct);
@@ -34,6 +35,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="screenName">The screen name to resolve.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="UtilsResolveScreenName"/> object with the result.</returns>
+        [AllowAnonymous]
         public async Task<UtilsResolveScreenName> ResolveScreenNameAsync(string screenName, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
@@ -49,6 +51,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="guid">The GUID to resolve.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="User"/> object.</returns>
+        [AllowAnonymous]
         public async Task<User> ResolveGuidAsync(string guid, CancellationToken ct = default)
         {
             var parameters = new RequestParams()

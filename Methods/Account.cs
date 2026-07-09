@@ -65,6 +65,7 @@ namespace OpenVkNetApi.Methods
         /// </summary>
         /// <param name="cancellationToken">A cancellation token for the operation.</param>
         /// <returns>A bitmask representing the application's permissions.</returns>
+        [AllowAnonymous]
         public Task<int> GetAppPermissionsAsync(CancellationToken cancellationToken = default)
         {
             return GetAsync<int>("getAppPermissions", cancellationToken: cancellationToken);

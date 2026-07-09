@@ -26,7 +26,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Polls
         /// Internal property for API communication.
         /// </summary>
         [ApiParameter("add_answers")]
-        public string AddAnswers => JsonConvert.SerializeObject(Answers);
+        public string AddAnswers => Answers != null ? JsonConvert.SerializeObject(Answers) : null;
 
         /// <summary>
         /// True to disable unvoting.

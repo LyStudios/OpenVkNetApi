@@ -25,6 +25,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="marketingId">The marketing ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>The user or group ID.</returns>
+        [AllowAnonymous]
         public async Task<int> GetIdByMarketingIdAsync(string marketingId, CancellationToken ct = default)
         {
             var parameters = new RequestParams()

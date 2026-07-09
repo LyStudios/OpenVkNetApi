@@ -28,6 +28,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="fields">A list of additional profile fields to return.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="PollsGetById"/> object with poll data.</returns>
+        [AllowAnonymous]
         public async Task<PollsGetById> GetByIdAsync(int pollId, bool extended = false, UserFields fields = UserFields.None, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
