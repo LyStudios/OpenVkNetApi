@@ -2,11 +2,14 @@
 
 [Читать на русском языке (Russian)](README.ru.md)
 
+[![Documentation](https://img.shields.io/badge/docs-website-brightgreen.svg?style=flat-square)](https://lystudios.github.io/OpenVkNetApi/)
 [![NuGet Version](https://img.shields.io/nuget/v/OpenVkNetApi.svg?style=flat-square)](https://www.nuget.org/packages/OpenVkNetApi/)
 [![Target Framework](https://img.shields.io/badge/.NET%20Standard-1.1-blue.svg?style=flat-square)](https://learn.microsoft.com/en-us/dotnet/standard/net-standard)
 [![License](https://img.shields.io/github/license/LyStudios/OpenVkNetApi.svg?style=flat-square)](LICENSE)
 
 A fully asynchronous C#/.NET library for interacting with the **OpenVK API**. Built with ease of use and performance in mind, targeting `.NET Standard 1.1` to ensure maximum compatibility across diverse platforms (including .NET Framework, .NET Core, Xamarin, and Unity).
+
+> 💡 **Looking for API Reference?** Check out the [Documentation Website](https://lystudios.github.io/OpenVkNetApi/).
 
 ---
 
