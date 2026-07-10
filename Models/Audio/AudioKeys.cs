@@ -7,6 +7,7 @@ namespace OpenVkNetApi.Models.Audio
     /// Represents playback keys for an audio file.
     /// This is a dynamic object, so extra properties are stored in a dictionary.
     /// </summary>
+    [JsonConverter(typeof(AudioKeysConverter))]
     public class AudioKeys
     {
         /// <summary>
