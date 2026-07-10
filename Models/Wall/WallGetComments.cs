@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using OpenVkNetApi.Models.Account;
 using OpenVkNetApi.Models.Comments;
+using OpenVkNetApi.Models.Groups;
 
 namespace OpenVkNetApi.Models.Wall
 {
@@ -51,5 +52,11 @@ namespace OpenVkNetApi.Models.Wall
         /// </summary>
         [JsonProperty("profiles")]
         public List<ProfileInfo> Profiles { get; set; }
+
+        /// <summary>
+        /// A list of groups related to the comments, if extended information was requested.
+        /// </summary>
+        [JsonProperty("groups")]
+        public List<Group> Groups { get; set; }
     }
 }
