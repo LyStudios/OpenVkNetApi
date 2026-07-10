@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 
 namespace OpenVkNetApi.Models.Video
@@ -28,12 +29,28 @@ namespace OpenVkNetApi.Models.Video
                 return null;
             }
 
-            return serializer.Deserialize<VideoFiles>(reader);
+            // Load JObject to bypass the serializer circular dependency loop
+            var obj = JObject.Load(reader);
+            var files = new VideoFiles
+            {
+                Mp4480 = obj["mp4_480"]?.Value<string>()
+            };
+            return files;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            serializer.Serialize(writer, value);
+            if (value == null)
+            {
+                writer.WriteNull();
+                return;
+            }
+
+            var files = (VideoFiles)value;
+            writer.WriteStartObject();
+            writer.WritePropertyName("mp4_480");
+            writer.WriteValue(files.Mp4480);
+            writer.WriteEndObject();
         }
     }
 }
