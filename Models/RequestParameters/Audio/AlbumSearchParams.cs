@@ -9,10 +9,16 @@ namespace OpenVkNetApi.Models.RequestParameters.Audio
     public class AlbumSearchParams
     {
         /// <summary>
-        /// The search query for albums.
+        /// The search query for albums (OpenVK method parameter).
+        /// </summary>
+        [ApiParameter("query")]
+        public string Query { get; set; } = "";
+
+        /// <summary>
+        /// Alias search query parameter ("q") for VK API compatibility.
         /// </summary>
         [ApiParameter("q")]
-        public string Query { get; set; } = "";
+        public string Q { get => Query; set => Query = value; }
         
         /// <summary>
         /// Offset for pagination of search results.

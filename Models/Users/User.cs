@@ -198,6 +198,30 @@ namespace OpenVkNetApi.Models.Users
         /// Indicates if the user is blacklisted by the current user.
         /// </summary>
         [JsonProperty("blacklisted_by_me")]
-        public bool? BlacklistedByMe { get; set; }       
+        public bool? BlacklistedByMe { get; set; }
+
+        /// <summary>
+        /// The positive numeric ID of the user.
+        /// </summary>
+        [JsonProperty("real_id")]
+        public long? RealId { get; set; }
+
+        /// <summary>
+        /// Indicates if the user is a follower of the current user.
+        /// </summary>
+        [JsonProperty("follower")]
+        public bool? Follower { get; set; }
+
+        /// <summary>
+        /// ID of the user's main profile photo.
+        /// </summary>
+        [JsonProperty("photo_id")]
+        public string PhotoId { get; set; }
+
+        /// <summary>
+        /// Entity model type string (e.g. "user").
+        /// </summary>
+        [JsonProperty("model")]
+        public string Model { get; set; }
     }
 }

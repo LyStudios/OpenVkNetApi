@@ -208,5 +208,22 @@ namespace OpenVkNetApi.Methods
 
             return await PostAsync<int>("unpin", parameters, ct);
         }
+
+        /// <summary>
+        /// Returns a list of wall posts near the geographical location of the specified post.
+        /// </summary>
+        /// <param name="ownerId">ID of the post owner.</param>
+        /// <param name="postId">ID of the post containing geo coordinates.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>A <see cref="WallGet"/> object containing nearby wall posts.</returns>
+        public async Task<WallGet> GetNearbyAsync(int ownerId, int postId, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .Add("post_id", postId)
+                .ToDictionary();
+
+            return await GetAsync<WallGet>("getNearby", parameters, ct);
+        }
     }
 }

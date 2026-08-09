@@ -85,6 +85,11 @@ export default {
             items: getSidebarItems('reference/docs', 'docs.')
           },
           {
+            text: 'Исполнение процедур (Execute)',
+            collapsed: true,
+            items: getSidebarItems('reference/execute', 'execute.')
+          },
+          {
             text: 'Друзья (Friends)',
             collapsed: true,
             items: getSidebarItems('reference/friends', 'friends.')
@@ -221,6 +226,11 @@ export default {
             text: 'Документы (Docs)',
             collapsed: true,
             items: getSidebarItems('reference/models/docs')
+          },
+          {
+            text: 'Исполнение процедур (Execute)',
+            collapsed: true,
+            items: getSidebarItems('reference/models/execute')
           },
           {
             text: 'Друзья (Friends)',

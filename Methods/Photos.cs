@@ -493,5 +493,22 @@ namespace OpenVkNetApi.Methods
         {
             return await GetAsync<ExtendedCollection<PhotoComment>>("getComments", @params, ct);
         }
+
+        /// <summary>
+        /// Deletes a comment on a photo.
+        /// </summary>
+        /// <param name="commentId">The ID of the comment to delete.</param>
+        /// <param name="ownerId">The owner ID of the photo.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>An integer representing the API's success code (usually 1 on success).</returns>
+        public async Task<int> DeleteCommentAsync(int commentId, int ownerId = 0, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("comment_id", commentId)
+                .Add("owner_id", ownerId)
+                .ToDictionary();
+
+            return await PostAsync<int>("deleteComment", parameters, ct);
+        }
     }
 }

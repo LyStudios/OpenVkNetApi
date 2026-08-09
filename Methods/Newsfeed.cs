@@ -93,5 +93,17 @@ namespace OpenVkNetApi.Methods
 
             return await PostAsync<int>("deleteBan", parameters);
         }
+
+        /// <summary>
+        /// Searches for posts by keyword or phrase.
+        /// </summary>
+        /// <param name="params">Search parameters.</param>
+        [AllowAnonymous]
+        public async Task<NewsfeedCollection<Post>> SearchAsync(NewsfeedSearchParams @params)
+        {
+            return await GetAsync<NewsfeedCollection<Post>>("search", @params);
+        }
+
     }
+
 }

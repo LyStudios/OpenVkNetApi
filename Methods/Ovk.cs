@@ -59,5 +59,16 @@ namespace OpenVkNetApi.Methods
 
             return await GetAsync<OvkAboutInstance>("aboutInstance", parameters, ct);
         }
+
+        /// <summary>
+        /// An Easter egg method returning "крылышки".
+        /// </summary>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>A string response.</returns>
+        [AllowAnonymous]
+        public async Task<string> ChickenWingsAsync(CancellationToken ct = default)
+        {
+            return await GetAsync<string>("chickenWings", null, ct);
+        }
     }
 }

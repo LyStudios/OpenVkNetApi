@@ -85,5 +85,53 @@ namespace OpenVkNetApi.Models.Groups
         /// </summary>
         [JsonProperty("real_id")]
         public int? RealId { get; set; }
+
+        /// <summary>
+        /// The group's background picture URLs (OpenVK custom feature).
+        /// </summary>
+        [JsonProperty("background")]
+        public List<string> Background { get; set; }
+
+        /// <summary>
+        /// Indicates if the user can suggest posts in the community.
+        /// </summary>
+        [JsonProperty("can_suggest")]
+        public bool? CanSuggest { get; set; }
+
+        /// <summary>
+        /// Start date of the event in Unix time.
+        /// </summary>
+        [JsonProperty("start_date")]
+        public long? StartDate { get; set; }
+
+        /// <summary>
+        /// Number of suggested posts in the community.
+        /// </summary>
+        [JsonProperty("suggested_count")]
+        public int? SuggestedCount { get; set; }
+
+        /// <summary>
+        /// Owner/Creator user ID of the community.
+        /// </summary>
+        [JsonProperty("user_id")]
+        public long? UserId { get; set; }
+
+        /// <summary>
+        /// URL of the original 200px profile photo.
+        /// </summary>
+        [JsonProperty("photo_200_orig")]
+        public string Photo200Orig { get; set; }
+
+        /// <summary>
+        /// URL of the original 400px profile photo.
+        /// </summary>
+        [JsonProperty("photo_400_orig")]
+        public string Photo400Orig { get; set; }
+
+        /// <summary>
+        /// URL of the maximum size profile photo.
+        /// </summary>
+        [JsonProperty("photo_max")]
+        public string PhotoMax { get; set; }
     }
 }

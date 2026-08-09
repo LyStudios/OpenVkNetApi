@@ -17,7 +17,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Users
         /// <summary>
         /// A list of additional fields to return for each user.
         /// </summary>
-        [ApiParameter   ("fields")]
+        [ApiParameter("fields")]
         public UserFields Fields { get; set; } = UserFields.None;
 
         /// <summary>

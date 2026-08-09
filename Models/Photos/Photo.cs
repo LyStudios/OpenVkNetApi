@@ -209,5 +209,33 @@ namespace OpenVkNetApi.Models.Photos
         /// </summary>
         [JsonProperty("sizes")]
         public List<PhotoSize> Sizes { get; set; }
+
+        /// <summary>
+        /// Indicates whether the current user can like the photo.
+        /// </summary>
+        [JsonProperty("can_like")]
+        [JsonConverter(typeof(BoolToIntConverter))]
+        public bool? CanLike { get; set; }
+
+        /// <summary>
+        /// Indicates whether the current user can post comments on the photo.
+        /// </summary>
+        [JsonProperty("can_post")]
+        [JsonConverter(typeof(BoolToIntConverter))]
+        public bool? CanPost { get; set; }
+
+        /// <summary>
+        /// Indicates whether the photo can be published.
+        /// </summary>
+        [JsonProperty("can_publish")]
+        [JsonConverter(typeof(BoolToIntConverter))]
+        public bool? CanPublish { get; set; }
+
+        /// <summary>
+        /// Indicates whether the current user has liked the photo.
+        /// </summary>
+        [JsonProperty("user_likes")]
+        [JsonConverter(typeof(BoolToIntConverter))]
+        public bool? UserLikes { get; set; }
     }
 }

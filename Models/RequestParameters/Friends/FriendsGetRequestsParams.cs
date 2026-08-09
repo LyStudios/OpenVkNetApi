@@ -39,5 +39,12 @@ namespace OpenVkNetApi.Models.RequestParameters.Friends
         [ApiParameter("extended")]
         [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
         public bool Extended { get; set; } = false;
+
+        /// <summary>
+        /// 1 to return suggested friend requests.
+        /// </summary>
+        [ApiParameter("suggested")]
+        [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
+        public bool Suggested { get; set; } = false;
     }
 }

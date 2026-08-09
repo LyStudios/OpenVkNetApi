@@ -97,5 +97,17 @@ namespace OpenVkNetApi.Models.Docs
         /// </summary>
         [JsonProperty("tags")]
         public List<string> Tags { get; set; }
+
+        /// <summary>
+        /// Indicates if the current user can manage/delete the document.
+        /// </summary>
+        [JsonProperty("can_manage")]
+        public bool? CanManage { get; set; }
+
+        /// <summary>
+        /// Private direct URL for document access in OpenVK.
+        /// </summary>
+        [JsonProperty("private_url")]
+        public string PrivateUrl { get; set; }
     }
 }

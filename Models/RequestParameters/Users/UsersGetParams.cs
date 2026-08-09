@@ -31,5 +31,11 @@ namespace OpenVkNetApi.Models.RequestParameters.Users
         /// </summary>
         [ApiParameter("count")]
         public int Count { get; set; } = 100;
+
+        /// <summary>
+        /// Account context ID or username for OpenVK multi-account requests.
+        /// </summary>
+        [ApiParameter("authuser")]
+        public string AuthUser { get; set; } = null;
     }
 }

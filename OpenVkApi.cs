@@ -53,6 +53,11 @@ namespace OpenVkNetApi
         public Docs Docs { get; }
 
         /// <summary>
+        /// Provides methods for executing custom scripts and procedures.
+        /// </summary>
+        public Execute Execute { get; }
+
+        /// <summary>
         /// Provides methods for working with friends.
         /// </summary>
         public Friends Friends { get; }
@@ -172,6 +177,7 @@ namespace OpenVkNetApi
             Audio = new Audio(this);
             Board = new Board(this);
             Docs = new Docs(this);
+            Execute = new Execute(this);
             Friends = new Friends(this);
             Gifts = new Gifts(this);
             Groups = new Groups(this);

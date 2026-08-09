@@ -87,5 +87,76 @@ namespace OpenVkNetApi.Methods
         {
             return await GetAsync<Collection<User>>("getRequests", @params, cancellationToken);
         }
+
+        /// <summary>
+        /// Returns custom friend lists.
+        /// </summary>
+        /// <param name="cancellationToken">A cancellation token for the operation.</param>
+        /// <returns>A <see cref="Collection{FriendList}"/> of friend lists.</returns>
+        public async Task<Collection<FriendList>> GetListsAsync(CancellationToken cancellationToken = default)
+        {
+            return await GetAsync<Collection<FriendList>>("getLists", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes a custom friend list.
+        /// </summary>
+        /// <param name="listId">The list ID to delete.</param>
+        /// <param name="cancellationToken">A cancellation token for the operation.</param>
+        /// <returns>An integer representing the API's success code.</returns>
+        public async Task<int> DeleteListAsync(int listId, CancellationToken cancellationToken = default)
+        {
+            var parameters = new RequestParams()
+                .Add("list_id", listId)
+                .ToDictionary();
+
+            return await PostAsync<int>("deleteList", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// Edits friend lists for a specific friend.
+        /// </summary>
+        /// <param name="userId">The ID of the friend.</param>
+        /// <param name="listIds">A comma-separated list of list IDs.</param>
+        /// <param name="cancellationToken">A cancellation token for the operation.</param>
+        /// <returns>An integer representing the API's success code.</returns>
+        public async Task<int> EditAsync(long userId, string listIds = "", CancellationToken cancellationToken = default)
+        {
+            var parameters = new RequestParams()
+                .Add("user_id", userId)
+                .Add("list_ids", listIds)
+                .ToDictionary();
+
+            return await PostAsync<int>("edit", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// Edits a custom friend list.
+        /// </summary>
+        /// <param name="listId">The ID of the list to edit.</param>
+        /// <param name="name">The new name of the list.</param>
+        /// <param name="userIds">A comma-separated list of user IDs for the list.</param>
+        /// <param name="addUserIds">A comma-separated list of user IDs to add.</param>
+        /// <param name="deleteUserIds">A comma-separated list of user IDs to delete.</param>
+        /// <param name="cancellationToken">A cancellation token for the operation.</param>
+        /// <returns>An integer representing the API's success code.</returns>
+        public async Task<int> EditListAsync(
+            int listId,
+            string name = "",
+            string userIds = "",
+            string addUserIds = "",
+            string deleteUserIds = "",
+            CancellationToken cancellationToken = default)
+        {
+            var parameters = new RequestParams()
+                .Add("list_id", listId)
+                .Add("name", name)
+                .Add("user_ids", userIds)
+                .Add("add_user_ids", addUserIds)
+                .Add("delete_user_ids", deleteUserIds)
+                .ToDictionary();
+
+            return await PostAsync<int>("editList", parameters, cancellationToken);
+        }
     }
 }

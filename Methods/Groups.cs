@@ -141,18 +141,18 @@ namespace OpenVkNetApi.Methods
         }
 
         /// <summary>
-        /// Checks if a user is a member of a group, returning extended information.
+        /// Checks if a user is a member of a group with extended information.
         /// </summary>
         /// <param name="groupId">The group ID.</param>
         /// <param name="userId">The user ID.</param>
         /// <param name="cancellationToken">A cancellation token for the operation.</param>
-        /// <returns>A <see cref="GroupsIsMember"/> object with extended information.</returns>
+        /// <returns>A <see cref="GroupsIsMember"/> object containing detailed membership status information.</returns>
         public async Task<GroupsIsMember> IsMemberExtendedAsync(string groupId, int userId, CancellationToken cancellationToken = default)
         {
             var parameters = new RequestParams()
                 .Add("group_id", groupId)
                 .Add("user_id", userId)
-                .Add("extended", 1)
+                .Add("extended", "1")
                 .ToDictionary();
 
             return await GetAsync<GroupsIsMember>("isMember", parameters, cancellationToken);
