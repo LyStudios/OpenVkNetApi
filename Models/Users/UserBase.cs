@@ -27,5 +27,8 @@ namespace OpenVkNetApi.Models.Users
         /// </summary>
         [JsonProperty("last_name")]
         public string LastName { get; set; }
+
+        [JsonIgnore]
+        public string Name => $"{FirstName} {LastName}".Trim();
     }
 }

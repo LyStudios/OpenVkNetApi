@@ -25,7 +25,7 @@ namespace OpenVkNetApi
         /// <summary>
         /// The base URL of the API (e.g., https://ovk.to).
         /// </summary>
-        private readonly string _baseUrl;
+        private string _baseUrl;
 
         /// <summary>
         /// The authorization token used for API requests.
@@ -206,10 +206,15 @@ namespace OpenVkNetApi
         /// <exception cref="ArgumentException">Thrown if the token is null or empty.</exception>
         public void SetAccessToken(string token)
         {
-            if (string.IsNullOrWhiteSpace(token))
-                throw new ArgumentException("Token cannot be null or empty", nameof(token));
-
             AccessToken = token;
+        }
+
+        public void SetBaseUrl(string baseUrl)
+        {
+            if (!string.IsNullOrWhiteSpace(baseUrl))
+            {
+                _baseUrl = baseUrl.Trim().TrimEnd('/');
+            }
         }
 
         /// <summary>
