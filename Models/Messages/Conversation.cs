@@ -19,21 +19,21 @@ namespace OpenVkNetApi.Models.Messages
         /// The ID of the last message in the conversation.
         /// </summary>
         [JsonProperty("last_message_id")]
-        public int LastMessageId { get; set; }
+        public int? LastMessageId { get; set; }
 
         /// <summary>
         /// The ID of the last incoming message that has been marked as read
         /// by the current user.
         /// </summary>
         [JsonProperty("in_read")]
-        public int InRead { get; set; }
+        public int? InRead { get; set; }
 
         /// <summary>
         /// The ID of the last outgoing message that has been marked as read
         /// by the conversation peer.
         /// </summary>
         [JsonProperty("out_read")]
-        public int OutRead { get; set; }
+        public int? OutRead { get; set; }
 
         /// <summary>
         /// Contains sorting information used internally by the API
@@ -87,6 +87,6 @@ namespace OpenVkNetApi.Models.Messages
         /// The number of unread messages in the conversation.
         /// </summary>
         [JsonProperty("unread_count")]
-        public int UnreadCount { get; set; }
+        public int? UnreadCount { get; set; }
     }
 }

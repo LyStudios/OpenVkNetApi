@@ -23,6 +23,6 @@ namespace OpenVkNetApi.Models.Messages
         /// The local ID within a chat.
         /// </summary>
         [JsonProperty("local_id")]
-        public int LocalId { get; set; }
+        public int? LocalId { get; set; }
     }
 }

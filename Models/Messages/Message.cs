@@ -21,20 +21,20 @@ namespace OpenVkNetApi.Models.Messages
         /// associated with the message.
         /// </summary>
         [JsonProperty("user_id")]
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
 
         /// <summary>
         /// The peer identifier (user ID, chat ID, or community ID)
         /// associated with the message.
         /// </summary>
         [JsonProperty("peer_id")]
-        public int PeerId { get; set; }
+        public int? PeerId { get; set; }
 
         /// <summary>
         /// The identifier of the user or community that sent the message.
         /// </summary>
         [JsonProperty("from_id")]
-        public int FromId { get; set; }
+        public int? FromId { get; set; }
 
         /// <summary>
         /// The date and time when the message was sent,
@@ -49,7 +49,7 @@ namespace OpenVkNetApi.Models.Messages
         /// and <c>0</c> indicates that it is unread.
         /// </summary>
         [JsonProperty("read_state")]
-        public int ReadState { get; set; }
+        public int? ReadState { get; set; }
 
         /// <summary>
         /// Indicates whether the message is outgoing.
@@ -57,7 +57,7 @@ namespace OpenVkNetApi.Models.Messages
         /// and <c>0</c> means it is incoming.
         /// </summary>
         [JsonProperty("out")]
-        public int Out { get; set; }
+        public int? Out { get; set; }
 
         /// <summary>
         /// The title of the message (used primarily in chat conversations).
@@ -108,7 +108,7 @@ namespace OpenVkNetApi.Models.Messages
         /// A value of <c>1</c> means deleted, and <c>0</c> means active.
         /// </summary>
         [JsonProperty("deleted")]
-        public int Deleted { get; set; }
+        public int? Deleted { get; set; }
 
         /// <summary>
         /// A unique identifier used to prevent duplicate message sending.
