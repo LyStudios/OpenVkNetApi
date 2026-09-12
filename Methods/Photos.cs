@@ -85,7 +85,21 @@ namespace OpenVkNetApi.Methods
                 var uploadResponse = await _api.HttpClient.PostAsync(uploadUrl, form, ct);
                 var json = await uploadResponse.Content.ReadAsStringAsync();
                 if (!uploadResponse.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        var err = JsonConvert.DeserializeObject<ApiError>(json);
+                        if (err != null && (!string.IsNullOrEmpty(err.ErrorDescription) || !string.IsNullOrEmpty(err.Error) || !string.IsNullOrEmpty(err.ErrorMessage)))
+                        {
+                            string msg = err.ErrorMessage ?? err.ErrorDescription ?? err.Error;
+                            throw new OvkApiException((int)uploadResponse.StatusCode, msg);
+                        }
+                    }
+                    catch (OvkApiException) { throw; }
+                    catch { }
+
                     throw new HttpRequestException($"Photo upload failed with status code {uploadResponse.StatusCode}: {json}");
+                }
 
                 var uploadData = JsonConvert.DeserializeObject<UploadResult>(json);
 

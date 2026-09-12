@@ -57,7 +57,7 @@ namespace OpenVkNetApi.Methods
                 .Add("code", code)
                 .ToDictionary();
 
-            return await PostAsync<T>("execute", parameters, ct);
+            return await _api.CallApiPostAsync<T>("execute", parameters, ct);
         }
 
         /// <summary>
@@ -69,6 +69,19 @@ namespace OpenVkNetApi.Methods
         public async Task<Newtonsoft.Json.Linq.JToken> ExecuteAsync(string code, CancellationToken ct = default)
         {
             return await ExecuteAsync<Newtonsoft.Json.Linq.JToken>(code, ct);
+        }
+
+        /// <summary>
+        /// Executes a stored server procedure on the OpenVK server (e.g., <c>execute.getNewsfeedSmart</c>).
+        /// </summary>
+        /// <typeparam name="T">The type of the expected result.</typeparam>
+        /// <param name="procedureName">The procedure name to execute.</param>
+        /// <param name="parameters">Parameters to pass to the procedure.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>The result of the procedure deserialized to <typeparamref name="T"/>.</returns>
+        public async Task<T> ProcedureAsync<T>(string procedureName, object parameters = null, CancellationToken ct = default)
+        {
+            return await PostAsync<T>(procedureName, parameters, ct);
         }
     }
 }
