@@ -1,5 +1,3 @@
-using Newtonsoft.Json;
-
 namespace OpenVkNetApi.Models
 {
     /// <summary>
@@ -8,10 +6,5 @@ namespace OpenVkNetApi.Models
     /// <typeparam name="T">The type of items in the newsfeed.</typeparam>
     public class NewsfeedCollection<T> : ExtendedCollection<T> where T : class
     {
-        /// <summary>
-        /// The starting point for the next page of results.
-        /// </summary>
-        [JsonProperty("next_from")]
-        public string NextFrom { get; set; }
     }
 }

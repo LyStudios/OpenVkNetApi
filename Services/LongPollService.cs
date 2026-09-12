@@ -27,16 +27,58 @@ namespace OpenVkNetApi.Services
         private bool _running;
 
         private int _wait = 25;
+        private int _mode = 234;
         private readonly int _version = 3;
+
+        /// <summary>
+        /// Gets or sets the bitmask mode for Long Poll requests (default: 234 = attachments + extended + pts + extra platform + random_id).
+        /// </summary>
+        public int Mode
+        {
+            get => _mode;
+            set => _mode = value;
+        }
 
         /// <summary>
         /// Occurs when a new message is received via Long Poll.
         /// </summary>
         public event EventHandler<NewMessageEventArgs> OnMessageNew;
+
         /// <summary>
-        /// Occurs when a user starts typing a message in a conversation.
+        /// Occurs when an existing message is edited.
+        /// </summary>
+        public event EventHandler<MessageEditEventArgs> OnMessageEdit;
+
+        /// <summary>
+        /// Occurs when messages in a conversation are marked as read.
+        /// </summary>
+        public event EventHandler<MessagesReadEventArgs> OnMessagesRead;
+
+        /// <summary>
+        /// Occurs when a friend/user comes online.
+        /// </summary>
+        public event EventHandler<UserOnlineEventArgs> OnUserOnline;
+
+        /// <summary>
+        /// Occurs when a friend/user goes offline.
+        /// </summary>
+        public event EventHandler<UserOfflineEventArgs> OnUserOffline;
+
+        /// <summary>
+        /// Occurs when chat information or settings change.
+        /// </summary>
+        public event EventHandler<ChatChangeEventArgs> OnChatChanged;
+
+        /// <summary>
+        /// Occurs when the total unread messages counter is updated.
+        /// </summary>
+        public event EventHandler<UnreadCountEventArgs> OnUnreadCountChanged;
+
+        /// <summary>
+        /// Occurs when a user starts typing a message or recording an audio message in a conversation.
         /// </summary>
         public event EventHandler<UserTypingEventArgs> OnUserTyping;
+
         /// <summary>
         /// Occurs when an error is encountered during the Long Poll process.
         /// </summary>
@@ -135,6 +177,7 @@ namespace OpenVkNetApi.Services
                         $"&key={_lp.Key}" +
                         $"&ts={_lp.Ts}" +
                         $"&wait={_wait}" +
+                        $"&mode={_mode}" +
                         $"&version={_version}";
 
                     System.Diagnostics.Debug.WriteLine("[LongPoll] Polling URL: " + url);
@@ -254,48 +297,272 @@ namespace OpenVkNetApi.Services
                 if (!int.TryParse(u[0]?.ToString(), out int type))
                     continue;
 
-                if (type == 61)
+                switch (type)
                 {
-                    int userId = SafeInt(u, 1);
-                    if (userId > 0)
-                    {
-                        OnUserTyping?.Invoke(this, new UserTypingEventArgs(userId, userId));
-                    }
-                    continue;
+                    case 4:
+                        ProcessNewMessage(u);
+                        break;
+
+                    case 5:
+                        ProcessMessageEdit(u);
+                        break;
+
+                    case 6:
+                        ProcessMessagesRead(u, isOutgoing: false);
+                        break;
+
+                    case 7:
+                        ProcessMessagesRead(u, isOutgoing: true);
+                        break;
+
+                    case 8:
+                        ProcessUserOnline(u);
+                        break;
+
+                    case 9:
+                        ProcessUserOffline(u);
+                        break;
+
+                    case 51:
+                        ProcessChatChangedUnknown(u);
+                        break;
+
+                    case 52:
+                        ProcessChatChangedTyped(u);
+                        break;
+
+                    case 61:
+                        ProcessUserTypingDm(u);
+                        break;
+
+                    case 62:
+                        ProcessUserTypingChat(u);
+                        break;
+
+                    case 63:
+                        ProcessUserActivityV3(u, isAudio: false);
+                        break;
+
+                    case 64:
+                        ProcessUserActivityV3(u, isAudio: true);
+                        break;
+
+                    case 80:
+                        ProcessUnreadCount(u);
+                        break;
                 }
-
-                if (type == 62)
-                {
-                    int userId = SafeInt(u, 1);
-                    int chatId = SafeInt(u, 2);
-                    if (userId > 0 && chatId > 0)
-                    {
-                        int peerId = 2000000000 + chatId;
-                        OnUserTyping?.Invoke(this, new UserTypingEventArgs(userId, peerId, chatId));
-                    }
-                    continue;
-                }
-
-                if (type != 4) continue; // only new messages
-
-                int msgId = SafeInt(u, 1);
-                if (msgId == 0) continue;
-
-                if (!_recentIds.Add(msgId))
-                    continue;
-
-                TrimCache();
-
-                var msg = new Message
-                {
-                    Id = msgId,
-                    Date = SafeLong(u, 4),
-                    Text = u.Count > 5 ? u[5]?.ToString() : null,
-                    FromId = u.Count > 9 ? SafeInt(u, 9) : SafeInt(u, 3)
-                };
-
-                OnMessageNew?.Invoke(this, new NewMessageEventArgs(msg));
             }
+        }
+
+        private void ProcessNewMessage(List<object> u)
+        {
+            int msgId = SafeInt(u, 1);
+            if (msgId == 0) return;
+
+            if (!_recentIds.Add(msgId))
+                return;
+
+            TrimCache();
+
+            int flags = SafeInt(u, 2);
+            int peerId = SafeInt(u, 3);
+            long date = SafeLong(u, 4);
+
+            string text = null;
+            if (u.Count > 5 && u[5] is string s5 && !string.IsNullOrEmpty(s5))
+            {
+                text = s5;
+            }
+            else if (u.Count > 6 && u[6] is string s6)
+            {
+                text = s6;
+            }
+
+            int fromId = peerId;
+            int cmid = 0;
+            if (u.Count > 9)
+            {
+                cmid = SafeInt(u, 9);
+            }
+
+            if (peerId > 2000000000)
+            {
+                int extracted = ExtractFromId(u);
+                if (extracted != 0)
+                {
+                    fromId = extracted;
+                }
+            }
+
+            var msg = new Message
+            {
+                Id = msgId,
+                PeerId = peerId,
+                FromId = fromId,
+                Date = date,
+                Text = text,
+                ConversationMessageId = cmid > 0 ? cmid : (int?)null,
+                Out = (flags & 2) != 0 ? 1 : 0,
+                ReadState = (flags & 1) == 0 ? 1 : 0
+            };
+
+            OnMessageNew?.Invoke(this, new NewMessageEventArgs(msg));
+        }
+
+        private void ProcessMessageEdit(List<object> u)
+        {
+            int msgId = SafeInt(u, 1);
+            int flags = SafeInt(u, 2);
+            int peerId = SafeInt(u, 3);
+            long date = SafeLong(u, 4);
+            string text = u.Count > 5 ? u[5]?.ToString() : "";
+
+            OnMessageEdit?.Invoke(this, new MessageEditEventArgs(msgId, peerId, text, date, flags));
+        }
+
+        private void ProcessMessagesRead(List<object> u, bool isOutgoing)
+        {
+            int peerId = SafeInt(u, 1);
+            int localId = SafeInt(u, 2);
+
+            OnMessagesRead?.Invoke(this, new MessagesReadEventArgs(peerId, localId, isOutgoing));
+        }
+
+        private void ProcessUserOnline(List<object> u)
+        {
+            int userId = Math.Abs(SafeInt(u, 1));
+            int extra = SafeInt(u, 2);
+            int platformId = extra & 0xFF;
+            long timestamp = SafeLong(u, 3);
+
+            OnUserOnline?.Invoke(this, new UserOnlineEventArgs(userId, platformId, timestamp));
+        }
+
+        private void ProcessUserOffline(List<object> u)
+        {
+            int userId = Math.Abs(SafeInt(u, 1));
+            int flags = SafeInt(u, 2);
+            long timestamp = SafeLong(u, 3);
+
+            OnUserOffline?.Invoke(this, new UserOfflineEventArgs(userId, flags, timestamp));
+        }
+
+        private void ProcessChatChangedUnknown(List<object> u)
+        {
+            int chatId = SafeInt(u, 1);
+            bool self = SafeInt(u, 2) == 1;
+
+            OnChatChanged?.Invoke(this, new ChatChangeEventArgs(chatId, 2000000000 + chatId, 0, self));
+        }
+
+        private void ProcessChatChangedTyped(List<object> u)
+        {
+            int typeId = SafeInt(u, 1);
+            int peerId = SafeInt(u, 2);
+            int chatId = peerId > 2000000000 ? peerId - 2000000000 : peerId;
+
+            OnChatChanged?.Invoke(this, new ChatChangeEventArgs(chatId, peerId, typeId, false));
+        }
+
+        private void ProcessUserTypingDm(List<object> u)
+        {
+            int userId = SafeInt(u, 1);
+            if (userId > 0)
+            {
+                OnUserTyping?.Invoke(this, new UserTypingEventArgs(userId, userId, null, false));
+            }
+        }
+
+        private void ProcessUserTypingChat(List<object> u)
+        {
+            int userId = SafeInt(u, 1);
+            int chatId = SafeInt(u, 2);
+            if (userId > 0 && chatId > 0)
+            {
+                int peerId = 2000000000 + chatId;
+                OnUserTyping?.Invoke(this, new UserTypingEventArgs(userId, peerId, chatId, false));
+            }
+        }
+
+        private void ProcessUserActivityV3(List<object> u, bool isAudio)
+        {
+            if (u.Count < 3) return;
+
+            int peerId;
+            var userIds = new List<int>();
+            ExtractUsersAndPeer(u, out peerId, userIds);
+
+            int? chatId = peerId > 2000000000 ? peerId - 2000000000 : (int?)null;
+            foreach (var uid in userIds)
+            {
+                if (uid > 0)
+                {
+                    OnUserTyping?.Invoke(this, new UserTypingEventArgs(uid, peerId, chatId, isAudio));
+                }
+            }
+        }
+
+        private static void ExtractUsersAndPeer(List<object> u, out int peerId, List<int> userIds)
+        {
+            peerId = 0;
+            if (u[1] is Newtonsoft.Json.Linq.JArray jArr1)
+            {
+                foreach (var item in jArr1)
+                {
+                    if (int.TryParse(item?.ToString(), out int id))
+                        userIds.Add(id);
+                }
+                peerId = SafeInt(u, 2);
+            }
+            else if (u[2] is Newtonsoft.Json.Linq.JArray jArr2)
+            {
+                peerId = SafeInt(u, 1);
+                foreach (var item in jArr2)
+                {
+                    if (int.TryParse(item?.ToString(), out int id))
+                        userIds.Add(id);
+                }
+            }
+            else
+            {
+                int id1 = SafeInt(u, 1);
+                int id2 = SafeInt(u, 2);
+                if (id2 > 2000000000 || id2 < 0)
+                {
+                    peerId = id2;
+                    if (id1 > 0) userIds.Add(id1);
+                }
+                else
+                {
+                    peerId = id1;
+                    if (id2 > 0) userIds.Add(id2);
+                    else if (id1 > 0) userIds.Add(id1);
+                }
+            }
+        }
+
+        private void ProcessUnreadCount(List<object> u)
+        {
+            int count = SafeInt(u, 1);
+            OnUnreadCountChanged?.Invoke(this, new UnreadCountEventArgs(count));
+        }
+
+        private static int ExtractFromId(List<object> u)
+        {
+            for (int i = 6; i <= 7 && i < u.Count; i++)
+            {
+                if (u[i] is Newtonsoft.Json.Linq.JObject jObj)
+                {
+                    if (jObj["from"] != null && int.TryParse(jObj["from"].ToString(), out int f))
+                        return f;
+                }
+                else if (u[i] is IDictionary<string, object> dict)
+                {
+                    if (dict.TryGetValue("from", out var fVal) && int.TryParse(fVal?.ToString(), out int f))
+                        return f;
+                }
+            }
+            return 0;
         }
 
         /// <summary>
@@ -393,6 +660,13 @@ namespace OpenVkNetApi.Services
         /// <param name="seconds">The number of seconds to wait. Clamped between 0 and 60 seconds.</param>
         public void SetWait(int seconds)
             => _wait = Math.Max(0, Math.Min(60, seconds));
+
+        /// <summary>
+        /// Sets the Long Poll bitmask mode for additional event fields.
+        /// </summary>
+        /// <param name="mode">The bitmask mode.</param>
+        public void SetMode(int mode)
+            => _mode = mode;
 
         /// <summary>
         /// Disposes of managed and unmanaged resources.

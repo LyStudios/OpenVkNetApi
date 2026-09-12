@@ -3,7 +3,7 @@ using System;
 namespace OpenVkNetApi.Events
 {
     /// <summary>
-    /// Contains information about a user typing event.
+    /// Contains information about a user typing or voice message recording event.
     /// Used in the <see cref="OpenVkNetApi.Services.LongPollService.OnUserTyping"/> event.
     /// </summary>
     public class UserTypingEventArgs : EventArgs
@@ -26,16 +26,23 @@ namespace OpenVkNetApi.Events
         public int? ChatId { get; }
 
         /// <summary>
+        /// Gets a value indicating whether the user is recording an audio/voice message.
+        /// </summary>
+        public bool IsAudioMessage { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="UserTypingEventArgs"/> class.
         /// </summary>
         /// <param name="userId">The ID of the user who is typing.</param>
         /// <param name="peerId">The peer ID of the conversation.</param>
         /// <param name="chatId">The optional chat ID.</param>
-        public UserTypingEventArgs(int userId, int peerId, int? chatId = null)
+        /// <param name="isAudioMessage">True if the user is recording an audio message, false if typing.</param>
+        public UserTypingEventArgs(int userId, int peerId, int? chatId = null, bool isAudioMessage = false)
         {
             UserId = userId;
             PeerId = peerId;
             ChatId = chatId;
+            IsAudioMessage = isAudioMessage;
         }
     }
 }
