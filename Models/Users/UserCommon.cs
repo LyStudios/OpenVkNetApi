@@ -72,5 +72,23 @@ namespace OpenVkNetApi.Models.Users
         /// </summary>
         [JsonProperty("photo_medium_rec")]
         public string PhotoMediumRec { get; set; }
+
+        /// <summary>
+        /// First name in genitive case.
+        /// </summary>
+        [JsonProperty("first_name_gen")]
+        public string FirstNameGen { get; set; }
+
+        /// <summary>
+        /// Last name in genitive case.
+        /// </summary>
+        [JsonProperty("last_name_gen")]
+        public string LastNameGen { get; set; }
+
+        /// <summary>
+        /// Audio track broadcast as status.
+        /// </summary>
+        [JsonProperty("status_audio")]
+        public Audio.Audio StatusAudio { get; set; }
     }
 }

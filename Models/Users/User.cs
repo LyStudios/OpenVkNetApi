@@ -27,10 +27,22 @@ namespace OpenVkNetApi.Models.Users
         public string Deactivated { get; set; }
 
         /// <summary>
+        /// Reason for account ban if deactivated is "banned".
+        /// </summary>
+        [JsonProperty("ban_reason")]
+        public string BanReason { get; set; }
+
+        /// <summary>
         /// Indicates if the user is currently online.
         /// </summary>
         [JsonProperty("online")]
         public bool? Online { get; set; }
+
+        /// <summary>
+        /// Indicates if the user is online from a mobile device (1 if true).
+        /// </summary>
+        [JsonProperty("online_mobile")]
+        public int? OnlineMobile { get; set; }
 
         /// <summary>
         /// Indicates if the user's profile is verified.

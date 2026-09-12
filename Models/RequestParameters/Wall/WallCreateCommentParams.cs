@@ -37,5 +37,11 @@ namespace OpenVkNetApi.Models.RequestParameters.Wall
         /// </summary>
         [ApiParameter("attachments")]
         public string Attachments { get; set; } = "";
+
+        /// <summary>
+        /// The ID of the comment being replied to.
+        /// </summary>
+        [ApiParameter("reply_to_comment")]
+        public int? ReplyToComment { get; set; } = null;
     }
 }

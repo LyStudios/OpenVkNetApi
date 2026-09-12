@@ -64,5 +64,11 @@ namespace OpenVkNetApi.Models.RequestParameters.Newsfeed
         [ApiParameter("with_alien_wall_posts")]
         [ApiParameterFormat(ParameterFormat.IntegerFromBool)]
         public bool WithAlienWallPosts { get; set; } = false;
+
+        /// <summary>
+        /// Filters to apply: comma-separated list of items to return (e.g. "post", "photo", "note"). Defaults to "post".
+        /// </summary>
+        [ApiParameter("filters")]
+        public string Filters { get; set; } = "post";
     }
 }

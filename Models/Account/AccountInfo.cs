@@ -74,5 +74,11 @@ namespace OpenVkNetApi.Models.Account
         /// </summary>
         [JsonProperty("own_posts_default")]
         public int OwnPostsDefault { get; set; }
+
+        /// <summary>
+        /// Indicates if music is available for this account on the OpenVK instance.
+        /// </summary>
+        [JsonProperty("music_available")]
+        public bool? MusicAvailable { get; set; }
     }
 }

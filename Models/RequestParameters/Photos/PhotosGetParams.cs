@@ -14,10 +14,10 @@ namespace OpenVkNetApi.Models.RequestParameters.Photos
         public int OwnerId { get; set; }
 
         /// <summary>
-        /// Album ID.
+        /// Album ID or system album identifier (e.g. "profile", "wall", "saved", or numeric ID).
         /// </summary>
         [ApiParameter("album_id")]
-        public int AlbumId { get; set; }
+        public string AlbumId { get; set; }
 
         /// <summary>
         /// A comma-separated list of photo IDs.
@@ -50,5 +50,11 @@ namespace OpenVkNetApi.Models.RequestParameters.Photos
         /// </summary>
         [ApiParameter("count")]
         public int Count { get; set; } = 10;
+
+        /// <summary>
+        /// Alternative limit on the number of photos to return (alias for count in OpenVK).
+        /// </summary>
+        [ApiParameter("limit")]
+        public int? Limit { get; set; } = null;
     }
 }
