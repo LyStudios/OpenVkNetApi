@@ -2,7 +2,7 @@
 
 # Long Poll (Прослушивание событий)
 
-Служба **Long Poll** позволяет вашему приложению получать уведомления о новых событиях (таких как входящие сообщения или индикация набора текста пользователем) практически мгновенно, без необходимости периодически опрашивать сервер вручную.
+Служба **Long Poll** позволяет вашему приложению получать уведомления о новых событиях (входящие и отредактированные сообщения, прочтение диалогов, онлайн/оффлайн статус пользователей, набор текста и запись голосовых сообщений) практически мгновенно, без необходимости периодически опрашивать сервер вручную.
 
 Для использования Long Poll в вашей программе должен быть авторизованный клиент `OpenVkApi`.
 
@@ -12,10 +12,19 @@
 
 # Поддерживаемые события
 
-На данный момент служба Long Poll в `OpenVkNetApi` поддерживает:
-* **`OnMessageNew`** — вызывается при получении нового сообщения. Возвращает объект сообщения и информацию о нём.
-* **`OnUserTyping`** — вызывается, когда собеседник начинает вводить текст в диалоге с вами.
-* **`OnError`** — возникает при сетевых сбоях, ошибках десериализации или проблемах связи с сервером Long Poll.
+Служба `LongPollService` поддерживает следующие события:
+
+| Событие | Аргументы | Описание |
+| :--- | :--- | :--- |
+| **`OnMessageNew`** | `NewMessageEventArgs` | Поступление нового сообщения. |
+| **`OnMessageEdit`** | `MessageEditEventArgs` | Редактирование сообщения. |
+| **`OnMessagesRead`** | `MessagesReadEventArgs` | Прочтение входящих или исходящих сообщений. |
+| **`OnUserOnline`** | `UserOnlineEventArgs` | Пользователь появился в сети. |
+| **`OnUserOffline`** | `UserOfflineEventArgs` | Пользователь вышел из сети. |
+| **`OnChatChanged`** | `ChatChangeEventArgs` | Изменение параметров беседы. |
+| **`OnUnreadCountChanged`** | `UnreadCountEventArgs` | Изменение счетчика непрочитанных диалогов. |
+| **`OnUserTyping`** | `UserTypingEventArgs` | Собеседник набирает текст или записывает аудио. |
+| **`OnError`** | `LongPollErrorEventArgs` | Сетевые ошибки или сбои подключения. |
 
 </div>
 
@@ -34,33 +43,58 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        var api = new OpenVkApi("https://api.openvk.org");
+        var api = new OpenVkApi("https://openvk.su");
         await api.AuthorizeAsync("логин", "пароль");
 
-        // Сервис LongPoll доступен как свойство клиента OpenVkApi
-        // Он реализует IDisposable, поэтому его удобно оборачивать в using
         using var longPoll = api.LongPoll;
 
-        // Подписываемся на событие новых сообщений
+        // Новые сообщения
         longPoll.OnMessageNew += (sender, e) =>
         {
-            Console.WriteLine($"[Новое сообщение] От: {e.Message.FromId} | Текст: {e.Message.Text}");
+            var msg = e.Message;
+            Console.WriteLine($"[Сообщение] От {msg.FromId} в {msg.PeerId}: {msg.Text}");
         };
 
-        // Подписываемся на индикатор набора текста
+        // Редактирование сообщений
+        longPoll.OnMessageEdit += (sender, e) =>
+        {
+            Console.WriteLine($"[Изменено #{e.MessageId}]: {e.Text}");
+        };
+
+        // Прочтение сообщений
+        longPoll.OnMessagesRead += (sender, e) =>
+        {
+            Console.WriteLine($"[Прочтение] В диалоге {e.PeerId} прочитано до #{e.LocalId}");
+        };
+
+        // Онлайн / Оффлайн
+        longPoll.OnUserOnline += (sender, e) =>
+        {
+            Console.WriteLine($"[Онлайн] Пользователь {e.UserId}");
+        };
+
+        longPoll.OnUserOffline += (sender, e) =>
+        {
+            Console.WriteLine($"[Оффлайн] Пользователь {e.UserId}");
+        };
+
+        // Индикатор набора текста / записи аудио
         longPoll.OnUserTyping += (sender, e) =>
         {
-            Console.WriteLine($"[Печать] Пользователь {e.UserId} вводит сообщение...");
+            string act = e.IsAudioMessage ? "записывает аудио" : "набирает текст";
+            Console.WriteLine($"[Активность] Пользователь {e.UserId} {act}...");
         };
 
-        // Логируем ошибки сети или сервера
+        // Изменение счетчика непрочитанных
+        longPoll.OnUnreadCountChanged += (sender, e) =>
+        {
+            Console.WriteLine($"[Непрочитано] Диалогов: {e.Count}");
+        };
+
+        // Ошибки
         longPoll.OnError += (sender, e) =>
         {
-            Console.WriteLine($"[Ошибка Long Poll] {e.ErrorMessage}");
-            if (e.Exception != null)
-            {
-                Console.WriteLine(e.Exception.ToString());
-            }
+            Console.WriteLine($"[Ошибка] {e.ErrorMessage}");
         };
 
         var cts = new CancellationTokenSource();
@@ -74,7 +108,6 @@ class Program
 
         try
         {
-            // Метод выполняется бесконечно в асинхронном цикле до отмены CancellationToken
             await longPoll.StartAsync(cts.Token);
         }
         catch (OperationCanceledException)

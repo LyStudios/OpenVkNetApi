@@ -65,6 +65,11 @@ export default {
         text: 'Методы API',
         items: [
           {
+            text: 'Активность (Activity)',
+            collapsed: true,
+            items: getSidebarItems('reference/activity', 'activity.')
+          },
+          {
             text: 'Аккаунт (Account)',
             collapsed: true,
             items: getSidebarItems('reference/account', 'account.')
@@ -145,6 +150,11 @@ export default {
             items: getSidebarItems('reference/pay', 'pay.')
           },
           {
+            text: 'Места и география (Places)',
+            collapsed: true,
+            items: getSidebarItems('reference/places', 'places.')
+          },
+          {
             text: 'Фотографии (Photos)',
             collapsed: true,
             items: getSidebarItems('reference/photos', 'photos.')
@@ -163,6 +173,11 @@ export default {
             text: 'Статус (Status)',
             collapsed: true,
             items: getSidebarItems('reference/status', 'status.')
+          },
+          {
+            text: 'Стикеры (Stickers)',
+            collapsed: true,
+            items: getSidebarItems('reference/stickers', 'stickers.')
           },
           {
             text: 'Пользователи (Users)',
@@ -284,6 +299,11 @@ export default {
             items: getSidebarItems('reference/models/ovk')
           },
           {
+            text: 'Места и география (Places)',
+            collapsed: true,
+            items: getSidebarItems('reference/models/places')
+          },
+          {
             text: 'Фотографии (Photos)',
             collapsed: true,
             items: getSidebarItems('reference/models/photos')
@@ -297,6 +317,11 @@ export default {
             text: 'Статус (Status)',
             collapsed: true,
             items: getSidebarItems('reference/models/status')
+          },
+          {
+            text: 'Стикеры (Stickers)',
+            collapsed: true,
+            items: getSidebarItems('reference/models/stickers')
           },
           {
             text: 'Пользователи (Users)',
