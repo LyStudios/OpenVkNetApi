@@ -186,5 +186,64 @@ namespace OpenVkNetApi.Methods
         {
             return GetAsync<AccountSaveInterests>("saveInterestsInfo", @params, cancellationToken: cancellationToken);
         }
+
+        /// <summary>
+        /// Subscribes an iOS/Android/Windows Phone device for push notifications.
+        /// </summary>
+        /// <param name="token">Device push token.</param>
+        /// <param name="deviceModel">Device model string.</param>
+        /// <param name="deviceYear">Device release year.</param>
+        /// <param name="systemVersion">Operating system version string.</param>
+        /// <param name="settings">Push notification settings JSON.</param>
+        /// <param name="cancellationToken">A cancellation token for the operation.</param>
+        /// <returns>An integer representing the API's success code (usually 1 on success).</returns>
+        public Task<int> RegisterDeviceAsync(string token, string deviceModel = "", string deviceYear = "", string systemVersion = "", string settings = "", CancellationToken cancellationToken = default)
+        {
+            var parameters = new RequestParams()
+                .Add("token", token)
+                .Add("device_model", deviceModel)
+                .Add("device_year", deviceYear)
+                .Add("system_version", systemVersion)
+                .Add("settings", settings)
+                .ToDictionary();
+
+            return PostAsync<int>("registerDevice", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// Unsubscribes a device from push notifications.
+        /// </summary>
+        /// <param name="token">Device push token.</param>
+        /// <param name="cancellationToken">A cancellation token for the operation.</param>
+        /// <returns>An integer representing the API's success code (usually 1 on success).</returns>
+        public Task<int> UnregisterDeviceAsync(string token, CancellationToken cancellationToken = default)
+        {
+            var parameters = new RequestParams()
+                .Add("token", token)
+                .ToDictionary();
+
+            return PostAsync<int>("unregisterDevice", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// Sets silence mode for push notifications.
+        /// </summary>
+        /// <param name="token">Device push token.</param>
+        /// <param name="time">Silence duration in seconds (-1 to disable forever).</param>
+        /// <param name="peerId">Destination ID (peer) to mute, or 0 for all.</param>
+        /// <param name="sound">1 to enable sound, 0 to disable sound.</param>
+        /// <param name="cancellationToken">A cancellation token for the operation.</param>
+        /// <returns>An integer representing the API's success code (usually 1 on success).</returns>
+        public Task<int> SetSilenceModeAsync(string token, int time = 0, int peerId = 0, int sound = 0, CancellationToken cancellationToken = default)
+        {
+            var parameters = new RequestParams()
+                .Add("token", token)
+                .Add("time", time)
+                .Add("peer_id", peerId)
+                .Add("sound", sound)
+                .ToDictionary();
+
+            return PostAsync<int>("setSilenceMode", parameters, cancellationToken);
+        }
     }
 }

@@ -58,6 +58,11 @@ namespace OpenVkNetApi
         public Account Account { get; }
 
         /// <summary>
+        /// Provides methods for managing user activity status.
+        /// </summary>
+        public Activity Activity { get; }
+
+        /// <summary>
         /// Provides methods for working with board topics.
         /// </summary>
         public Board Board { get; }
@@ -133,6 +138,11 @@ namespace OpenVkNetApi
         public Photos Photos { get; }
 
         /// <summary>
+        /// Provides methods for working with places and geographic data.
+        /// </summary>
+        public Places Places { get; }
+
+        /// <summary>
         /// Provides methods for working with polls.
         /// </summary>
         public Polls Polls { get; }
@@ -146,6 +156,11 @@ namespace OpenVkNetApi
         /// Provides methods for working with user statuses.
         /// </summary>
         public Status Status { get; }
+
+        /// <summary>
+        /// Provides methods for working with stickers and sticker packs.
+        /// </summary>
+        public Stickers Stickers { get; }
 
         /// <summary>
         /// Provides methods for working with users.
@@ -189,6 +204,7 @@ namespace OpenVkNetApi
             catch { }
 
             Account = new Account(this);
+            Activity = new Activity(this);
             Audio = new Audio(this);
             Auth = new Methods.Auth(this);
             Board = new Board(this);
@@ -199,6 +215,7 @@ namespace OpenVkNetApi
             Groups = new Groups(this);
             Likes = new Likes(this);
             Photos = new Photos(this);
+            Places = new Places(this);
             Messages = new Messages(this);
             LongPoll = new LongPollService(this);
             Newsfeed = new Newsfeed(this);
@@ -209,6 +226,7 @@ namespace OpenVkNetApi
             Polls = new Polls(this);
             Reports = new Reports(this);
             Status = new Status(this);
+            Stickers = new Stickers(this);
             Users = new Users(this);
             Utils = new Methods.Utils(this);
             Video = new Video(this);
