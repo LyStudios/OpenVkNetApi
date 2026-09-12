@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenVkNetApi.Models.Ovk;
@@ -69,6 +70,28 @@ namespace OpenVkNetApi.Methods
         public async Task<string> ChickenWingsAsync(CancellationToken ct = default)
         {
             return await GetAsync<string>("chickenWings", null, ct);
+        }
+
+        /// <summary>
+        /// An Easter egg method returning "котлетки".
+        /// </summary>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>A string response.</returns>
+        [AllowAnonymous]
+        public async Task<string> NuggetsAsync(CancellationToken ct = default)
+        {
+            return await GetAsync<string>("nuggets", null, ct);
+        }
+
+        /// <summary>
+        /// Returns a list of active mirror domains for the current OpenVK instance.
+        /// </summary>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>A list of mirror domain strings.</returns>
+        [AllowAnonymous]
+        public async Task<List<string>> GetMirrorsAsync(CancellationToken ct = default)
+        {
+            return await GetAsync<List<string>>("getMirrors", null, ct);
         }
     }
 }

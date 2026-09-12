@@ -48,6 +48,11 @@ namespace OpenVkNetApi
         public Audio Audio { get; }
 
         /// <summary>
+        /// Provides methods for working with authentication.
+        /// </summary>
+        public Methods.Auth Auth { get; }
+
+        /// <summary>
         /// Provides methods for working with accounts.
         /// </summary>
         public Account Account { get; }
@@ -185,6 +190,7 @@ namespace OpenVkNetApi
 
             Account = new Account(this);
             Audio = new Audio(this);
+            Auth = new Methods.Auth(this);
             Board = new Board(this);
             Docs = new Docs(this);
             Execute = new Execute(this);
@@ -238,7 +244,7 @@ namespace OpenVkNetApi
         /// <returns>An object containing authentication data.</returns>
         /// <exception cref="HttpRequestException">Thrown on request failure.</exception>
         /// <exception cref="OvkApiException">Thrown on API errors or response parsing failures.</exception>
-        public async Task<Auth> AuthorizeAsync(
+        public async Task<Models.Auth> AuthorizeAsync(
             string username,
             string password,
             string clientName = "OpenVkNetApi",
@@ -293,7 +299,7 @@ namespace OpenVkNetApi
             if (apiError != null && apiError.ErrorCode != 0)
                 throw new OvkApiException(apiError.ErrorCode, apiError.ErrorMessage ?? "Unknown API error");
 
-            var data = JsonConvert.DeserializeObject<Auth>(json);
+            var data = JsonConvert.DeserializeObject<Models.Auth>(json);
             if (data == null || string.IsNullOrEmpty(data.AccessToken))
                 throw new OvkApiException(-1, "Server returned empty authorization response");
 
