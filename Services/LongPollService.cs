@@ -127,9 +127,11 @@ namespace OpenVkNetApi.Services
                         }
                     }
 
+                    string server = SanitizeServerUrl(_lp.Server);
+                    string sep = server.Contains("?") ? "&" : "?";
                     string url =
-                        $"{_lp.Server}" +
-                        $"?act=a_check" +
+                        $"{server}" +
+                        $"{sep}act=a_check" +
                         $"&key={_lp.Key}" +
                         $"&ts={_lp.Ts}" +
                         $"&wait={_wait}" +
@@ -339,6 +341,11 @@ namespace OpenVkNetApi.Services
                 _lp = await _api.Messages
                     .GetLongPollServerAsync(1, _version, null, ct);
 
+                if (_lp != null && !string.IsNullOrEmpty(_lp.Server))
+                {
+                    _lp.Server = SanitizeServerUrl(_lp.Server);
+                }
+
                 return _lp != null;
             }
             catch (Exception ex)
@@ -349,6 +356,35 @@ namespace OpenVkNetApi.Services
                 await Task.Delay(1500, ct);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Ensures that the Long Poll server URL has an absolute HTTP or HTTPS scheme.
+        /// </summary>
+        /// <param name="server">The raw server URL returned by the API.</param>
+        /// <returns>A well-formed absolute URL string.</returns>
+        private string SanitizeServerUrl(string server)
+        {
+            if (string.IsNullOrEmpty(server))
+                return server;
+
+            server = server.Trim();
+            string defaultScheme = (!string.IsNullOrEmpty(_api.BaseUrl) && _api.BaseUrl.StartsWith("http://", StringComparison.OrdinalIgnoreCase))
+                ? "http:"
+                : "https:";
+
+            if (server.StartsWith("//"))
+            {
+                return defaultScheme + server;
+            }
+
+            if (!server.StartsWith("http://", StringComparison.OrdinalIgnoreCase) &&
+                !server.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+            {
+                return defaultScheme + "//" + server;
+            }
+
+            return server;
         }
 
         /// <summary>

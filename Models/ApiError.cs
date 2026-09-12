@@ -19,6 +19,18 @@ namespace OpenVkNetApi.Models
         /// </summary>
         [JsonProperty("error_msg")]
         public string ErrorMessage { get; set; }
+
+        /// <summary>
+        /// The OAuth / authorization error code string (e.g., "need_validation", "invalid_grant").
+        /// </summary>
+        [JsonProperty("error")]
+        public string Error { get; set; }
+
+        /// <summary>
+        /// The OAuth / authorization error description.
+        /// </summary>
+        [JsonProperty("error_description")]
+        public string ErrorDescription { get; set; }
         
         /// <summary>
         /// The request parameters that caused the error.
@@ -30,6 +42,10 @@ namespace OpenVkNetApi.Models
         /// Returns a string representation of the API error.
         /// </summary>
         /// <returns>A string in the format "Code: Message".</returns>
-        public override string ToString() => $"{ErrorCode}: {ErrorMessage}";
+        public override string ToString()
+        {
+            var msg = !string.IsNullOrEmpty(ErrorMessage) ? ErrorMessage : (!string.IsNullOrEmpty(ErrorDescription) ? ErrorDescription : Error);
+            return $"{ErrorCode}: {msg}";
+        }
     }
 }

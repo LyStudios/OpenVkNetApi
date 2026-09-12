@@ -28,9 +28,19 @@ namespace OpenVkNetApi
         private string _baseUrl;
 
         /// <summary>
+        /// Gets the base URL of the API.
+        /// </summary>
+        public string BaseUrl => _baseUrl;
+
+        /// <summary>
         /// The authorization token used for API requests.
         /// </summary>
         public string AccessToken { get; private set; }
+
+        /// <summary>
+        /// The native OpenVK API version ("5.9999").
+        /// </summary>
+        public const string ApiVersion = "5.9999";
 
         /// <summary>
         /// Provides methods for working with audio.
@@ -355,10 +365,19 @@ namespace OpenVkNetApi
                 hasParams = true;
             }
 
+            urlBuilder.Append(hasParams ? "&" : "?");
+            urlBuilder.Append("v=");
+            urlBuilder.Append(ApiVersion);
+            hasParams = true;
+
             if (httpMethod == HttpMethod.Get && parameters != null)
             {
                 foreach (var p in parameters)
                 {
+                    if (string.Equals(p.Key.Trim(), "v", StringComparison.OrdinalIgnoreCase) ||
+                        string.Equals(p.Key.Trim(), "access_token", StringComparison.OrdinalIgnoreCase))
+                        continue;
+
                     urlBuilder.Append(hasParams ? "&" : "?");
                     hasParams = true;
                     urlBuilder.Append(p.Key.Trim());
@@ -418,7 +437,7 @@ namespace OpenVkNetApi
                         continue;
                     }
 
-                    if (!response.IsSuccessStatusCode && !json.TrimStart().StartsWith("{"))
+                    if (!response.IsSuccessStatusCode && (string.IsNullOrWhiteSpace(json) || !json.TrimStart().StartsWith("{")))
                     {
                         throw new OvkApiException(-1, string.Format("Server error (HTTP {0}) at {1}: {2}", (int)response.StatusCode, url, snippet));
                     }
@@ -427,12 +446,17 @@ namespace OpenVkNetApi
                 if (!response.IsSuccessStatusCode)
                 {
                     var err = TryParseApiError(json);
-                    throw new OvkApiException(err?.ErrorCode ?? (int)response.StatusCode, err?.ErrorMessage ?? response.ReasonPhrase);
+                    int code = (err != null && err.ErrorCode != 0) ? err.ErrorCode : (int)response.StatusCode;
+                    string message = err?.ErrorMessage ?? err?.ErrorDescription ?? err?.Error ?? response.ReasonPhrase;
+                    throw new OvkApiException(code, message);
                 }
 
                 var apiError = TryParseApiError(json);
-                if (apiError != null && apiError.ErrorCode != 0)
-                    throw new OvkApiException(apiError.ErrorCode, apiError.ErrorMessage ?? "Unknown API error");
+                if (apiError != null)
+                {
+                    string message = apiError.ErrorMessage ?? apiError.ErrorDescription ?? apiError.Error ?? "Unknown API error";
+                    throw new OvkApiException(apiError.ErrorCode, message);
+                }
 
                 var wrapper = JsonConvert.DeserializeObject<ApiResponseWrapper<T>>(json);
                 if (wrapper == null || wrapper.Response == null)
@@ -446,17 +470,23 @@ namespace OpenVkNetApi
         /// Attempts to deserialize an API error from a JSON string.
         /// </summary>
         /// <param name="json">The JSON response string.</param>
-        /// <returns>An <see cref="ApiError"/> object, or null if parsing fails.</returns>
+        /// <returns>An <see cref="ApiError"/> object, or null if parsing fails or response is not an error.</returns>
         private static ApiError TryParseApiError(string json)
         {
+            if (string.IsNullOrWhiteSpace(json))
+                return null;
+
             try
             {
-                return JsonConvert.DeserializeObject<ApiError>(json);
+                var err = JsonConvert.DeserializeObject<ApiError>(json);
+                if (err != null && (err.ErrorCode != 0 || !string.IsNullOrEmpty(err.ErrorMessage) || !string.IsNullOrEmpty(err.Error)))
+                    return err;
             }
             catch
             {
-                return null;
             }
+
+            return null;
         }
     }
 }
