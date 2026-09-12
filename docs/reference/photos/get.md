@@ -34,7 +34,7 @@ var photosCollection = await api.Photos.GetAsync(parameters);
 | Параметр / Тип | Описание |
 | :--- | :--- |
 | **OwnerId** <br> `int?` | Идентификатор владельца альбома (пользователя или сообщества). Для сообщества используйте отрицательное значение. <br> <span style="color: var(--vp-c-text-3)">целое число, по умолчанию: текущий пользователь</span> |
-| **AlbumId** <br> `int?` | Идентификатор альбома. Может принимать системные значения (например, для стены). <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **AlbumId** <br> `string` | Идентификатор альбома. Принимает числовой ID или системные имена: `"profile"`, `"wall"`, `"saved"`. <br> <span style="color: var(--vp-c-text-3)">строка, обязательный параметр</span> |
 | **PhotoIds** <br> `string` | Список идентификаторов фотографий через запятую. <br> <span style="color: var(--vp-c-text-3)">строка, необязательный параметр</span> |
 | **Rev** <br> `bool` | Порядок сортировки (true — обратный, false — прямой). <br> <span style="color: var(--vp-c-text-3)">логическое значение, по умолчанию: false</span> |
 | **Extended** <br> `bool` | Возвращать ли дополнительную информацию (лайки, теги и др.). <br> <span style="color: var(--vp-c-text-3)">логическое значение, по умолчанию: false</span> |
@@ -42,6 +42,7 @@ var photosCollection = await api.Photos.GetAsync(parameters);
 | **Feed** <br> `int?` | Фид. <br> <span style="color: var(--vp-c-text-3)">целое число, необязательный параметр</span> |
 | **Offset** <br> `int` | Смещение для выборки определенного подмножества фотографий. <br> <span style="color: var(--vp-c-text-3)">целое число, по умолчанию: 0</span> |
 | **Count** <br> `int` | Количество возвращаемых фотографий. <br> <span style="color: var(--vp-c-text-3)">целое число, по умолчанию: 50, максимум: 1000</span> |
+| **Limit** <br> `int?` | Лимит возвращаемых фотографий (альтернативное имя для Count в OpenVK). <br> <span style="color: var(--vp-c-text-3)">целое число, необязательный параметр</span> |
 
 </div>
 

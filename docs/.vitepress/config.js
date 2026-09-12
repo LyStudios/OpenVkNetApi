@@ -70,6 +70,11 @@ export default {
             items: getSidebarItems('reference/account', 'account.')
           },
           {
+            text: 'Авторизация (Auth)',
+            collapsed: true,
+            items: getSidebarItems('reference/auth', 'auth.')
+          },
+          {
             text: 'Аудиозаписи (Audio)',
             collapsed: true,
             items: getSidebarItems('reference/audio', 'audio.')
@@ -188,6 +193,7 @@ export default {
             text: 'Базовые и общие модели',
             collapsed: true,
             items: [
+              { text: 'Валидация аккаунта (AccountValidationResult)', link: '/reference/models/account-validation-result' },
               { text: 'Ошибка API (ApiError)', link: '/reference/models/api-error' },
               { text: 'Авторизация (Auth)', link: '/reference/models/auth' },
               { text: 'Универсальная коллекция (Collection)', link: '/reference/models/collection' },

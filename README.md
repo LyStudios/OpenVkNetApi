@@ -15,12 +15,14 @@ A fully asynchronous C#/.NET library for interacting with the **OpenVK API**. Bu
 
 ## Features
 
-- **Fully Asynchronous:** All network requests and disk operations are async-first.
-- **Strongly Typed:** Complete mapping of OpenVK models (Profiles, Groups, Messages, Video, Attachments, etc.) to C# classes with clean JSON serialization.
+- **Native OpenVK Client:** Operates using native OpenVK API version `5.9999`, correctly handling native flat error responses, OAuth/2FA flows, and OpenVK-exclusive features.
+- **Fully Asynchronous:** All network requests and disk operations are async-first with full `CancellationToken` support across all methods.
+- **Strongly Typed:** Complete mapping of OpenVK models (Profiles, Groups, Messages, Audio, Video, Wall, Attachments, etc.) to C# classes.
 - **Robust Long Poll Service:** High-performance background listening of server events, including:
   - New message events.
   - Real-time typing indicators (`User is typing...`) in private dialogues.
-  - Automatic session key refreshing and retry logic on connection dropouts.
+  - Automatic URL scheme resolution, session key refreshing, and exponential retry backoff.
+- **Ultra Portable:** Built on `.NET Standard 1.1` with minimal dependencies (`Newtonsoft.Json`), ensuring compatibility with modern .NET (Core/5/6/7/8/9), legacy .NET Framework, Xamarin, Unity, and retro platforms like Windows Phone 8.1 / Windows 10 Mobile.
 
 ---
 

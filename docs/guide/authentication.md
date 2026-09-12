@@ -50,16 +50,35 @@ class Program
 
 # 2. Использование существующего токена
 
-Если у вас уже сохранен токен авторизации (например, из базы данных или настроек приложения), вы можете передать его напрямую в клиент:
+Если у вас уже сохранен токен авторизации (например, из базы данных или настроек приложения), вы можете установить его через метод `SetAccessToken`:
 
 ```csharp
 using OpenVkNetApi;
 
-// Передаем токен сразу в конструктор
-var api = new OpenVkApi("https://api.openvk.org", "ваш_сохраненный_токен");
+var api = new OpenVkApi("https://api.openvk.org");
+api.SetAccessToken("ваш_сохраненный_токен");
 
 // Теперь можно сразу делать защищенные запросы
 var myProfile = await api.Users.GetAsync();
+```
+
+</div>
+
+<div class="vk-card">
+
+# 3. Двухфакторная аутентификация (2FA) и валидация
+
+Если на аккаунте включена двухфакторная аутентификация, передайте код подтверждения из приложения аутентификатора:
+
+```csharp
+var authInfo = await api.AuthorizeAsync("ваш_логин", "ваш_пароль", twoFactorCode: "123456");
+```
+
+Также вы можете предварительно проверить аккаунт через метод [`api.Auth.ValidateAccountAsync`](/reference/auth/validateAccount):
+
+```csharp
+var validation = await api.Auth.ValidateAccountAsync("ваш_логин");
+Console.WriteLine($"Требуемый сценарий: {validation.FlowName}");
 ```
 
 </div>
