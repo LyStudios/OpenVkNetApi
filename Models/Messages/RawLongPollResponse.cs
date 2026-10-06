@@ -6,7 +6,7 @@ namespace OpenVkNetApi.Models.Messages
     /// <summary>
     /// Represents the raw JSON response from the OpenVK Long Poll server.
     /// </summary>
-    public class RawLongPollResponse
+    internal class RawLongPollResponse
     {
         /// <summary>
         /// The new 'ts' (timestamp/sequence number) to be used in the next Long Poll request.

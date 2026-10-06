@@ -1,10 +1,9 @@
 using Newtonsoft.Json;
 
-namespace OpenVkNetApi.Models
+namespace OpenVkNetApi.Models.Auth
 {
     /// <summary>
-    /// Represents the OpenVK API response for an authorization request.
-    /// Returned by <see cref="OpenVkApi.AuthorizeAsync"/>.
+    /// Represents the OpenVK API authorization data returned by <c>/token</c>.
     /// </summary>
     public class Auth
     {

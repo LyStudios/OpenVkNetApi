@@ -22,5 +22,11 @@ namespace OpenVkNetApi.Models
         /// </summary>
         [JsonProperty("groups")]
         public List<Group> Groups { get; set; }
+
+        /// <summary>
+        /// The cursor / starting point for fetching the next page of results, if applicable.
+        /// </summary>
+        [JsonProperty("next_from")]
+        public string NextFrom { get; set; }
     }
 }

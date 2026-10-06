@@ -260,3 +260,7 @@ paket-files/
 __pycache__/
 *.pyc
 Properties/PublishProfiles/FolderProfile.pubxml
+
+# Reference sources
+openvk-master/
+

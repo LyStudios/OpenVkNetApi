@@ -65,6 +65,11 @@ export default {
         text: 'Методы API',
         items: [
           {
+            text: 'Активность (Activity)',
+            collapsed: true,
+            items: getSidebarItems('reference/activity', 'activity.')
+          },
+          {
             text: 'Аккаунт (Account)',
             collapsed: true,
             items: getSidebarItems('reference/account', 'account.')
@@ -145,6 +150,11 @@ export default {
             items: getSidebarItems('reference/pay', 'pay.')
           },
           {
+            text: 'Места и география (Places)',
+            collapsed: true,
+            items: getSidebarItems('reference/places', 'places.')
+          },
+          {
             text: 'Фотографии (Photos)',
             collapsed: true,
             items: getSidebarItems('reference/photos', 'photos.')
@@ -165,6 +175,11 @@ export default {
             items: getSidebarItems('reference/status', 'status.')
           },
           {
+            text: 'Стикеры (Stickers)',
+            collapsed: true,
+            items: getSidebarItems('reference/stickers', 'stickers.')
+          },
+          {
             text: 'Пользователи (Users)',
             collapsed: true,
             items: getSidebarItems('reference/users', 'users.')
@@ -183,6 +198,46 @@ export default {
             text: 'Стена (Wall)',
             collapsed: true,
             items: getSidebarItems('reference/wall', 'wall.')
+          },
+          {
+            text: 'Мини-приложения (Apps)',
+            collapsed: true,
+            items: getSidebarItems('reference/apps', 'apps.')
+          },
+          {
+            text: 'Звонки (Calls)',
+            collapsed: true,
+            items: getSidebarItems('reference/calls', 'calls.')
+          },
+          {
+            text: 'Капча (Captcha)',
+            collapsed: true,
+            items: getSidebarItems('reference/captcha', 'captcha.')
+          },
+          {
+            text: 'Каналы (Channels)',
+            collapsed: true,
+            items: getSidebarItems('reference/channels', 'channels.')
+          },
+          {
+            text: 'Очереди событий (Queue)',
+            collapsed: true,
+            items: getSidebarItems('reference/queue', 'queue.')
+          },
+          {
+            text: 'Поиск (Search)',
+            collapsed: true,
+            items: getSidebarItems('reference/search', 'search.')
+          },
+          {
+            text: 'Статистика (Stats)',
+            collapsed: true,
+            items: getSidebarItems('reference/stats', 'stats.')
+          },
+          {
+            text: 'Магазин стикеров (Store)',
+            collapsed: true,
+            items: getSidebarItems('reference/store', 'store.')
           }
         ]
       },
@@ -284,6 +339,11 @@ export default {
             items: getSidebarItems('reference/models/ovk')
           },
           {
+            text: 'Места и география (Places)',
+            collapsed: true,
+            items: getSidebarItems('reference/models/places')
+          },
+          {
             text: 'Фотографии (Photos)',
             collapsed: true,
             items: getSidebarItems('reference/models/photos')
@@ -297,6 +357,11 @@ export default {
             text: 'Статус (Status)',
             collapsed: true,
             items: getSidebarItems('reference/models/status')
+          },
+          {
+            text: 'Стикеры (Stickers)',
+            collapsed: true,
+            items: getSidebarItems('reference/models/stickers')
           },
           {
             text: 'Пользователи (Users)',
@@ -317,6 +382,41 @@ export default {
             text: 'Стена (Wall)',
             collapsed: true,
             items: getSidebarItems('reference/models/wall')
+          },
+          {
+            text: 'Мини-приложения (Apps)',
+            collapsed: true,
+            items: getSidebarItems('reference/models/apps')
+          },
+          {
+            text: 'Авторизация (Auth)',
+            collapsed: true,
+            items: getSidebarItems('reference/models/auth')
+          },
+          {
+            text: 'Звонки (Calls)',
+            collapsed: true,
+            items: getSidebarItems('reference/models/calls')
+          },
+          {
+            text: 'Каналы (Channels)',
+            collapsed: true,
+            items: getSidebarItems('reference/models/channels')
+          },
+          {
+            text: 'Очереди событий (Queue)',
+            collapsed: true,
+            items: getSidebarItems('reference/models/queue')
+          },
+          {
+            text: 'Поиск (Search)',
+            collapsed: true,
+            items: getSidebarItems('reference/models/search')
+          },
+          {
+            text: 'Магазин (Store)',
+            collapsed: true,
+            items: getSidebarItems('reference/models/store')
           }
         ]
       }

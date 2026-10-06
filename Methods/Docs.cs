@@ -38,7 +38,7 @@ namespace OpenVkNetApi.Methods
 
             return await PostAsync<string>("add", parameters, ct);
         }
-        
+
         /// <summary>
         /// Deletes a document.
         /// </summary>

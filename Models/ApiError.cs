@@ -31,12 +31,12 @@ namespace OpenVkNetApi.Models
         /// </summary>
         [JsonProperty("error_description")]
         public string ErrorDescription { get; set; }
-        
+
         /// <summary>
         /// The request parameters that caused the error.
         /// </summary>
         [JsonProperty("request_params")]
-        public object RequestParams { get; set; }
+        public System.Collections.Generic.List<RequestParam> RequestParams { get; set; }
 
         /// <summary>
         /// Returns a string representation of the API error.

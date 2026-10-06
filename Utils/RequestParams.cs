@@ -17,13 +17,65 @@ namespace OpenVkNetApi.Utils
         private static readonly ConcurrentDictionary<Type, List<PropertyInfo>> _propertyCache = new ConcurrentDictionary<Type, List<PropertyInfo>>();
 
         /// <summary>
-        /// Adds a parameter to the request. This is for manual building.
+        /// Adds a parameter to the request. Formats enums, collections, and primitives cleanly.
         /// </summary>
         public RequestParams Add(string key, object value)
         {
-            if (value != null)
+            if (value == null) return this;
+
+            if (value is Enum e && e.GetType().GetTypeInfo().IsDefined(typeof(FlagsAttribute), false))
             {
-                _parameters[key] = value.ToString();
+                long valLong = Convert.ToInt64(e);
+                if (valLong != 0)
+                {
+                    string str = EnumHelper.GetEnumFlagsDescription(e);
+                    if (!string.IsNullOrEmpty(str))
+                    {
+                        _parameters[key] = str;
+                    }
+                }
+                return this;
+            }
+
+            if (value is IEnumerable<int> intList)
+            {
+                var s = string.Join(",", intList);
+                if (!string.IsNullOrEmpty(s)) _parameters[key] = s;
+                return this;
+            }
+
+            if (value is IEnumerable<string> strList)
+            {
+                var s = string.Join(",", strList);
+                if (!string.IsNullOrEmpty(s)) _parameters[key] = s;
+                return this;
+            }
+
+            string stringVal = value.ToString();
+            if (!string.IsNullOrEmpty(stringVal))
+            {
+                _parameters[key] = stringVal;
+            }
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a flags enum parameter (like UserFields or GroupFields) to the request.
+        /// Automatically formats as comma-separated lowercase descriptions.
+        /// </summary>
+        public RequestParams Add(string key, Enum flags)
+        {
+            if (flags != null)
+            {
+                long valLong = Convert.ToInt64(flags);
+                if (valLong != 0)
+                {
+                    string str = EnumHelper.GetEnumFlagsDescription(flags);
+                    if (!string.IsNullOrEmpty(str))
+                    {
+                        _parameters[key] = str;
+                    }
+                }
             }
             return this;
         }
@@ -77,7 +129,7 @@ namespace OpenVkNetApi.Utils
                                 stringValue = bInt ? "1" : "0";
                             else continue;
                             break;
-                        
+
                         default: // Handles .ToString() for most types
                             stringValue = value.ToString();
                             break;

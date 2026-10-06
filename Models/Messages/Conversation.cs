@@ -84,6 +84,24 @@ namespace OpenVkNetApi.Models.Messages
         public ConversationCanWrite CanWrite { get; set; }
 
         /// <summary>
+        /// Indicates whether the conversation is marked as unanswered.
+        /// </summary>
+        [JsonProperty("unanswered")]
+        public bool Unanswered { get; set; }
+
+        /// <summary>
+        /// Push notification settings for the conversation.
+        /// </summary>
+        [JsonProperty("push_settings")]
+        public ConversationPushSettings PushSettings { get; set; }
+
+        /// <summary>
+        /// Settings for group chat conversations.
+        /// </summary>
+        [JsonProperty("chat_settings")]
+        public ChatSettings ChatSettings { get; set; }
+
+        /// <summary>
         /// The number of unread messages in the conversation.
         /// </summary>
         [JsonProperty("unread_count")]

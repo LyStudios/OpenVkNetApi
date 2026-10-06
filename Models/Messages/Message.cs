@@ -17,6 +17,30 @@ namespace OpenVkNetApi.Models.Messages
         public int Id { get; set; }
 
         /// <summary>
+        /// Unique conversation-specific message identifier.
+        /// </summary>
+        [JsonProperty("conversation_message_id")]
+        public int? ConversationMessageId { get; set; }
+
+        /// <summary>
+        /// Indicates whether the message has been pinned.
+        /// </summary>
+        [JsonProperty("is_pinned")]
+        public int? IsPinned { get; set; }
+
+        /// <summary>
+        /// Indicates whether the message was edited.
+        /// </summary>
+        [JsonProperty("edited")]
+        public bool? Edited { get; set; }
+
+        /// <summary>
+        /// Unix timestamp when the message was last edited.
+        /// </summary>
+        [JsonProperty("edited_at")]
+        public long? EditedAt { get; set; }
+
+        /// <summary>
         /// The peer identifier (user ID, chat ID, or community ID)
         /// associated with the message.
         /// </summary>

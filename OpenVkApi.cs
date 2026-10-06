@@ -58,9 +58,19 @@ namespace OpenVkNetApi
         public Account Account { get; }
 
         /// <summary>
+        /// Provides methods for managing user activity status.
+        /// </summary>
+        public Activity Activity { get; }
+
+        /// <summary>
         /// Provides methods for working with board topics.
         /// </summary>
         public Board Board { get; }
+
+        /// <summary>
+        /// Provides methods for interacting with captcha.
+        /// </summary>
+        public Captcha Captcha { get; }
 
         /// <summary>
         /// Provides methods for working with documents.
@@ -133,6 +143,11 @@ namespace OpenVkNetApi
         public Photos Photos { get; }
 
         /// <summary>
+        /// Provides methods for working with places and geographic data.
+        /// </summary>
+        public Places Places { get; }
+
+        /// <summary>
         /// Provides methods for working with polls.
         /// </summary>
         public Polls Polls { get; }
@@ -146,6 +161,16 @@ namespace OpenVkNetApi
         /// Provides methods for working with user statuses.
         /// </summary>
         public Status Status { get; }
+
+        /// <summary>
+        /// Provides methods for working with stickers and sticker packs.
+        /// </summary>
+        public Stickers Stickers { get; }
+
+        /// <summary>
+        /// Provides methods for working with the store catalog, products, and stickers keywords.
+        /// </summary>
+        public Methods.Store Store { get; }
 
         /// <summary>
         /// Provides methods for working with users.
@@ -166,6 +191,36 @@ namespace OpenVkNetApi
         /// Provides methods for working with wall posts.
         /// </summary>
         public Wall Wall { get; }
+
+        /// <summary>
+        /// Provides methods for working with mini apps.
+        /// </summary>
+        public Apps Apps { get; }
+
+        /// <summary>
+        /// Provides methods for working with calls.
+        /// </summary>
+        public Calls Calls { get; }
+
+        /// <summary>
+        /// Provides methods for working with channels.
+        /// </summary>
+        public Channels Channels { get; }
+
+        /// <summary>
+        /// Provides methods for managing real-time queue notifications.
+        /// </summary>
+        public Queue Queue { get; }
+
+        /// <summary>
+        /// Provides search helper methods.
+        /// </summary>
+        public Search Search { get; }
+
+        /// <summary>
+        /// Provides methods for tracking stats and metrics.
+        /// </summary>
+        public Stats Stats { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenVkApi"/> class.
@@ -189,9 +244,14 @@ namespace OpenVkNetApi
             catch { }
 
             Account = new Account(this);
+            Activity = new Activity(this);
+            Apps = new Apps(this);
             Audio = new Audio(this);
             Auth = new Methods.Auth(this);
             Board = new Board(this);
+            Calls = new Calls(this);
+            Captcha = new Captcha(this);
+            Channels = new Channels(this);
             Docs = new Docs(this);
             Execute = new Execute(this);
             Friends = new Friends(this);
@@ -199,6 +259,7 @@ namespace OpenVkNetApi
             Groups = new Groups(this);
             Likes = new Likes(this);
             Photos = new Photos(this);
+            Places = new Places(this);
             Messages = new Messages(this);
             LongPoll = new LongPollService(this);
             Newsfeed = new Newsfeed(this);
@@ -207,8 +268,13 @@ namespace OpenVkNetApi
             Ovk = new Ovk(this);
             Pay = new Pay(this);
             Polls = new Polls(this);
+            Queue = new Queue(this);
             Reports = new Reports(this);
+            Search = new Search(this);
+            Stats = new Stats(this);
             Status = new Status(this);
+            Stickers = new Stickers(this);
+            Store = new Methods.Store(this);
             Users = new Users(this);
             Utils = new Methods.Utils(this);
             Video = new Video(this);
@@ -244,7 +310,7 @@ namespace OpenVkNetApi
         /// <returns>An object containing authentication data.</returns>
         /// <exception cref="HttpRequestException">Thrown on request failure.</exception>
         /// <exception cref="OvkApiException">Thrown on API errors or response parsing failures.</exception>
-        public async Task<Models.Auth> AuthorizeAsync(
+        public async Task<Models.Auth.Auth> AuthorizeAsync(
             string username,
             string password,
             string clientName = "OpenVkNetApi",
@@ -299,7 +365,7 @@ namespace OpenVkNetApi
             if (apiError != null && apiError.ErrorCode != 0)
                 throw new OvkApiException(apiError.ErrorCode, apiError.ErrorMessage ?? "Unknown API error");
 
-            var data = JsonConvert.DeserializeObject<Models.Auth>(json);
+            var data = JsonConvert.DeserializeObject<Models.Auth.Auth>(json);
             if (data == null || string.IsNullOrEmpty(data.AccessToken))
                 throw new OvkApiException(-1, "Server returned empty authorization response");
 

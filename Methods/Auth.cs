@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenVkNetApi.Models;
+using OpenVkNetApi.Models.Auth;
 using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Methods
@@ -31,6 +33,64 @@ namespace OpenVkNetApi.Methods
                 .ToDictionary();
 
             return await GetAsync<AccountValidationResult>("validateAccount", parameters, ct);
+        }
+
+        /// <summary>
+        /// Obtains a secure token.
+        /// </summary>
+        [AllowAnonymous]
+        public async Task<AuthSecureToken> GetTokenSecureAsync(string nonce = null, int? apiId = null, string clientId = null, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("nonce", nonce)
+                .Add("api_id", apiId)
+                .Add("client_id", clientId)
+                .ToDictionary();
+
+            return await GetAsync<AuthSecureToken>("getTokenSecure", parameters, ct);
+        }
+
+        /// <summary>
+        /// Obtains a session securely via user credentials.
+        /// </summary>
+        [AllowAnonymous]
+        public async Task<AuthSecureSession> GetSessionSecureAsync(string login = null, string password = null, int? apiId = null, string clientId = null, string code = null, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("login", login)
+                .Add("password", password)
+                .Add("api_id", apiId)
+                .Add("client_id", clientId)
+                .Add("code", code)
+                .ToDictionary();
+
+            return await PostAsync<AuthSecureSession>("getSessionSecure", parameters, ct);
+        }
+
+        /// <summary>
+        /// Returns information about exchange tokens.
+        /// </summary>
+        public async Task<List<ExchangeTokenInfo>> GetExchangeTokensInfoAsync(string exchangeTokens = "", int targetAppId = 0, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("exchange_tokens", exchangeTokens)
+                .Add("target_app_id", targetAppId)
+                .ToDictionary();
+
+            return await GetAsync<List<ExchangeTokenInfo>>("getExchangeTokensInfo", parameters, ct);
+        }
+
+        /// <summary>
+        /// Generates an exchange token for cross-app authorization.
+        /// </summary>
+        public async Task<ExchangeTokenResult> GetExchangeTokenAsync(string exchangeTokens = "", int intermediate = 0, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("exchange_tokens", exchangeTokens)
+                .Add("intermediate", intermediate)
+                .ToDictionary();
+
+            return await GetAsync<ExchangeTokenResult>("getExchangeToken", parameters, ct);
         }
     }
 }

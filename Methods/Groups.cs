@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenVkNetApi.Models;
+using OpenVkNetApi.Models.Enums;
 using OpenVkNetApi.Models.Groups;
 using OpenVkNetApi.Models.RequestParameters.Groups;
 using OpenVkNetApi.Models.Users;
@@ -156,6 +157,71 @@ namespace OpenVkNetApi.Methods
                 .ToDictionary();
 
             return await GetAsync<GroupsIsMember>("isMember", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// Adds a user to the community blacklist (bans a member).
+        /// </summary>
+        /// <param name="groupId">Community ID.</param>
+        /// <param name="ownerId">User ID to ban.</param>
+        /// <param name="reason">Ban reason code.</param>
+        /// <param name="endDate">Ban end timestamp (0 for permanent).</param>
+        /// <param name="comment">Ban comment / explanation.</param>
+        /// <param name="commentVisible">Whether comment is visible to user.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>A boolean indicating success.</returns>
+        public async Task<bool> BanAsync(int groupId, int ownerId, int reason = 0, long endDate = 0, string comment = "", bool commentVisible = true, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("group_id", groupId)
+                .Add("owner_id", ownerId)
+                .Add("reason", reason)
+                .Add("end_date", endDate)
+                .Add("comment", comment)
+                .Add("comment_visible", commentVisible ? 1 : 0)
+                .ToDictionary();
+
+            var result = await PostAsync<int>("ban", parameters, ct);
+            return result == 1;
+        }
+
+        /// <summary>
+        /// Removes a user from the community blacklist (unbans a member).
+        /// </summary>
+        /// <param name="groupId">Community ID.</param>
+        /// <param name="ownerId">User ID to unban.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>A boolean indicating success.</returns>
+        public async Task<bool> UnbanAsync(int groupId, int ownerId, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("group_id", groupId)
+                .Add("owner_id", ownerId)
+                .ToDictionary();
+
+            var result = await PostAsync<int>("unban", parameters, ct);
+            return result == 1;
+        }
+
+        /// <summary>
+        /// Returns a list of users banned in the community.
+        /// </summary>
+        /// <param name="groupId">Community ID.</param>
+        /// <param name="offset">Offset for pagination.</param>
+        /// <param name="count">Number of banned users to return.</param>
+        /// <param name="fields">User fields to return.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>A <see cref="Collection{User}"/> of banned users.</returns>
+        public async Task<Collection<User>> GetBannedAsync(int groupId, int offset = 0, int count = 20, UserFields fields = UserFields.None, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("group_id", groupId)
+                .Add("offset", offset)
+                .Add("count", count)
+                .Add("fields", fields)
+                .ToDictionary();
+
+            return await GetAsync<Collection<User>>("getBanned", parameters, ct);
         }
     }
 }

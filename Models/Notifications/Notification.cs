@@ -15,10 +15,9 @@ namespace OpenVkNetApi.Models.Notifications
 
         /// <summary>
         /// Information about the event that triggered the notification.
-        /// The structure can be complex and varies by notification type.
         /// </summary>
         [JsonProperty("feedback")]
-        public object Feedback { get; set; }
+        public NotificationFeedback Feedback { get; set; }
 
         /// <summary>
         /// The notification ID.
@@ -36,6 +35,6 @@ namespace OpenVkNetApi.Models.Notifications
         /// Information about the parent object (e.g. post, photo, video) for the notification.
         /// </summary>
         [JsonProperty("parent")]
-        public object Parent { get; set; }
+        public NotificationParent Parent { get; set; }
     }
 }

@@ -109,7 +109,7 @@ namespace OpenVkNetApi.Models.Video
         /// Gets or sets the platform where the video is hosted or played.
         /// </summary>
         [JsonProperty("platform")]
-        public object Platform { get; set; }
+        public string Platform { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this video is added to the user's video list (1 if added, 0 otherwise).

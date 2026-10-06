@@ -83,5 +83,21 @@ namespace OpenVkNetApi.Methods
 
             return await GetAsync<List<CatalogGift>>("getGiftsInCategory", parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// Deletes a received gift.
+        /// </summary>
+        /// <param name="giftId">Gift ID to delete.</param>
+        /// <param name="cancellationToken">A cancellation token for the operation.</param>
+        /// <returns>A boolean indicating success.</returns>
+        public async Task<bool> DeleteAsync(int giftId, CancellationToken cancellationToken = default)
+        {
+            var parameters = new RequestParams()
+                .Add("gift_id", giftId)
+                .ToDictionary();
+
+            var result = await PostAsync<int>("delete", parameters, cancellationToken);
+            return result == 1;
+        }
     }
 }

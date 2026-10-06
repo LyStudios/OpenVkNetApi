@@ -13,12 +13,12 @@ namespace OpenVkNetApi.Utils
         /// Gets a value indicating whether the API call was successful.
         /// </summary>
         public bool IsSuccess { get; }
-        
+
         /// <summary>
         /// Gets the result of the API call if successful, otherwise <c>null</c>.
         /// </summary>
         public T Result { get; }
-        
+
         /// <summary>
         /// Gets the error information if the API call failed, otherwise <c>null</c>.
         /// </summary>
@@ -50,7 +50,7 @@ namespace OpenVkNetApi.Utils
         /// <param name="data">The successful result data.</param>
         /// <returns>A new <see cref="ApiResponse{T}"/> instance representing success.</returns>
         public static ApiResponse<T> Success(T data) => new ApiResponse<T>(data);
-        
+
         /// <summary>
         /// Creates a failed API response.
         /// </summary>

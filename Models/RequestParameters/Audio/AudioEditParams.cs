@@ -13,13 +13,13 @@ namespace OpenVkNetApi.Models.RequestParameters.Audio
         /// </summary>
         [ApiParameter("owner_id")]
         public int OwnerId { get; set; }
-        
+
         /// <summary>
         /// The ID of the audio file to edit.
         /// </summary>
         [ApiParameter("audio_id")]
         public int AudioId { get; set; }
-        
+
         /// <summary>
         /// The new artist name.
         /// </summary>
@@ -43,13 +43,13 @@ namespace OpenVkNetApi.Models.RequestParameters.Audio
         /// </summary>
         [ApiParameter("genre_id")]
         public int? GenreId { get; set; } = null;
-        
+
         /// <summary>
         /// The genre name string.
         /// </summary>
         [ApiParameter("genre_str")]
         public string GenreStr { get; set; } = null;
-        
+
         /// <summary>
         /// Whether to exclude the record from search results (0 or 1).
         /// </summary>

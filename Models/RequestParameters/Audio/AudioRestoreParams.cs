@@ -13,19 +13,19 @@ namespace OpenVkNetApi.Models.RequestParameters.Audio
         /// </summary>
         [ApiParameter("audio_id")]
         public int AudioId { get; set; }
-        
+
         /// <summary>
         /// The ID of the audio file's owner.
         /// </summary>
         [ApiParameter("owner_id")]
         public int OwnerId { get; set; }
-        
+
         /// <summary>
         /// The community ID (if restoring to a group).
         /// </summary>
         [ApiParameter("group_id")]
         public int? GroupId { get; set; } = null;
-        
+
         /// <summary>
         /// The hash for the request.
         /// </summary>

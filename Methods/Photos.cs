@@ -524,5 +524,207 @@ namespace OpenVkNetApi.Methods
 
             return await PostAsync<int>("deleteComment", parameters, ct);
         }
+
+        /// <summary>
+        /// Returns an upload server URL for a photo in a private message.
+        /// </summary>
+        /// <param name="groupId">The group ID, if uploading on behalf of a group.</param>
+        /// <param name="peerId">Destination ID for message.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>A <see cref="PhotosUploadServer"/> instance.</returns>
+        public async Task<PhotosUploadServer> GetMessagesUploadServerAsync(int groupId = 0, int peerId = 0, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("group_id", groupId)
+                .Add("peer_id", peerId)
+                .ToDictionary();
+
+            return await GetAsync<PhotosUploadServer>("getMessagesUploadServer", parameters, ct);
+        }
+
+        /// <summary>
+        /// Saves a photo uploaded for a private message.
+        /// </summary>
+        /// <param name="photo">Uploaded photo parameter string returned from upload server.</param>
+        /// <param name="hash">Hash returned from upload server.</param>
+        /// <param name="server">Optional server parameter returned from upload server.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>A list of saved <see cref="Photo"/> objects.</returns>
+        public async Task<List<Photo>> SaveMessagesPhotoAsync(string photo, string hash, string server = null, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("photo", photo)
+                .Add("hash", hash)
+                .Add("server", server)
+                .ToDictionary();
+
+            return await PostAsync<List<Photo>>("saveMessagesPhoto", parameters, ct);
+        }
+
+        /// <summary>
+        /// Uploads a photo intended to be attached to a private message.
+        /// </summary>
+        /// <param name="photoStream">A stream containing the photo data.</param>
+        /// <param name="fileName">The name of the file (e.g., "image.jpg").</param>
+        /// <param name="groupId">The group ID, if uploading on behalf of a community.</param>
+        /// <param name="peerId">Destination ID (peer) of the conversation.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>A list of saved <see cref="Photo"/> objects.</returns>
+        public async Task<List<Photo>> UploadMessagesPhotoAsync(Stream photoStream, string fileName, int groupId = 0, int peerId = 0, CancellationToken ct = default)
+        {
+            if (string.IsNullOrEmpty(_api.AccessToken))
+                throw new InvalidOperationException("API is not authorized. Call AuthorizeAsync() first.");
+
+            var server = await GetMessagesUploadServerAsync(groupId, peerId, ct);
+            if (string.IsNullOrEmpty(server?.UploadUrl))
+                throw new OvkApiException(-1, "Failed to get messages photo upload URL.");
+
+            var uploadData = await UploadAsync(server.UploadUrl, photoStream, fileName, false, ct);
+            return await SaveMessagesPhotoAsync(uploadData.Photo ?? uploadData.File, uploadData.Hash, uploadData.Server, ct);
+        }
+
+        /// <summary>
+        /// Returns an upload server address for a chat cover photo.
+        /// </summary>
+        /// <param name="chatId">Chat ID.</param>
+        /// <param name="groupId">Group ID, if uploading on behalf of a group.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>A <see cref="PhotosUploadServer"/> instance.</returns>
+        public async Task<PhotosUploadServer> GetChatUploadServerAsync(int chatId, int groupId = 0, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("chat_id", chatId)
+                .Add("group_id", groupId)
+                .ToDictionary();
+
+            return await GetAsync<PhotosUploadServer>("getChatUploadServer", parameters, ct);
+        }
+
+        /// <summary>
+        /// Uploads a chat avatar photo and returns the upload result.
+        /// </summary>
+        /// <param name="photoStream">A stream containing the photo data.</param>
+        /// <param name="fileName">The file name.</param>
+        /// <param name="chatId">Chat ID.</param>
+        /// <param name="groupId">Group ID.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>The upload result containing file and hash.</returns>
+        public async Task<ChatPhotoUploadResult> UploadChatPhotoAsync(Stream photoStream, string fileName, int chatId, int groupId = 0, CancellationToken ct = default)
+        {
+            if (string.IsNullOrEmpty(_api.AccessToken))
+                throw new InvalidOperationException("API is not authorized. Call AuthorizeAsync() first.");
+
+            var server = await GetChatUploadServerAsync(chatId, groupId, ct);
+            if (string.IsNullOrEmpty(server?.UploadUrl))
+                throw new OvkApiException(-1, "Failed to get chat photo upload URL.");
+
+            var uploadData = await UploadAsync(server.UploadUrl, photoStream, fileName, false, ct);
+            return new ChatPhotoUploadResult
+            {
+                File = uploadData.File ?? uploadData.Photo,
+                Hash = uploadData.Hash
+            };
+        }
+
+        /// <summary>
+        /// Returns a list of photos on a user's profile.
+        /// </summary>
+        /// <param name="ownerId">Target user ID.</param>
+        /// <param name="userId">Alias for user ID.</param>
+        /// <param name="extended">Specifies whether to return additional information.</param>
+        /// <param name="offset">Offset needed to return a specific subset of photos.</param>
+        /// <param name="count">Number of photos to return.</param>
+        /// <param name="photoSizes">Specifies whether to return photo sizes array.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>A <see cref="Collection{Photo}"/> of photos.</returns>
+        public async Task<Collection<Photo>> GetUserPhotosAsync(int ownerId = 0, int userId = 0, bool extended = false, int offset = 0, int count = 100, bool photoSizes = false, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .Add("user_id", userId)
+                .Add("extended", extended ? 1 : 0)
+                .Add("offset", offset)
+                .Add("count", count)
+                .Add("photo_sizes", photoSizes ? 1 : 0)
+                .ToDictionary();
+
+            return await GetAsync<Collection<Photo>>("getUserPhotos", parameters, ct);
+        }
+
+        /// <summary>
+        /// Returns a list of tags on a photo.
+        /// </summary>
+        /// <param name="ownerId">Photo owner ID.</param>
+        /// <param name="photoId">Photo ID.</param>
+        /// <param name="pid">Legacy photo ID.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>A list of <see cref="PhotoTag"/> objects.</returns>
+        public async Task<List<PhotoTag>> GetTagsAsync(int ownerId = 0, int photoId = 0, int pid = 0, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .Add("photo_id", photoId)
+                .Add("pid", pid)
+                .ToDictionary();
+
+            return await GetAsync<List<PhotoTag>>("getTags", parameters, ct);
+        }
+
+        /// <summary>
+        /// Adds a tag on a photo.
+        /// </summary>
+        public async Task<int> PutTagAsync(int ownerId, int photoId = 0, int uid = 0, float x = 0.0f, float y = 0.0f, float x2 = 100.0f, float y2 = 100.0f, int pid = 0, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .Add("photo_id", photoId)
+                .Add("pid", pid)
+                .Add("uid", uid)
+                .Add("x", x)
+                .Add("y", y)
+                .Add("x2", x2)
+                .Add("y2", y2)
+                .ToDictionary();
+
+            return await PostAsync<int>("putTag", parameters, ct);
+        }
+
+        /// <summary>
+        /// Removes a tag from a photo.
+        /// </summary>
+        public async Task<int> DeleteTagAsync(int ownerId, int tagId, int photoId = 0, int pid = 0, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .Add("tag_id", tagId)
+                .Add("photo_id", photoId)
+                .Add("pid", pid)
+                .ToDictionary();
+
+            return await PostAsync<int>("deleteTag", parameters, ct);
+        }
+
+        /// <summary>
+        /// Confirms a tag on a photo.
+        /// </summary>
+        public async Task<int> ConfirmTagAsync(int ownerId, int tagId, int photoId = 0, int pid = 0, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .Add("tag_id", tagId)
+                .Add("photo_id", photoId)
+                .Add("pid", pid)
+                .ToDictionary();
+
+            return await PostAsync<int>("confirmTag", parameters, ct);
+        }
+
+        /// <summary>
+        /// Adds a comment on a photo (alias to <see cref="CreateCommentAsync"/>).
+        /// </summary>
+        public Task<int> AddCommentAsync(PhotosCreateCommentParams @params, CancellationToken ct = default)
+        {
+            return CreateCommentAsync(@params, ct);
+        }
     }
 }

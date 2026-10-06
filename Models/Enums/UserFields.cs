@@ -198,5 +198,55 @@ namespace OpenVkNetApi.Models.Enums
         /// </summary>
         [Description("bdate")]
         Bdate = 1L << 36,
+        /// <summary>
+        /// Whether the user is online.
+        /// </summary>
+        [Description("online")]
+        Online = 1L << 37,
+        /// <summary>
+        /// Detailed online information (platform, app, etc.).
+        /// </summary>
+        [Description("online_info")]
+        OnlineInfo = 1L << 38,
+        /// <summary>
+        /// The user's base photo URL.
+        /// </summary>
+        [Description("photo_base")]
+        PhotoBase = 1L << 39,
+        /// <summary>
+        /// The ID of the user's avatar photo.
+        /// </summary>
+        [Description("photo_id")]
+        PhotoId = 1L << 40,
+        /// <summary>
+        /// Whether current user can write private messages to this user.
+        /// </summary>
+        [Description("can_write_private_message")]
+        CanWritePrivateMessage = 1L << 41,
+        /// <summary>
+        /// The real user ID in the system.
+        /// </summary>
+        [Description("real_id")]
+        RealId = 1L << 42,
+        /// <summary>
+        /// Domain / short address of the user.
+        /// </summary>
+        [Description("domain")]
+        Domain = 1L << 43,
+        /// <summary>
+        /// Whether current user can see all posts on the wall.
+        /// </summary>
+        [Description("can_see_all_posts")]
+        CanSeeAllPosts = 1L << 44,
+        /// <summary>
+        /// Whether current user can post on the user's wall.
+        /// </summary>
+        [Description("can_post")]
+        CanPost = 1L << 45,
+        /// <summary>
+        /// Whether current user can send a friend request.
+        /// </summary>
+        [Description("can_send_friend_request")]
+        CanSendFriendRequest = 1L << 46,
     }
 }

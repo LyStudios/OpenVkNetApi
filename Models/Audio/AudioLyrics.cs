@@ -13,7 +13,7 @@ namespace OpenVkNetApi.Models.Audio
         /// </summary>
         [JsonProperty("lyrics_id")]
         public int LyricsId { get; set; }
-        
+
         /// <summary>
         /// The text of the lyrics.
         /// </summary>
