@@ -1,5 +1,7 @@
+using System.Threading;
 using System.Threading.Tasks;
 using OpenVkNetApi.Models;
+using OpenVkNetApi.Models.Enums;
 using OpenVkNetApi.Models.Newsfeed;
 using OpenVkNetApi.Models.RequestParameters.Newsfeed;
 using OpenVkNetApi.Utils;
@@ -104,6 +106,33 @@ namespace OpenVkNetApi.Methods
             return await GetAsync<NewsfeedCollection<Post>>("search", @params);
         }
 
-    }
+        /// <summary>
+        /// Returns comments on posts and photos in the newsfeed.
+        /// </summary>
+        public async Task<NewsfeedCollection<Post>> GetCommentsAsync(int count = 30, string filters = "post", string reposts = "", int startTime = 0, int endTime = 0, int lastComments = 1, int lastCommentsCount = 1, string startFrom = "", UserFields fields = UserFields.None, int offset = 0, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("count", count)
+                .Add("filters", filters)
+                .Add("reposts", reposts)
+                .Add("start_time", startTime)
+                .Add("end_time", endTime)
+                .Add("last_comments", lastComments)
+                .Add("last_comments_count", lastCommentsCount)
+                .Add("start_from", startFrom)
+                .Add("fields", fields)
+                .Add("offset", offset)
+                .ToDictionary();
 
+            return await GetAsync<NewsfeedCollection<Post>>("getComments", parameters, ct);
+        }
+
+        /// <summary>
+        /// Returns custom newsfeed lists.
+        /// </summary>
+        public async Task<Collection<string>> GetListsAsync(CancellationToken ct = default)
+        {
+            return await GetAsync<Collection<string>>("getLists", null, ct);
+        }
+    }
 }

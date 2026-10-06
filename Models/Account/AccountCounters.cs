@@ -14,13 +14,13 @@ namespace OpenVkNetApi.Models.Account
         /// </summary>
         [JsonProperty("friends")]
         public int? Friends { get; set; }
-        
+
         /// <summary>
         /// Number of unread notifications.
         /// </summary>
         [JsonProperty("notifications")]
         public int? Notifications { get; set; }
-        
+
         /// <summary>
         /// Number of unread private messages.
         /// </summary>

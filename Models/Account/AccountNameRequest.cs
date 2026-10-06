@@ -12,13 +12,13 @@ namespace OpenVkNetApi.Models.Account
         /// </summary>
         [JsonProperty("id")]
         public int Id { get; set; }
-        
+
         /// <summary>
         /// The status of the request.
         /// </summary>
         [JsonProperty("status")]
         public string Status { get; set; }
-        
+
         /// <summary>
         /// The requested first name.
         /// </summary>

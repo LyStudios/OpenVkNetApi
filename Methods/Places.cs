@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenVkNetApi.Models;
@@ -76,6 +75,32 @@ namespace OpenVkNetApi.Methods
         {
             var list = await GetCountryByIdAsync(new[] { cid }, ct);
             return list != null && list.Count > 0 ? list[0] : null;
+        }
+
+        /// <summary>
+        /// Returns information about cities by their IDs (alias for getCitiesById).
+        /// </summary>
+        [AllowAnonymous]
+        public async Task<List<City>> GetCitiesByIdAsync(IEnumerable<int> cityIds, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("city_ids", cityIds != null ? string.Join(",", cityIds) : "")
+                .ToDictionary();
+
+            return await GetAsync<List<City>>("getCitiesById", parameters, ct);
+        }
+
+        /// <summary>
+        /// Returns information about countries by their IDs (alias for getCountriesById).
+        /// </summary>
+        [AllowAnonymous]
+        public async Task<List<Country>> GetCountriesByIdAsync(IEnumerable<int> countryIds, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("country_ids", countryIds != null ? string.Join(",", countryIds) : "")
+                .ToDictionary();
+
+            return await GetAsync<List<Country>>("getCountriesById", parameters, ct);
         }
 
         /// <summary>

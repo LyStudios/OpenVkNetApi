@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using OpenVkNetApi.Models.Groups;
 using OpenVkNetApi.Models.Users;
-using OpenVkNetApi.Models.Wall;
 
 namespace OpenVkNetApi.Models.Execute
 {

@@ -23,6 +23,6 @@ namespace OpenVkNetApi.Models.Photos
         /// The ID of the user who is performing the upload.
         /// </summary>
         [JsonProperty("user_id")]
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
     }
 }

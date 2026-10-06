@@ -20,6 +20,18 @@ namespace OpenVkNetApi.Models.Photos
         public string PhotosList { get; set; }
 
         /// <summary>
+        /// A string representation of the uploaded file/photo.
+        /// </summary>
+        [JsonProperty("file")]
+        public string File { get; set; }
+
+        /// <summary>
+        /// An optional server identifier returned after upload.
+        /// </summary>
+        [JsonProperty("server")]
+        public string Server { get; set; }
+
+        /// <summary>
         /// A hash string required to save the uploaded photo(s).
         /// </summary>
         [JsonProperty("hash")]

@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenVkNetApi.Models;
 using OpenVkNetApi.Models.Stickers;
+using OpenVkNetApi.Models.Store;
 using OpenVkNetApi.Utils;
 
 namespace OpenVkNetApi.Methods
@@ -84,6 +86,92 @@ namespace OpenVkNetApi.Methods
                 .ToDictionary();
 
             return await PostAsync<StickerBuyResult>("buy", parameters, ct);
+        }
+
+        /// <summary>
+        /// Returns store products for stickers.
+        /// </summary>
+        public async Task<Collection<StoreProduct>> GetProductsAsync(
+            string type = "stickers",
+            string filters = "",
+            bool extended = true,
+            int count = 50,
+            int offset = 0,
+            IEnumerable<int> productIds = null,
+            int userId = 0,
+            CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("type", type)
+                .Add("filters", filters)
+                .Add("extended", extended ? 1 : 0)
+                .Add("count", count)
+                .Add("offset", offset)
+                .Add("product_ids", productIds)
+                .Add("user_id", userId > 0 ? userId : (int?)null)
+                .ToDictionary();
+
+            return await GetAsync<Collection<StoreProduct>>("getProducts", parameters, ct);
+        }
+
+        /// <summary>
+        /// Returns available stock items from catalog.
+        /// </summary>
+        public async Task<Collection<StoreProduct>> GetStockItemsAsync(
+            string type = "stickers",
+            string section = "",
+            bool extended = true,
+            int count = 50,
+            int offset = 0,
+            string merchant = "",
+            CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("type", type)
+                .Add("section", section)
+                .Add("extended", extended ? 1 : 0)
+                .Add("count", count)
+                .Add("offset", offset)
+                .Add("merchant", merchant)
+                .ToDictionary();
+
+            return await GetAsync<Collection<StoreProduct>>("getStockItems", parameters, ct);
+        }
+
+        /// <summary>
+        /// Returns keyword-to-sticker mappings.
+        /// </summary>
+        public async Task<StickersKeywords> GetStickersKeywordsAsync(
+            bool aliases = true,
+            bool allProducts = true,
+            bool needCollections = false,
+            CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("aliases", aliases ? 1 : 0)
+                .Add("all_products", allProducts ? 1 : 0)
+                .Add("need_collections", needCollections ? 1 : 0)
+                .ToDictionary();
+
+            return await GetAsync<StickersKeywords>("getStickersKeywords", parameters, ct);
+        }
+
+        /// <summary>
+        /// Returns stickers matching specified keywords.
+        /// </summary>
+        public async Task<List<string>> GetKeywordStickersAsync(
+            string words = "",
+            bool needStickers = true,
+            string aliases = "",
+            CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("words", words)
+                .Add("need_stickers", needStickers ? 1 : 0)
+                .Add("aliases", aliases)
+                .ToDictionary();
+
+            return await GetAsync<List<string>>("getKeywordStickers", parameters, ct);
         }
     }
 }

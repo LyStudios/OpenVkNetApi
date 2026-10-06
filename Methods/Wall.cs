@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using OpenVkNetApi.Models;
+using OpenVkNetApi.Models.Enums;
 using OpenVkNetApi.Models.RequestParameters.Wall;
 using OpenVkNetApi.Models.Wall;
 using OpenVkNetApi.Utils;
-using OpenVkNetApi.Models.Enums;
 
 namespace OpenVkNetApi.Methods
 {
@@ -224,6 +226,86 @@ namespace OpenVkNetApi.Methods
                 .ToDictionary();
 
             return await GetAsync<WallGet>("getNearby", parameters, ct);
+        }
+
+        /// <summary>
+        /// Adds a comment on a wall post (alias to <see cref="CreateCommentAsync"/>).
+        /// </summary>
+        public Task<WallCreateComment> AddCommentAsync(WallCreateCommentParams @params, CancellationToken ct = default)
+        {
+            return CreateCommentAsync(@params, ct);
+        }
+
+        /// <summary>
+        /// Returns a list of years for which posts exist on the owner's wall.
+        /// </summary>
+        /// <param name="ownerId">Target owner ID.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>A list of years.</returns>
+        public async Task<List<int>> GetArchiveYearsAsync(int ownerId, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .ToDictionary();
+
+            return await GetAsync<List<int>>("getArchiveYears", parameters, ct);
+        }
+
+        /// <summary>
+        /// Archives a post on the user's or community's wall.
+        /// </summary>
+        /// <param name="ownerId">Post owner ID.</param>
+        /// <param name="postId">Post ID to archive.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>A boolean indicating success.</returns>
+        public async Task<bool> ArchiveAsync(int ownerId, int postId, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .Add("post_id", postId)
+                .ToDictionary();
+
+            var result = await PostAsync<int>("archive", parameters, ct);
+            return result == 1;
+        }
+
+        /// <summary>
+        /// Reveals (unarchives) a post on the user's or community's wall.
+        /// </summary>
+        /// <param name="ownerId">Post owner ID.</param>
+        /// <param name="postId">Post ID to unarchive.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>A boolean indicating success.</returns>
+        public async Task<bool> RevealAsync(int ownerId, int postId, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .Add("post_id", postId)
+                .ToDictionary();
+
+            var result = await PostAsync<int>("reveal", parameters, ct);
+            return result == 1;
+        }
+
+        /// <summary>
+        /// Returns subscriptions to wall posts.
+        /// </summary>
+        /// <param name="offset">Offset for pagination.</param>
+        /// <param name="count">Number of posts to return.</param>
+        /// <param name="extended">Whether to return extended profiles.</param>
+        /// <param name="fields">User and group fields to return.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>A <see cref="Collection{Post}"/> of posts.</returns>
+        public async Task<Collection<Post>> GetSubscriptionsAsync(int offset = 0, int count = 20, bool extended = false, UserFields fields = UserFields.None, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("offset", offset)
+                .Add("count", count)
+                .Add("extended", extended ? 1 : 0)
+                .Add("fields", fields)
+                .ToDictionary();
+
+            return await GetAsync<Collection<Post>>("getSubscriptions", parameters, ct);
         }
     }
 }

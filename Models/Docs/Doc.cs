@@ -85,7 +85,7 @@ namespace OpenVkNetApi.Models.Docs
         /// </summary>
         [JsonProperty("access_key")]
         public string AccessKey { get; set; }
-        
+
         /// <summary>
         /// The preview data for the document.
         /// </summary>

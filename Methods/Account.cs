@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using OpenVkNetApi.Models;
 using OpenVkNetApi.Models.Account;
 using OpenVkNetApi.Models.Enums;
@@ -244,6 +245,133 @@ namespace OpenVkNetApi.Methods
                 .ToDictionary();
 
             return PostAsync<int>("setSilenceMode", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the current viewer (authorized user) ID.
+        /// </summary>
+        /// <param name="cancellationToken">A cancellation token for the operation.</param>
+        /// <returns>The user ID of the authorized user.</returns>
+        public Task<int> GetViewerIdAsync(CancellationToken cancellationToken = default)
+        {
+            return GetAsync<int>("getViewerId", cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets push notification settings for the account.
+        /// </summary>
+        /// <param name="token">Device push token.</param>
+        /// <param name="peerId">Destination ID (peer) to get settings for.</param>
+        /// <param name="cancellationToken">A cancellation token for the operation.</param>
+        /// <returns>An <see cref="AccountPushSettings"/> object.</returns>
+        public Task<AccountPushSettings> GetPushSettingsAsync(string token = "", int peerId = 0, CancellationToken cancellationToken = default)
+        {
+            var parameters = new RequestParams()
+                .Add("token", token)
+                .Add("peer_id", peerId)
+                .ToDictionary();
+
+            return GetAsync<AccountPushSettings>("getPushSettings", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns profile information for specified user IDs or the authorized user.
+        /// </summary>
+        /// <param name="userIds">Comma-separated user IDs.</param>
+        /// <param name="fields">User profile fields to return.</param>
+        /// <param name="cancellationToken">A cancellation token for the operation.</param>
+        /// <returns>A list of <see cref="Models.Users.User"/> objects.</returns>
+        public Task<List<Models.Users.User>> GetAsync(string userIds = "", UserFields fields = UserFields.None, CancellationToken cancellationToken = default)
+        {
+            var parameters = new RequestParams()
+                .Add("user_ids", userIds)
+                .Add("fields", fields)
+                .ToDictionary();
+
+            return GetAsync<List<Models.Users.User>>("get", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns profile information for multiple accounts.
+        /// </summary>
+        /// <param name="fields">User profile fields to return.</param>
+        /// <param name="cancellationToken">A cancellation token for the operation.</param>
+        /// <returns>A <see cref="Collection{User}"/> containing profile items.</returns>
+        public Task<Collection<Models.Users.User>> GetMultiAsync(UserFields fields = UserFields.None, CancellationToken cancellationToken = default)
+        {
+            var parameters = new RequestParams()
+                .Add("fields", fields)
+                .ToDictionary();
+
+            return GetAsync<Collection<Models.Users.User>>("getMulti", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns privacy settings of the account.
+        /// </summary>
+        /// <param name="cancellationToken">A cancellation token for the operation.</param>
+        /// <returns>An <see cref="AccountPrivacySettings"/> object.</returns>
+        public Task<AccountPrivacySettings> GetPrivacySettingsAsync(CancellationToken cancellationToken = default)
+        {
+            return GetAsync<AccountPrivacySettings>("getPrivacySettings", cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns contact list for the account.
+        /// </summary>
+        /// <param name="offset">Offset for pagination.</param>
+        /// <param name="count">Number of contacts to return.</param>
+        /// <param name="fields">User profile fields to return.</param>
+        /// <param name="cancellationToken">A cancellation token for the operation.</param>
+        /// <returns>A <see cref="Collection{User}"/> of contacts.</returns>
+        public Task<Collection<Models.Users.User>> GetContactListAsync(int offset = 0, int count = 100, UserFields fields = UserFields.None, CancellationToken cancellationToken = default)
+        {
+            var parameters = new RequestParams()
+                .Add("offset", offset)
+                .Add("count", count)
+                .Add("fields", fields)
+                .ToDictionary();
+
+            return GetAsync<Collection<Models.Users.User>>("getContactList", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns help hints for the account.
+        /// </summary>
+        /// <param name="section">Section name.</param>
+        /// <param name="appId">Application ID.</param>
+        /// <param name="fields">Fields to return.</param>
+        /// <param name="cancellationToken">A cancellation token for the operation.</param>
+        /// <returns>An <see cref="AccountHelpHints"/> object.</returns>
+        public Task<AccountHelpHints> GetHelpHintsAsync(string section = "", string appId = "", UserFields fields = UserFields.None, CancellationToken cancellationToken = default)
+        {
+            var parameters = new RequestParams()
+                .Add("section", section)
+                .Add("app_id", appId)
+                .Add("fields", fields)
+                .ToDictionary();
+
+            return GetAsync<AccountHelpHints>("getHelpHints", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns badges settings for the account.
+        /// </summary>
+        /// <param name="cancellationToken">A cancellation token for the operation.</param>
+        /// <returns>An <see cref="AccountBadgesSettings"/> object.</returns>
+        public Task<AccountBadgesSettings> GetBadgesSettingsAsync(CancellationToken cancellationToken = default)
+        {
+            return GetAsync<AccountBadgesSettings>("getBadgesSettings", cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns feature toggles and experiments for the account.
+        /// </summary>
+        /// <param name="cancellationToken">A cancellation token for the operation.</param>
+        /// <returns>An <see cref="AccountToggles"/> object.</returns>
+        public Task<AccountToggles> GetTogglesAsync(CancellationToken cancellationToken = default)
+        {
+            return GetAsync<AccountToggles>("getToggles", cancellationToken: cancellationToken);
         }
     }
 }

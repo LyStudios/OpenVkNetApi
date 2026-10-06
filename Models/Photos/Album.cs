@@ -55,7 +55,7 @@ namespace OpenVkNetApi.Models.Photos
         /// </summary>
         [JsonProperty("size")]
         public int Size { get; set; }
-        
+
         /// <summary>
         /// Indicates if the current user can upload photos to this album.
         /// </summary>

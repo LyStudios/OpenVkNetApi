@@ -49,13 +49,13 @@ namespace OpenVkNetApi.Models.Groups
         /// </summary>
         [JsonProperty("photo_200")]
         public string Photo200 { get; set; }
-        
+
         /// <summary>
         /// The number of members in the group.
         /// </summary>
         [JsonProperty("members_count")]
         public int? MembersCount { get; set; }
-        
+
         /// <summary>
         /// The group's website.
         /// </summary>
@@ -67,7 +67,7 @@ namespace OpenVkNetApi.Models.Groups
         /// </summary>
         [JsonProperty("description")]
         public string Description { get; set; }
-        
+
         /// <summary>
         /// A list of contact people for the group.
         /// </summary>

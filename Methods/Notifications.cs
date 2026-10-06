@@ -52,5 +52,32 @@ namespace OpenVkNetApi.Methods
 
             return await GetAsync<NotificationsFetch>("fetch", parameters, ct);
         }
+
+        /// <summary>
+        /// Returns notification settings and subscriptions.
+        /// </summary>
+        public async Task<NotificationsSettings> GetSettingsAsync(string deviceId = "", string from = "", string lang = "", CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("device_id", deviceId)
+                .Add("from", from)
+                .Add("lang", lang)
+                .ToDictionary();
+
+            return await GetAsync<NotificationsSettings>("getSettings", parameters, ct);
+        }
+
+        /// <summary>
+        /// Returns a list of ignored sources for notifications.
+        /// </summary>
+        public async Task<Collection<string>> GetIgnoredSourcesAsync(int offset = 0, int count = 0, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("offset", offset)
+                .Add("count", count)
+                .ToDictionary();
+
+            return await GetAsync<Collection<string>>("getIgnoredSources", parameters, ct);
+        }
     }
 }

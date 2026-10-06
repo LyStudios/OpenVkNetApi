@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using OpenVkNetApi.Models.Attachments;
 using OpenVkNetApi.Models.Users;
 using OpenVkNetApi.Models.Utils;
 using OpenVkNetApi.Utils;
@@ -59,6 +61,36 @@ namespace OpenVkNetApi.Methods
                 .ToDictionary();
 
             return await GetAsync<User>("resolveGuid", parameters, ct);
+        }
+
+        /// <summary>
+        /// Resolves raw attachment strings into structured attachment objects.
+        /// </summary>
+        public async Task<List<Attachment>> ResolveAttachmentsAsync(string attachments, int allowType = 0, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("attachments", attachments)
+                .Add("allow_type", allowType)
+                .ToDictionary();
+
+            return await GetAsync<List<Attachment>>("resolveAttachments", parameters, ct);
+        }
+
+        /// <summary>
+        /// Calculates the exact pagination offset for a specific target object.
+        /// </summary>
+        public async Task<int> ResolveOffsetAsync(int ownerId, int id, int? id2 = null, string method = "wall.get", int perPage = 10, bool rev = false, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("owner_id", ownerId)
+                .Add("id", id)
+                .Add("id2", id2)
+                .Add("method", method)
+                .Add("perPage", perPage)
+                .Add("rev", rev ? 1 : 0)
+                .ToDictionary();
+
+            return await GetAsync<int>("resolveOffset", parameters, ct);
         }
     }
 }

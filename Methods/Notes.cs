@@ -49,6 +49,14 @@ namespace OpenVkNetApi.Methods
         }
 
         /// <summary>
+        /// Creates a new comment on a note (alias to <see cref="CreateCommentAsync"/>).
+        /// </summary>
+        public Task<int> AddCommentAsync(NotesCreateCommentParams @params, CancellationToken ct = default)
+        {
+            return CreateCommentAsync(@params, ct);
+        }
+
+        /// <summary>
         /// Edits a note.
         /// </summary>
         /// <param name="params">Parameters for the edit operation.</param>

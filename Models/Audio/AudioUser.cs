@@ -12,19 +12,19 @@ namespace OpenVkNetApi.Models.Audio
         /// </summary>
         [JsonProperty("id")]
         public int Id { get; set; }
-        
+
         /// <summary>
         /// The URL of the user's profile photo.
         /// </summary>
         [JsonProperty("photo")]
         public string Photo { get; set; }
-        
+
         /// <summary>
         /// The user's full name.
         /// </summary>
         [JsonProperty("name")]
         public string Name { get; set; }
-        
+
         /// <summary>
         /// The user's name in the genitive case.
         /// </summary>

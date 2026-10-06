@@ -165,5 +165,19 @@ namespace OpenVkNetApi.Methods
 
             return await PostAsync<int>("unfixTopic", parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// Creates a new topic linked to a chat.
+        /// </summary>
+        public async Task<int> AddChatTopicAsync(int groupId, string title, int? chatId = null, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("group_id", groupId)
+                .Add("title", title)
+                .Add("chat_id", chatId)
+                .ToDictionary();
+
+            return await PostAsync<int>("addChatTopic", parameters, ct);
+        }
     }
 }
