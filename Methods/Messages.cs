@@ -2,7 +2,9 @@ using Newtonsoft.Json.Linq;
 using OpenVkNetApi.Builders;
 using OpenVkNetApi.Models;
 using OpenVkNetApi.Models.Enums;
+using OpenVkNetApi.Models.Groups;
 using OpenVkNetApi.Models.Messages;
+using OpenVkNetApi.Models.Photos;
 using OpenVkNetApi.Models.RequestParameters.Messages;
 using OpenVkNetApi.Models.Users;
 using OpenVkNetApi.Utils;
@@ -47,7 +49,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="Collection{Message}"/> of message objects.</returns>
         public async Task<Collection<Message>> GetByIdAsync(string messageIds, int previewLength = 0, bool extended = false, CancellationToken ct = default)
-        { 
+        {
             var parameters = new RequestParams()
                 .Add("message_ids", messageIds)
                 .Add("preview_length", previewLength)
@@ -124,7 +126,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="extended">True to return extended information.</param>
         /// <param name="fields">A list of additional profile fields to return.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
-        /// <returns>A <see cref="MessagesGetConversationsResponse"/> object containing conversations.</returns>
+        /// <returns>An <see cref="ExtendedCollection{Conversation}"/> containing conversations.</returns>
         public async Task<ExtendedCollection<Conversation>> GetConversationsByIdAsync(string peerIds, bool extended = false, UserFields fields = UserFields.None, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
@@ -355,8 +357,8 @@ namespace OpenVkNetApi.Methods
         /// <param name="file">The uploaded file parameter returned by the upload server.</param>
         /// <param name="hash">The upload hash parameter.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
-        /// <returns>A <see cref="ChatPhotoResponse"/> with updated chat data.</returns>
-        public async Task<ChatPhotoResponse> SetChatPhotoAsync(int chatId, string file, string hash, CancellationToken ct = default)
+        /// <returns>A <see cref="ChatPhotoResult"/> with updated chat data.</returns>
+        public async Task<ChatPhotoResult> SetChatPhotoAsync(int chatId, string file, string hash, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("chat_id", chatId)
@@ -364,7 +366,7 @@ namespace OpenVkNetApi.Methods
                 .Add("hash", hash)
                 .ToDictionary();
 
-            return await PostAsync<ChatPhotoResponse>("setChatPhoto", parameters, ct);
+            return await PostAsync<ChatPhotoResult>("setChatPhoto", parameters, ct);
         }
 
         /// <summary>
@@ -372,14 +374,14 @@ namespace OpenVkNetApi.Methods
         /// </summary>
         /// <param name="chatId">The chat ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
-        /// <returns>A <see cref="ChatPhotoResponse"/> with updated chat data.</returns>
-        public async Task<ChatPhotoResponse> DeleteChatPhotoAsync(int chatId, CancellationToken ct = default)
+        /// <returns>A <see cref="ChatPhotoResult"/> with updated chat data.</returns>
+        public async Task<ChatPhotoResult> DeleteChatPhotoAsync(int chatId, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("chat_id", chatId)
                 .ToDictionary();
 
-            return await PostAsync<ChatPhotoResponse>("deleteChatPhoto", parameters, ct);
+            return await PostAsync<ChatPhotoResult>("deleteChatPhoto", parameters, ct);
         }
 
         /// <summary>
@@ -411,9 +413,9 @@ namespace OpenVkNetApi.Methods
         /// <param name="fields">Profile fields to return for chat members.</param>
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
-        /// <returns>A <see cref="ChatPreviewResponse"/> containing chat preview data.</returns>
+        /// <returns>A <see cref="ChatPreviewDetails"/> containing chat preview data.</returns>
         [AllowAnonymous]
-        public async Task<ChatPreviewResponse> GetChatPreviewAsync(string link, UserFields fields = UserFields.None, int groupId = 0, CancellationToken ct = default)
+        public async Task<ChatPreviewDetails> GetChatPreviewAsync(string link, UserFields fields = UserFields.None, int groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("link", link)
@@ -421,7 +423,7 @@ namespace OpenVkNetApi.Methods
                 .Add("group_id", groupId > 0 ? groupId : (int?)null)
                 .ToDictionary();
 
-            return await GetAsync<ChatPreviewResponse>("getChatPreview", parameters, ct);
+            return await GetAsync<ChatPreviewDetails>("getChatPreview", parameters, ct);
         }
 
         /// <summary>
@@ -514,8 +516,8 @@ namespace OpenVkNetApi.Methods
         /// <param name="fields">Profile fields to return for moderators.</param>
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
-        /// <returns>A <see cref="ChatModeratorsResponse"/> object.</returns>
-        public async Task<ChatModeratorsResponse> GetChatModeratorsAsync(int peerId = 0, int chatId = 0, bool extended = false, UserFields fields = UserFields.None, int groupId = 0, CancellationToken ct = default)
+        /// <returns>A <see cref="ChatModerators"/> object.</returns>
+        public async Task<ChatModerators> GetChatModeratorsAsync(int peerId = 0, int chatId = 0, bool extended = false, UserFields fields = UserFields.None, int groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("peer_id", peerId > 0 ? peerId : (int?)null)
@@ -525,7 +527,7 @@ namespace OpenVkNetApi.Methods
                 .Add("group_id", groupId > 0 ? groupId : (int?)null)
                 .ToDictionary();
 
-            return await GetAsync<ChatModeratorsResponse>("getChatModerators", parameters, ct);
+            return await GetAsync<ChatModerators>("getChatModerators", parameters, ct);
         }
 
         /// <summary>
@@ -986,5 +988,360 @@ namespace OpenVkNetApi.Methods
             var res = await GetAsync<JObject>("isMessagesFromGroupAllowed", parameters, ct);
             return res?["is_allowed"]?.Value<int>() == 1;
         }
+
+        #region Folders
+
+        /// <summary>
+        /// Creates a new dialog folder.
+        /// </summary>
+        /// <param name="name">Name of the folder.</param>
+        /// <param name="includedPeerIds">Peer IDs to include in the folder.</param>
+        /// <param name="type">Type of the folder ("custom").</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>The ID of the created folder.</returns>
+        public async Task<int> CreateFolderAsync(string name, IEnumerable<int> includedPeerIds = null, string type = "custom", CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("name", name)
+                .Add("type", type)
+                .Add("included_peer_ids", includedPeerIds)
+                .ToDictionary();
+
+            var res = await PostAsync<JObject>("createFolder", parameters, ct);
+            return res?["folder_id"]?.Value<int>() ?? 0;
+        }
+
+        /// <summary>
+        /// Creates a new dialog folder using parameter object.
+        /// </summary>
+        public async Task<int> CreateFolderAsync(MessagesCreateFolderParams @params, CancellationToken ct = default)
+        {
+            var res = await PostAsync<JObject>("createFolder", @params, ct);
+            return res?["folder_id"]?.Value<int>() ?? 0;
+        }
+
+        /// <summary>
+        /// Returns a list of dialog folders.
+        /// </summary>
+        public async Task<Collection<MessageFolder>> GetFoldersAsync(bool withPeers = false, UserFields fields = UserFields.None, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("with_peers", withPeers ? 1 : 0)
+                .Add("fields", fields)
+                .ToDictionary();
+
+            return await GetAsync<Collection<MessageFolder>>("getFolders", parameters, ct);
+        }
+
+        /// <summary>
+        /// Returns a list of dialog folders using parameter object.
+        /// </summary>
+        public async Task<Collection<MessageFolder>> GetFoldersAsync(MessagesGetFoldersParams @params, CancellationToken ct = default)
+        {
+            return await GetAsync<Collection<MessageFolder>>("getFolders", @params, ct);
+        }
+
+        /// <summary>
+        /// Updates a dialog folder.
+        /// </summary>
+        public async Task<bool> UpdateFolderAsync(int folderId, string name = null, IEnumerable<int> addPeerIds = null, IEnumerable<int> removePeerIds = null, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("folder_id", folderId)
+                .Add("name", name)
+                .Add("add_included_peer_ids", addPeerIds)
+                .Add("remove_included_peer_ids", removePeerIds)
+                .ToDictionary();
+
+            var res = await PostAsync<int>("updateFolder", parameters, ct);
+            return res == 1;
+        }
+
+        /// <summary>
+        /// Updates a dialog folder using parameter object.
+        /// </summary>
+        public async Task<bool> UpdateFolderAsync(MessagesUpdateFolderParams @params, CancellationToken ct = default)
+        {
+            var res = await PostAsync<int>("updateFolder", @params, ct);
+            return res == 1;
+        }
+
+        /// <summary>
+        /// Deletes a dialog folder.
+        /// </summary>
+        public async Task<bool> DeleteFolderAsync(int folderId, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("folder_id", folderId)
+                .ToDictionary();
+
+            var res = await PostAsync<int>("deleteFolder", parameters, ct);
+            return res == 1;
+        }
+
+        /// <summary>
+        /// Reorders dialog folders.
+        /// </summary>
+        public async Task<bool> ReorderFoldersAsync(IEnumerable<int> folderIds, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("folder_ids", folderIds)
+                .ToDictionary();
+
+            var res = await PostAsync<int>("reorderFolders", parameters, ct);
+            return res == 1;
+        }
+
+        /// <summary>
+        /// Reorders dialog folders using parameter object.
+        /// </summary>
+        public async Task<bool> ReorderFoldersAsync(MessagesReorderFoldersParams @params, CancellationToken ct = default)
+        {
+            var res = await PostAsync<int>("reorderFolders", @params, ct);
+            return res == 1;
+        }
+
+        /// <summary>
+        /// Returns recommended dialog folders.
+        /// </summary>
+        public async Task<List<MessageFolder>> GetRecommendedFoldersAsync(UserFields fields = UserFields.None, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("fields", fields)
+                .ToDictionary();
+
+            var res = await GetAsync<JObject>("getRecommendedFolders", parameters, ct);
+            return res?["items"]?.ToObject<List<MessageFolder>>() ?? new List<MessageFolder>();
+        }
+
+        #endregion
+
+        #region Roles and Permissions
+
+        /// <summary>
+        /// Changes a participant's role in a group chat (e.g., "admin" or "member").
+        /// </summary>
+        public async Task<bool> SetMemberRoleAsync(int peerId, int memberId, string role, int chatId = 0, int groupId = 0, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("peer_id", peerId)
+                .Add("member_id", memberId)
+                .Add("user_id", memberId)
+                .Add("role", role)
+                .Add("chat_id", chatId > 0 ? chatId : (int?)null)
+                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .ToDictionary();
+
+            var res = await PostAsync<int>("setMemberRole", parameters, ct);
+            return res == 1;
+        }
+
+        /// <summary>
+        /// Changes a participant's role using parameter object.
+        /// </summary>
+        public async Task<bool> SetMemberRoleAsync(MessagesSetMemberRoleParams @params, CancellationToken ct = default)
+        {
+            var res = await PostAsync<int>("setMemberRole", @params, ct);
+            return res == 1;
+        }
+
+        /// <summary>
+        /// Sets granular permissions in a chat.
+        /// </summary>
+        public async Task<bool> SetChatPermissionsAsync(MessagesSetChatPermissionsParams @params, CancellationToken ct = default)
+        {
+            var res = await PostAsync<int>("setChatPermissions", @params, ct);
+            return res == 1;
+        }
+
+        /// <summary>
+        /// Returns chat avatar photo history.
+        /// </summary>
+        public async Task<Collection<Photo>> GetChatAvatarHistoryAsync(int chatId, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("chat_id", chatId)
+                .ToDictionary();
+
+            return await GetAsync<Collection<Photo>>("getChatAvatarHistory", parameters, ct);
+        }
+
+        #endregion
+
+        #region Counters and Sync
+
+        /// <summary>
+        /// Returns overall messaging counters (unread messages, requests, folders, calls, etc.).
+        /// </summary>
+        public async Task<MessagesCounters> GetCountersAsync(int filter = 0, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("filter", filter)
+                .ToDictionary();
+
+            return await GetAsync<MessagesCounters>("getCounters", parameters, ct);
+        }
+
+        /// <summary>
+        /// Returns reactions assets metadata.
+        /// </summary>
+        public async Task<ReactionsAssets> GetReactionsAssetsAsync(int reactionsHash = 0, int assetsHash = 0, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("reactions_hash", reactionsHash)
+                .Add("assets_hash", assetsHash)
+                .ToDictionary();
+
+            return await GetAsync<ReactionsAssets>("getReactionsAssets", parameters, ct);
+        }
+
+        /// <summary>
+        /// Returns feature onboarding status.
+        /// </summary>
+        public async Task<FeatureOnboarding> GetFeatureOnboardingAsync(string type = "", string key = "", CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("type", type)
+                .Add("key", key)
+                .ToDictionary();
+
+            return await GetAsync<FeatureOnboarding>("getFeatureOnboarding", parameters, ct);
+        }
+
+        /// <summary>
+        /// Performs incremental sync of messages, conversations, and state.
+        /// </summary>
+        public async Task<MessagesDiff> GetDiffAsync(MessagesGetDiffParams @params, CancellationToken ct = default)
+        {
+            return await GetAsync<MessagesDiff>("getDiff", @params, ct);
+        }
+
+        /// <summary>
+        /// Returns diff content payload.
+        /// </summary>
+        public async Task<List<ConversationDiffInfo>> GetDiffContentAsync(int nestedLimit = 0, int groupId = 0, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("nested_limit", nestedLimit)
+                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .ToDictionary();
+
+            var res = await GetAsync<JObject>("getDiffContent", parameters, ct);
+            return res?["items"]?.ToObject<List<ConversationDiffInfo>>() ?? new List<ConversationDiffInfo>();
+        }
+
+        #endregion
+
+        #region Calls
+
+        /// <summary>
+        /// Returns groups available for making a call.
+        /// </summary>
+        public async Task<Collection<Group>> GetGroupsForCallAsync(UserFields fields = UserFields.None, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("fields", fields)
+                .ToDictionary();
+
+            return await GetAsync<Collection<Group>>("getGroupsForCall", parameters, ct);
+        }
+
+        /// <summary>
+        /// Returns list of recent calls.
+        /// </summary>
+        public async Task<ExtendedCollection<CallItem>> GetRecentCallsAsync(int count = 20, int startMessageId = 0, UserFields fields = UserFields.None, bool extended = false, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("count", count)
+                .Add("start_message_id", startMessageId > 0 ? startMessageId : (int?)null)
+                .Add("fields", fields)
+                .Add("extended", extended ? 1 : 0)
+                .ToDictionary();
+
+            return await GetAsync<ExtendedCollection<CallItem>>("getRecentCalls", parameters, ct);
+        }
+
+        /// <summary>
+        /// Returns list of scheduled calls.
+        /// </summary>
+        public async Task<ExtendedCollection<CallItem>> GetScheduledCallsAsync(int count = 20, string startFrom = "", UserFields fields = UserFields.None, bool extended = false, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("count", count)
+                .Add("start_from", startFrom)
+                .Add("fields", fields)
+                .Add("extended", extended ? 1 : 0)
+                .ToDictionary();
+
+            return await GetAsync<ExtendedCollection<CallItem>>("getScheduledCalls", parameters, ct);
+        }
+
+        /// <summary>
+        /// Returns list of current active calls.
+        /// </summary>
+        public async Task<ExtendedCollection<CallItem>> GetCurrentCallsAsync(UserFields fields = UserFields.None, bool extended = false, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("fields", fields)
+                .Add("extended", extended ? 1 : 0)
+                .ToDictionary();
+
+            return await GetAsync<ExtendedCollection<CallItem>>("getCurrentCalls", parameters, ct);
+        }
+
+        #endregion
+
+        #region Legacy Aliases
+
+        /// <summary>
+        /// Legacy method to retrieve messages list.
+        /// </summary>
+        public async Task<ExtendedCollection<Message>> GetAsync(MessagesGetParams @params, CancellationToken ct = default)
+        {
+            return await GetAsync<ExtendedCollection<Message>>("get", @params, ct);
+        }
+
+        /// <summary>
+        /// Legacy method to retrieve list of dialogs.
+        /// </summary>
+        public async Task<ExtendedCollection<ConversationAndMessage>> GetDialogsAsync(MessagesGetDialogsParams @params, CancellationToken ct = default)
+        {
+            return await GetAsync<ExtendedCollection<ConversationAndMessage>>("getDialogs", @params, ct);
+        }
+
+        /// <summary>
+        /// Searches dialogs matching the specified query.
+        /// </summary>
+        public async Task<List<ConversationAndMessage>> SearchDialogsAsync(string query, int limit = 20, UserFields fields = UserFields.None, int groupId = 0, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("q", query)
+                .Add("limit", limit)
+                .Add("fields", fields)
+                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .ToDictionary();
+
+            return await GetAsync<List<ConversationAndMessage>>("searchDialogs", parameters, ct);
+        }
+
+        /// <summary>
+        /// Deletes all messages in a dialog (legacy alias for deleteConversation).
+        /// </summary>
+        public async Task<bool> DeleteDialogAsync(int peerId = 0, int userId = 0, int offset = 0, int count = 0, int groupId = 0, int chatId = 0, CancellationToken ct = default)
+        {
+            var parameters = new RequestParams()
+                .Add("peer_id", peerId > 0 ? peerId : (int?)null)
+                .Add("user_id", userId > 0 ? userId : (int?)null)
+                .Add("offset", offset > 0 ? offset : (int?)null)
+                .Add("count", count > 0 ? count : (int?)null)
+                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("chat_id", chatId > 0 ? chatId : (int?)null)
+                .ToDictionary();
+
+            var res = await PostAsync<int>("deleteDialog", parameters, ct);
+            return res == 1;
+        }
+
+        #endregion
     }
 }

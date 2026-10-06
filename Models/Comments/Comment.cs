@@ -45,7 +45,7 @@ namespace OpenVkNetApi.Models.Comments
         /// A stack of parent comment IDs for replies.
         /// </summary>
         [JsonProperty("parents_stack")]
-        public List<object> ParentsStack { get; set; }
+        public List<int> ParentsStack { get; set; }
 
         /// <summary>
         /// Indicates if the current user has liked this comment.

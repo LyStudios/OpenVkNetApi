@@ -3,9 +3,9 @@ using Newtonsoft.Json;
 namespace OpenVkNetApi.Models.Messages
 {
     /// <summary>
-    /// Represents the response returned after updating or deleting a chat photo.
+    /// Represents the result of updating or deleting a chat photo.
     /// </summary>
-    public class ChatPhotoResponse
+    public class ChatPhotoResult
     {
         /// <summary>
         /// Gets or sets the service message ID generated for the photo change.

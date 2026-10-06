@@ -5,9 +5,9 @@ using OpenVkNetApi.Models.Users;
 namespace OpenVkNetApi.Models.Messages
 {
     /// <summary>
-    /// Represents the response returned by <c>messages.getChatModerators</c>.
+    /// Represents the moderators returned by <c>messages.getChatModerators</c>.
     /// </summary>
-    public class ChatModeratorsResponse
+    public class ChatModerators
     {
         /// <summary>
         /// Gets or sets the ID of the chat owner/creator.

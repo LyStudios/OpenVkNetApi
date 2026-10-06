@@ -6,9 +6,9 @@ using OpenVkNetApi.Models.Users;
 namespace OpenVkNetApi.Models.Messages
 {
     /// <summary>
-    /// Represents the response returned by <c>messages.getChatPreview</c>.
+    /// Represents the chat preview details returned by <c>messages.getChatPreview</c>.
     /// </summary>
-    public class ChatPreviewResponse
+    public class ChatPreviewDetails
     {
         /// <summary>
         /// Gets or sets the chat preview details.

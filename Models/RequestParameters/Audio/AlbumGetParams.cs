@@ -13,13 +13,13 @@ namespace OpenVkNetApi.Models.RequestParameters.Audio
         /// </summary>
         [ApiParameter("owner_id")]
         public int? OwnerId { get; set; } = 0;
-        
+
         /// <summary>
         /// Offset for pagination.
         /// </summary>
         [ApiParameter("offset")]
         public int? Offset { get; set; } = 0;
-        
+
         /// <summary>
         /// The number of albums to return.
         /// </summary>

@@ -105,7 +105,7 @@ namespace OpenVkNetApi.Models
         /// Information about the source of the post.
         /// </summary>
         [JsonProperty("post_source")]
-        public object PostSource { get; set; }
+        public PostSource PostSource { get; set; }
 
         /// <summary>
         /// Information about comments on the post.
@@ -129,19 +129,19 @@ namespace OpenVkNetApi.Models
         /// Copyright information for the post.
         /// </summary>
         [JsonProperty("copyright")]
-        public object Copyright { get; set; }
+        public string Copyright { get; set; }
 
         /// <summary>
         /// The ID of the user who signed the post (if applicable).
         /// </summary>
         [JsonProperty("signer_id")]
-        public object SignerId { get; set; }
+        public int? SignerId { get; set; }
 
         /// <summary>
         /// Indicates if this is the final post in a series.
         /// </summary>
         [JsonProperty("final_post")]
-        public object FinalPost { get; set; }
+        public int? FinalPost { get; set; }
 
         /// <summary>
         /// Geographic information attached to the post.
