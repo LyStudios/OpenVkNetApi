@@ -1,6 +1,6 @@
 <div class="vk-card">
 
-# Объект ChatPhotoResponse (Результат смены аватара беседы)
+# Объект ChatPhotoResult (Результат смены аватара беседы)
 
 Возвращается при установке или удалении фотографии беседы (`messages.setChatPhoto`, `messages.deleteChatPhoto`).
 

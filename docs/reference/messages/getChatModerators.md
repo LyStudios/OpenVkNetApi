@@ -7,7 +7,7 @@
 # Вызов метода
 
 ```csharp
-ChatModeratorsResponse moderators = await api.Messages.GetChatModeratorsAsync(
+ChatModerators moderators = await api.Messages.GetChatModeratorsAsync(
     chatId: 1
 );
 ```
@@ -28,6 +28,6 @@ ChatModeratorsResponse moderators = await api.Messages.GetChatModeratorsAsync(
 
 # Результат
 
-Возвращает объект `ChatModeratorsResponse`, содержащий идентификатор создателя `OwnerId` и список ID модераторов `Moderators`.
+Возвращает объект `ChatModerators`, содержащий идентификатор создателя `OwnerId` и список ID модераторов `Moderators`.
 
 </div>

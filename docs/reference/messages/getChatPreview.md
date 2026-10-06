@@ -7,7 +7,7 @@
 # Вызов метода
 
 ```csharp
-ChatPreviewResponse preview = await api.Messages.GetChatPreviewAsync(
+ChatPreviewDetails preview = await api.Messages.GetChatPreviewAsync(
     link: "https://openvk.su/messages?act=join_chat&chat=..."
 );
 ```
@@ -29,6 +29,6 @@ ChatPreviewResponse preview = await api.Messages.GetChatPreviewAsync(
 
 # Результат
 
-Возвращает `ChatPreviewResponse`, содержащий превью беседы `Preview` (`ChatPreview`), список профилей участников `Profiles` и сообществ `Groups`.
+Возвращает `ChatPreviewDetails`, содержащий превью беседы `Preview` (`ChatPreview`), список профилей участников `Profiles` и сообществ `Groups`.
 
 </div>

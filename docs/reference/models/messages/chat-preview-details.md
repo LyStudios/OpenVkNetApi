@@ -1,6 +1,6 @@
 <div class="vk-card">
 
-# Объект ChatPreviewResponse (Ответ предпросмотра беседы)
+# Объект ChatPreviewDetails (Предпросмотр беседы)
 
 Возвращается методом `messages.getChatPreview`.
 

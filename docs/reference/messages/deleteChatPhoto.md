@@ -7,7 +7,7 @@
 # Вызов метода
 
 ```csharp
-ChatPhotoResponse result = await api.Messages.DeleteChatPhotoAsync(
+ChatPhotoResult result = await api.Messages.DeleteChatPhotoAsync(
     chatId: 1
 );
 ```
@@ -28,6 +28,6 @@ ChatPhotoResponse result = await api.Messages.DeleteChatPhotoAsync(
 
 # Результат
 
-Возвращает `ChatPhotoResponse`, содержащий идентификатор служебного сообщения `MessageId` и объект беседы `Chat`.
+Возвращает `ChatPhotoResult`, содержащий идентификатор служебного сообщения `MessageId` и объект беседы `Chat`.
 
 </div>

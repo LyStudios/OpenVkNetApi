@@ -1,6 +1,6 @@
 <div class="vk-card">
 
-# Объект ChatModeratorsResponse (Модераторы беседы)
+# Объект ChatModerators (Модераторы беседы)
 
 Возвращается методом `messages.getChatModerators` и содержит список модераторов и создателя беседы.
 

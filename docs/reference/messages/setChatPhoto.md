@@ -7,7 +7,7 @@
 # Вызов метода
 
 ```csharp
-ChatPhotoResponse result = await api.Messages.SetChatPhotoAsync(
+ChatPhotoResult result = await api.Messages.SetChatPhotoAsync(
     file: "{\"response\":\"...\"}"
 );
 ```
@@ -28,6 +28,6 @@ ChatPhotoResponse result = await api.Messages.SetChatPhotoAsync(
 
 # Результат
 
-Возвращает `ChatPhotoResponse`, содержащий идентификатор служебного сообщения `MessageId` и объект обновленного чата `Chat`.
+Возвращает `ChatPhotoResult`, содержащий идентификатор служебного сообщения `MessageId` и объект обновленного чата `Chat`.
 
 </div>
