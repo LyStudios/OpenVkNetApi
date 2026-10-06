@@ -118,5 +118,50 @@ namespace OpenVkNetApi.Models.Enums
         /// </summary>
         [Description("is_advertiser")]
         IsAdvertiser = 1 << 20,
+        /// <summary>
+        /// The group's main wiki page name.
+        /// </summary>
+        [Description("wiki_page")]
+        WikiPage = 1 << 21,
+        /// <summary>
+        /// The group's status or short description.
+        /// </summary>
+        [Description("status")]
+        Status = 1 << 22,
+        /// <summary>
+        /// The group's city ID.
+        /// </summary>
+        [Description("city")]
+        City = 1 << 23,
+        /// <summary>
+        /// The group's country ID.
+        /// </summary>
+        [Description("country")]
+        Country = 1 << 24,
+        /// <summary>
+        /// The ID of the group's avatar photo.
+        /// </summary>
+        [Description("photo_id")]
+        PhotoId = 1 << 25,
+        /// <summary>
+        /// The real group ID in the system.
+        /// </summary>
+        [Description("real_id")]
+        RealId = 1 << 26,
+        /// <summary>
+        /// The group's content counters (topics, photos, videos, etc.).
+        /// </summary>
+        [Description("counters")]
+        Counters = 1 << 27,
+        /// <summary>
+        /// Event start date (if event).
+        /// </summary>
+        [Description("start_date")]
+        StartDate = 1 << 28,
+        /// <summary>
+        /// Event finish date (if event).
+        /// </summary>
+        [Description("finish_date")]
+        FinishDate = 1 << 29,
     }
 }
