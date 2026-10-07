@@ -14,13 +14,13 @@ namespace OpenVkNetApi.Models.Messages
         /// The unique identifier of the message.
         /// </summary>
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Unique conversation-specific message identifier.
         /// </summary>
         [JsonProperty("conversation_message_id")]
-        public int? ConversationMessageId { get; set; }
+        public long? ConversationMessageId { get; set; }
 
         /// <summary>
         /// Indicates whether the message has been pinned.
@@ -45,20 +45,20 @@ namespace OpenVkNetApi.Models.Messages
         /// associated with the message.
         /// </summary>
         [JsonProperty("user_id")]
-        public int? UserId { get; set; }
+        public long? UserId { get; set; }
 
         /// <summary>
         /// The peer identifier (user ID, chat ID, or community ID)
         /// associated with the message.
         /// </summary>
         [JsonProperty("peer_id")]
-        public int? PeerId { get; set; }
+        public long? PeerId { get; set; }
 
         /// <summary>
         /// The identifier of the user or community that sent the message.
         /// </summary>
         [JsonProperty("from_id")]
-        public int? FromId { get; set; }
+        public long? FromId { get; set; }
 
         /// <summary>
         /// The date and time when the message was sent,
@@ -138,6 +138,6 @@ namespace OpenVkNetApi.Models.Messages
         /// A unique identifier used to prevent duplicate message sending.
         /// </summary>
         [JsonProperty("random_id")]
-        public int? RandomId { get; set; }
+        public long? RandomId { get; set; }
     }
 }

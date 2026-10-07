@@ -24,19 +24,19 @@ namespace OpenVkNetApi.Models.RequestParameters.Messages
         /// User ID. Use 'peer_id' instead if possible.
         /// </summary>
         [ApiParameter("user_id")]
-        public int UserId { get; set; } = -1;
+        public long UserId { get; set; } = -1;
 
         /// <summary>
         /// Peer ID.
         /// </summary>
         [ApiParameter("peer_id")]
-        public int PeerId { get; set; } = -1;
+        public long PeerId { get; set; } = -1;
 
         /// <summary>
         /// Start message ID. Messages will be returned starting from this ID.
         /// </summary>
         [ApiParameter("start_message_id")]
-        public int StartMessageId { get; set; } = 0;
+        public long StartMessageId { get; set; } = 0;
 
         /// <summary>
         /// True to return messages in reverse chronological order.

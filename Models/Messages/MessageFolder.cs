@@ -48,6 +48,6 @@ namespace OpenVkNetApi.Models.Messages
         /// Random ID associated with the folder.
         /// </summary>
         [JsonProperty("random_id")]
-        public int RandomId { get; set; }
+        public long? RandomId { get; set; }
     }
 }
