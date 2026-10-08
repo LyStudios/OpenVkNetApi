@@ -30,13 +30,13 @@ namespace OpenVkNetApi.Models.Messages
         /// Peer IDs included in this folder.
         /// </summary>
         [JsonProperty("included_peer_ids")]
-        public List<int> IncludedPeerIds { get; set; }
+        public List<long> IncludedPeerIds { get; set; }
 
         /// <summary>
         /// Included lists for this folder.
         /// </summary>
         [JsonProperty("included_lists")]
-        public List<int> IncludedLists { get; set; }
+        public List<long> IncludedLists { get; set; }
 
         /// <summary>
         /// Flags for folder attributes.

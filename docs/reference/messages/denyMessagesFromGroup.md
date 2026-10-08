@@ -20,7 +20,7 @@ int result = await api.Messages.DenyMessagesFromGroupAsync(
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **groupId** <br> `int` | Идентификатор сообщества. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **groupId** <br> `long` | Идентификатор сообщества. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
 
 </div>
 

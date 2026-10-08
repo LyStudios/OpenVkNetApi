@@ -7,8 +7,8 @@
 # Вызов метода
 
 ```csharp
-int chatId = await api.Messages.CreateChatAsync(
-    userIds: new[] { 1, 2, 3 },
+long chatId = await api.Messages.CreateChatAsync(
+    userIds: new long[] { 1, 2, 3 },
     title: "Беседа разработчиков"
 );
 ```
@@ -21,7 +21,7 @@ int chatId = await api.Messages.CreateChatAsync(
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **userIds** <br> `IEnumerable<int>` | Идентификаторы пользователей, которых необходимо включить в беседу. <br> <span style="color: var(--vp-c-text-3)">список целых чисел, обязательный параметр</span> |
+| **userIds** <br> `IEnumerable<long>` | Идентификаторы пользователей, которых необходимо включить в беседу. <br> <span style="color: var(--vp-c-text-3)">список целых чисел, обязательный параметр</span> |
 | **title** <br> `string` | Название создаваемой беседы. <br> <span style="color: var(--vp-c-text-3)">строка</span> |
 
 </div>

@@ -21,7 +21,7 @@ int result = await api.Messages.MarkAsAnsweredConversationAsync(
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **peerId** <br> `int` | Идентификатор диалога. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **peerId** <br> `long` | Идентификатор диалога. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
 | **answered** <br> `bool` | `true` — пометить отвеченным, `false` — пометить неотвеченным (по умолчанию true). <br> <span style="color: var(--vp-c-text-3)">логическое значение</span> |
 
 </div>

@@ -11,7 +11,7 @@ namespace OpenVkNetApi.Models.Messages
         /// Gets or sets the user ID.
         /// </summary>
         [JsonProperty("user_id")]
-        public int UserId { get; set; }
+        public long UserId { get; set; }
 
         /// <summary>
         /// Gets or sets the conversation local message ID up to which the user has read.

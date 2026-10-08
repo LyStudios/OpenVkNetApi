@@ -22,7 +22,7 @@ int result = await api.Messages.RestoreAsync(messageId: 12);
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **messageId** <br> `int` | Идентификатор восстанавливаемого сообщения. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **messageId** <br> `long` | Идентификатор восстанавливаемого сообщения. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
 
 </div>
 

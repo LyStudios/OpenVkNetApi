@@ -10,12 +10,12 @@ namespace OpenVkNetApi.Events
         /// <summary>
         /// Gets the local chat ID.
         /// </summary>
-        public int ChatId { get; }
+        public long ChatId { get; }
 
         /// <summary>
         /// Gets the peer ID of the conversation.
         /// </summary>
-        public int PeerId { get; }
+        public long PeerId { get; }
 
         /// <summary>
         /// Gets the change type ID (1: title, 2: photo, 3: admin, 5: pin, 6: join, 7: leave, 8: kick).
@@ -30,7 +30,7 @@ namespace OpenVkNetApi.Events
         /// <summary>
         /// Initializes a new instance of the <see cref="ChatChangeEventArgs"/> class.
         /// </summary>
-        public ChatChangeEventArgs(int chatId, int peerId, int typeId, bool self)
+        public ChatChangeEventArgs(long chatId, long peerId, int typeId, bool self)
         {
             ChatId = chatId;
             PeerId = peerId;

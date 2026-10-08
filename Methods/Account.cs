@@ -235,7 +235,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="sound">1 to enable sound, 0 to disable sound.</param>
         /// <param name="cancellationToken">A cancellation token for the operation.</param>
         /// <returns>An integer representing the API's success code (usually 1 on success).</returns>
-        public Task<int> SetSilenceModeAsync(string token, int time = 0, int peerId = 0, int sound = 0, CancellationToken cancellationToken = default)
+        public Task<int> SetSilenceModeAsync(string token, int time = 0, long peerId = 0, int sound = 0, CancellationToken cancellationToken = default)
         {
             var parameters = new RequestParams()
                 .Add("token", token)
@@ -264,7 +264,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="peerId">Destination ID (peer) to get settings for.</param>
         /// <param name="cancellationToken">A cancellation token for the operation.</param>
         /// <returns>An <see cref="AccountPushSettings"/> object.</returns>
-        public Task<AccountPushSettings> GetPushSettingsAsync(string token = "", int peerId = 0, CancellationToken cancellationToken = default)
+        public Task<AccountPushSettings> GetPushSettingsAsync(string token = "", long peerId = 0, CancellationToken cancellationToken = default)
         {
             var parameters = new RequestParams()
                 .Add("token", token)

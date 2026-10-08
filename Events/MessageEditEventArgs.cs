@@ -10,12 +10,12 @@ namespace OpenVkNetApi.Events
         /// <summary>
         /// Gets the ID of the edited message.
         /// </summary>
-        public int MessageId { get; }
+        public long MessageId { get; }
 
         /// <summary>
         /// Gets the conversation peer ID.
         /// </summary>
-        public int PeerId { get; }
+        public long PeerId { get; }
 
         /// <summary>
         /// Gets the updated text of the message.
@@ -35,7 +35,7 @@ namespace OpenVkNetApi.Events
         /// <summary>
         /// Initializes a new instance of the <see cref="MessageEditEventArgs"/> class.
         /// </summary>
-        public MessageEditEventArgs(int messageId, int peerId, string text, long date, int flags)
+        public MessageEditEventArgs(long messageId, long peerId, string text, long date, int flags)
         {
             MessageId = messageId;
             PeerId = peerId;

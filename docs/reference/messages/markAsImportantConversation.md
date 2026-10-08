@@ -21,7 +21,7 @@ int result = await api.Messages.MarkAsImportantConversationAsync(
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **peerId** <br> `int` | Идентификатор диалога или беседы. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **peerId** <br> `long` | Идентификатор диалога или беседы. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
 | **important** <br> `bool` | `true` — отметить как важный диалог, `false` — снять отметку (по умолчанию true). <br> <span style="color: var(--vp-c-text-3)">логическое значение</span> |
 
 </div>

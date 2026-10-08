@@ -21,8 +21,8 @@ bool isAllowed = await api.Messages.IsMessagesFromGroupAllowedAsync(
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **groupId** <br> `int` | Идентификатор сообщества. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
-| **userId** <br> `int?` | Идентификатор проверяемого пользователя (по умолчанию текущий пользователь). <br> <span style="color: var(--vp-c-text-3)">целое число</span> |
+| **groupId** <br> `long` | Идентификатор сообщества. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **userId** <br> `long?` | Идентификатор проверяемого пользователя (по умолчанию текущий пользователь). <br> <span style="color: var(--vp-c-text-3)">целое число</span> |
 
 </div>
 

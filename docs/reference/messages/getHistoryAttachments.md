@@ -22,7 +22,7 @@ ExtendedCollection<HistoryAttachmentItem> attachments = await api.Messages.GetHi
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **peerId** <br> `int` | Идентификатор диалога/беседы. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **peerId** <br> `long` | Идентификатор диалога/беседы. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
 | **mediaType** <br> `string` | Тип искомых вложений (`"photo"`, `"video"`, `"audio"`, `"doc"`, `"link"`, `"market"`). По умолчанию `"photo"`. <br> <span style="color: var(--vp-c-text-3)">строка</span> |
 | **startFrom** <br> `string` | Курсор пагинации для получения следующей страницы результатов. <br> <span style="color: var(--vp-c-text-3)">строка</span> |
 | **count** <br> `int?` | Количество возвращаемых вложений (по умолчанию 30, максимум 200). <br> <span style="color: var(--vp-c-text-3)">целое число</span> |

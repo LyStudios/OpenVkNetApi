@@ -60,19 +60,32 @@ namespace OpenVkNetApi.Methods
         }
 
         /// <summary>
+        /// Returns a list of messages by their IDs.
+        /// </summary>
+        /// <param name="messageIds">A collection of message IDs.</param>
+        /// <param name="previewLength">The number of characters to return from the message text.</param>
+        /// <param name="extended">True to return extended information.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>A <see cref="Collection{Message}"/> of message objects.</returns>
+        public async Task<Collection<Message>> GetByIdAsync(IEnumerable<long> messageIds, int previewLength = 0, bool extended = false, CancellationToken ct = default)
+        {
+            return await GetByIdAsync(messageIds != null ? string.Join(",", messageIds) : "", previewLength, extended, ct);
+        }
+
+        /// <summary>
         /// Sends a message.
         /// </summary>
         /// <param name="params">Parameters for the message.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>The ID of the sent message, or an array of IDs if multiple recipients were specified.</returns>
-        public async Task<List<int>> SendAsync(MessagesSendParams @params, CancellationToken ct = default)
+        public async Task<List<long>> SendAsync(MessagesSendParams @params, CancellationToken ct = default)
         {
             var result = await PostAsync<JToken>("send", @params, ct);
 
             if (result.Type == JTokenType.Array)
-                return result.ToObject<List<int>>();
+                return result.ToObject<List<long>>();
 
-            return new List<int> { result.ToObject<int>() };
+            return new List<long> { result.ToObject<long>() };
         }
 
         /// <summary>
@@ -94,12 +107,25 @@ namespace OpenVkNetApi.Methods
         }
 
         /// <summary>
+        /// Deletes one or more messages.
+        /// </summary>
+        /// <param name="messageIds">A collection of message IDs to delete.</param>
+        /// <param name="spam">True to mark the messages as spam.</param>
+        /// <param name="deleteForAll">True to delete the messages for all recipients.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>A <see cref="Dictionary<string, int>"/> object with the results of the deletion.</returns>
+        public async Task<Dictionary<string, int>> DeleteAsync(IEnumerable<long> messageIds, bool spam = false, bool deleteForAll = false, CancellationToken ct = default)
+        {
+            return await DeleteAsync(messageIds != null ? string.Join(",", messageIds) : "", spam, deleteForAll, ct);
+        }
+
+        /// <summary>
         /// Restores a deleted message.
         /// </summary>
         /// <param name="messageId">The ID of the message to restore.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An integer representing the API's success code (usually <c>1</c> on success).</returns>
-        public async Task<int> RestoreAsync(int messageId, CancellationToken ct = default)
+        public async Task<int> RestoreAsync(long messageId, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("message_id", messageId)
@@ -139,6 +165,19 @@ namespace OpenVkNetApi.Methods
         }
 
         /// <summary>
+        /// Returns information about conversations by their IDs.
+        /// </summary>
+        /// <param name="peerIds">A collection of peer IDs.</param>
+        /// <param name="extended">True to return extended information.</param>
+        /// <param name="fields">A list of additional profile fields to return.</param>
+        /// <param name="ct">A cancellation token for the operation.</param>
+        /// <returns>An <see cref="ExtendedCollection{Conversation}"/> containing conversations.</returns>
+        public async Task<ExtendedCollection<Conversation>> GetConversationsByIdAsync(IEnumerable<long> peerIds, bool extended = false, UserFields fields = UserFields.None, CancellationToken ct = default)
+        {
+            return await GetConversationsByIdAsync(peerIds != null ? string.Join(",", peerIds) : "", extended, fields, ct);
+        }
+
+        /// <summary>
         /// Returns a list of messages from a conversation's history.
         /// </summary>
         /// <param name="params">Parameters for the request.</param>
@@ -168,7 +207,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID (if for a community).</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="LongPollServerInfo"/> object with connection data.</returns>
-        public async Task<LongPollServerInfo> GetLongPollServerAsync(int needPts = 1, int lpVersion = 3, int? groupId = null, CancellationToken ct = default)
+        public async Task<LongPollServerInfo> GetLongPollServerAsync(int needPts = 1, int lpVersion = 3, long? groupId = null, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("need_pts", needPts)
@@ -198,12 +237,12 @@ namespace OpenVkNetApi.Methods
         /// <param name="peerId">The ID of the peer conversation.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An integer representing the API's success code (usually 1 on success).</returns>
-        public async Task<int> SetActivityAsync(int userId = 0, string type = "typing", int peerId = 0, CancellationToken ct = default)
+        public async Task<int> SetActivityAsync(long userId = 0, string type = "typing", long peerId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
-                .Add("user_id", userId)
+                .Add("user_id", userId != 0 ? userId : (long?)null)
                 .Add("type", type)
-                .Add("peer_id", peerId)
+                .Add("peer_id", peerId != 0 ? peerId : (long?)null)
                 .ToDictionary();
 
             return await PostAsync<int>("setActivity", parameters, ct);
@@ -217,15 +256,15 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID (if called on behalf of a community).</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>The ID of the created chat.</returns>
-        public async Task<int> CreateChatAsync(string title, IEnumerable<int> userIds = null, int groupId = 0, CancellationToken ct = default)
+        public async Task<long> CreateChatAsync(string title, IEnumerable<long> userIds = null, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("title", title)
                 .Add("user_ids", userIds != null ? string.Join(",", userIds) : null)
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
-            return await PostAsync<int>("createChat", parameters, ct);
+            return await PostAsync<long>("createChat", parameters, ct);
         }
 
         /// <summary>
@@ -237,13 +276,13 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="Chat"/> object.</returns>
-        public async Task<Chat> GetChatAsync(int chatId, bool extended = false, UserFields fields = UserFields.None, int groupId = 0, CancellationToken ct = default)
+        public async Task<Chat> GetChatAsync(long chatId, bool extended = false, UserFields fields = UserFields.None, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("chat_id", chatId)
                 .Add("extended", extended ? 1 : 0)
                 .Add("fields", EnumHelper.GetEnumFlagsDescription(fields))
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await GetAsync<Chat>("getChat", parameters, ct);
@@ -258,13 +297,13 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A list of <see cref="Chat"/> objects.</returns>
-        public async Task<List<Chat>> GetChatAsync(IEnumerable<int> chatIds, bool extended = false, UserFields fields = UserFields.None, int groupId = 0, CancellationToken ct = default)
+        public async Task<List<Chat>> GetChatAsync(IEnumerable<long> chatIds, bool extended = false, UserFields fields = UserFields.None, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("chat_ids", chatIds != null ? string.Join(",", chatIds) : "")
                 .Add("extended", extended ? 1 : 0)
                 .Add("fields", EnumHelper.GetEnumFlagsDescription(fields))
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await GetAsync<List<Chat>>("getChat", parameters, ct);
@@ -279,13 +318,13 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A list of <see cref="User"/> objects.</returns>
-        public async Task<List<User>> GetChatUsersAsync(int chatId, UserFields fields = UserFields.None, string nameCase = "nom", int groupId = 0, CancellationToken ct = default)
+        public async Task<List<User>> GetChatUsersAsync(long chatId, UserFields fields = UserFields.None, string nameCase = "nom", long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("chat_id", chatId)
                 .Add("fields", EnumHelper.GetEnumFlagsDescription(fields))
                 .Add("name_case", nameCase)
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await GetAsync<List<User>>("getChatUsers", parameters, ct);
@@ -300,13 +339,13 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An integer representing the API's success code (usually 1 on success).</returns>
-        public async Task<int> AddChatUserAsync(int chatId, int userId, int peerId = 0, int groupId = 0, CancellationToken ct = default)
+        public async Task<int> AddChatUserAsync(long chatId, long userId, long peerId = 0, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
-                .Add("chat_id", chatId)
+                .Add("chat_id", chatId != 0 ? chatId : (long?)null)
                 .Add("user_id", userId)
-                .Add("peer_id", peerId > 0 ? peerId : (int?)null)
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("peer_id", peerId != 0 ? peerId : (long?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await PostAsync<int>("addChatUser", parameters, ct);
@@ -321,13 +360,13 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An integer representing the API's success code (usually 1 on success).</returns>
-        public async Task<int> RemoveChatUserAsync(int chatId, int userId, int peerId = 0, int groupId = 0, CancellationToken ct = default)
+        public async Task<int> RemoveChatUserAsync(long chatId, long userId, long peerId = 0, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
-                .Add("chat_id", chatId)
+                .Add("chat_id", chatId != 0 ? chatId : (long?)null)
                 .Add("user_id", userId)
-                .Add("peer_id", peerId > 0 ? peerId : (int?)null)
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("peer_id", peerId != 0 ? peerId : (long?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await PostAsync<int>("removeChatUser", parameters, ct);
@@ -340,7 +379,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="title">The new title of the chat.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An integer representing the API's success code (usually 1 on success).</returns>
-        public async Task<int> EditChatAsync(int chatId, string title, CancellationToken ct = default)
+        public async Task<int> EditChatAsync(long chatId, string title, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("chat_id", chatId)
@@ -358,7 +397,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="hash">The upload hash parameter.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="ChatPhotoResult"/> with updated chat data.</returns>
-        public async Task<ChatPhotoResult> SetChatPhotoAsync(int chatId, string file, string hash, CancellationToken ct = default)
+        public async Task<ChatPhotoResult> SetChatPhotoAsync(long chatId, string file, string hash, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("chat_id", chatId)
@@ -375,10 +414,11 @@ namespace OpenVkNetApi.Methods
         /// <param name="chatId">The chat ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="ChatPhotoResult"/> with updated chat data.</returns>
-        public async Task<ChatPhotoResult> DeleteChatPhotoAsync(int chatId, CancellationToken ct = default)
+        public async Task<ChatPhotoResult> DeleteChatPhotoAsync(long chatId, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("chat_id", chatId)
+                .Add("deleteChatPhoto", 1)
                 .ToDictionary();
 
             return await PostAsync<ChatPhotoResult>("deleteChatPhoto", parameters, ct);
@@ -393,13 +433,13 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>The invite link URL string.</returns>
-        public async Task<string> GetInviteLinkAsync(int peerId = 0, int chatId = 0, bool reset = false, int groupId = 0, CancellationToken ct = default)
+        public async Task<string> GetInviteLinkAsync(long peerId = 0, long chatId = 0, bool reset = false, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
-                .Add("peer_id", peerId > 0 ? peerId : (int?)null)
-                .Add("chat_id", chatId > 0 ? chatId : (int?)null)
+                .Add("peer_id", peerId != 0 ? peerId : (long?)null)
+                .Add("chat_id", chatId != 0 ? chatId : (long?)null)
                 .Add("reset", reset ? 1 : 0)
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             var res = await GetAsync<JObject>("getInviteLink", parameters, ct);
@@ -415,12 +455,12 @@ namespace OpenVkNetApi.Methods
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="ChatPreviewDetails"/> containing chat preview data.</returns>
         [AllowAnonymous]
-        public async Task<ChatPreviewDetails> GetChatPreviewAsync(string link, UserFields fields = UserFields.None, int groupId = 0, CancellationToken ct = default)
+        public async Task<ChatPreviewDetails> GetChatPreviewAsync(string link, UserFields fields = UserFields.None, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("link", link)
                 .Add("fields", EnumHelper.GetEnumFlagsDescription(fields))
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await GetAsync<ChatPreviewDetails>("getChatPreview", parameters, ct);
@@ -433,15 +473,15 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>The ID of the joined chat.</returns>
-        public async Task<int> JoinChatByInviteLinkAsync(string link, int groupId = 0, CancellationToken ct = default)
+        public async Task<long> JoinChatByInviteLinkAsync(string link, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("link", link)
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             var res = await PostAsync<JObject>("joinChatByInviteLink", parameters, ct);
-            return res?["chat_id"]?.Value<int>() ?? 0;
+            return res?["chat_id"]?.Value<long>() ?? 0;
         }
 
         /// <summary>
@@ -451,7 +491,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="topicId">The discussion topic ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>The ID of the joined chat.</returns>
-        public async Task<int> JoinChatByTopicAsync(int groupId, int topicId, CancellationToken ct = default)
+        public async Task<long> JoinChatByTopicAsync(long groupId, long topicId, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("group_id", groupId)
@@ -460,9 +500,9 @@ namespace OpenVkNetApi.Methods
 
             var res = await PostAsync<JToken>("joinChatByTopic", parameters, ct);
             if (res is JObject obj && obj["chat_id"] != null)
-                return obj["chat_id"].Value<int>();
+                return obj["chat_id"].Value<long>();
 
-            return res?.Value<int>() ?? 1;
+            return res?.Value<long>() ?? 1;
         }
 
         /// <summary>
@@ -474,13 +514,13 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An integer representing the API's success code (usually 1 on success).</returns>
-        public async Task<int> SetChatModeratorAsync(int userId, int peerId = 0, int chatId = 0, int groupId = 0, CancellationToken ct = default)
+        public async Task<int> SetChatModeratorAsync(long userId, long peerId = 0, long chatId = 0, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("user_id", userId)
-                .Add("peer_id", peerId > 0 ? peerId : (int?)null)
-                .Add("chat_id", chatId > 0 ? chatId : (int?)null)
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("peer_id", peerId != 0 ? peerId : (long?)null)
+                .Add("chat_id", chatId != 0 ? chatId : (long?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await PostAsync<int>("setChatModerator", parameters, ct);
@@ -495,13 +535,13 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An integer representing the API's success code (usually 1 on success).</returns>
-        public async Task<int> RemoveChatModeratorAsync(int userId, int peerId = 0, int chatId = 0, int groupId = 0, CancellationToken ct = default)
+        public async Task<int> RemoveChatModeratorAsync(long userId, long peerId = 0, long chatId = 0, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("user_id", userId)
-                .Add("peer_id", peerId > 0 ? peerId : (int?)null)
-                .Add("chat_id", chatId > 0 ? chatId : (int?)null)
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("peer_id", peerId != 0 ? peerId : (long?)null)
+                .Add("chat_id", chatId != 0 ? chatId : (long?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await PostAsync<int>("removeChatModerator", parameters, ct);
@@ -517,14 +557,14 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="ChatModerators"/> object.</returns>
-        public async Task<ChatModerators> GetChatModeratorsAsync(int peerId = 0, int chatId = 0, bool extended = false, UserFields fields = UserFields.None, int groupId = 0, CancellationToken ct = default)
+        public async Task<ChatModerators> GetChatModeratorsAsync(long peerId = 0, long chatId = 0, bool extended = false, UserFields fields = UserFields.None, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
-                .Add("peer_id", peerId > 0 ? peerId : (int?)null)
-                .Add("chat_id", chatId > 0 ? chatId : (int?)null)
+                .Add("peer_id", peerId != 0 ? peerId : (long?)null)
+                .Add("chat_id", chatId != 0 ? chatId : (long?)null)
                 .Add("extended", extended ? 1 : 0)
                 .Add("fields", EnumHelper.GetEnumFlagsDescription(fields))
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await GetAsync<ChatModerators>("getChatModerators", parameters, ct);
@@ -538,12 +578,12 @@ namespace OpenVkNetApi.Methods
         /// <param name="conversationMessageId">The conversation-specific message ID (cmid).</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>The pinned <see cref="Message"/> object.</returns>
-        public async Task<Message> PinAsync(int peerId, int messageId, int conversationMessageId = 0, CancellationToken ct = default)
+        public async Task<Message> PinAsync(long peerId, long messageId = 0, long conversationMessageId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("peer_id", peerId)
-                .Add("message_id", messageId)
-                .Add("conversation_message_id", conversationMessageId > 0 ? conversationMessageId : (int?)null)
+                .Add("message_id", messageId != 0 ? messageId : (long?)null)
+                .Add("conversation_message_id", conversationMessageId != 0 ? conversationMessageId : (long?)null)
                 .ToDictionary();
 
             return await PostAsync<Message>("pin", parameters, ct);
@@ -555,7 +595,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="peerId">The peer ID of the conversation.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An integer representing the API's success code (usually 1 on success).</returns>
-        public async Task<int> UnpinAsync(int peerId, CancellationToken ct = default)
+        public async Task<int> UnpinAsync(long peerId, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("peer_id", peerId)
@@ -574,14 +614,14 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An integer representing the API's success code (usually 1 on success).</returns>
-        public async Task<int> MarkAsReadAsync(IEnumerable<int> messageIds = null, int peerId = 0, int startMessageId = 0, bool markConversationAsRead = false, int groupId = 0, CancellationToken ct = default)
+        public async Task<int> MarkAsReadAsync(IEnumerable<long> messageIds = null, long peerId = 0, long startMessageId = 0, bool markConversationAsRead = false, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("message_ids", messageIds != null ? string.Join(",", messageIds) : null)
-                .Add("peer_id", peerId > 0 ? peerId : (int?)null)
-                .Add("start_message_id", startMessageId > 0 ? startMessageId : (int?)null)
+                .Add("peer_id", peerId != 0 ? peerId : (long?)null)
+                .Add("start_message_id", startMessageId != 0 ? startMessageId : (long?)null)
                 .Add("mark_conversation_as_read", markConversationAsRead ? 1 : 0)
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await PostAsync<int>("markAsRead", parameters, ct);
@@ -594,14 +634,14 @@ namespace OpenVkNetApi.Methods
         /// <param name="important">True to mark as important, false to unmark.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A list of message IDs that were marked.</returns>
-        public async Task<List<int>> MarkAsImportantAsync(IEnumerable<int> messageIds, bool important = true, CancellationToken ct = default)
+        public async Task<List<long>> MarkAsImportantAsync(IEnumerable<long> messageIds, bool important = true, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("message_ids", messageIds != null ? string.Join(",", messageIds) : "")
                 .Add("important", important ? 1 : 0)
                 .ToDictionary();
 
-            return await PostAsync<List<int>>("markAsImportant", parameters, ct);
+            return await PostAsync<List<long>>("markAsImportant", parameters, ct);
         }
 
         /// <summary>
@@ -615,12 +655,12 @@ namespace OpenVkNetApi.Methods
         /// <param name="fields">Profile fields to return.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An <see cref="ExtendedCollection{Message}"/> containing important messages.</returns>
-        public async Task<ExtendedCollection<Message>> GetImportantMessagesAsync(int count = 20, int offset = 0, int startMessageId = 0, int previewLength = 0, bool extended = false, UserFields fields = UserFields.None, CancellationToken ct = default)
+        public async Task<ExtendedCollection<Message>> GetImportantMessagesAsync(int count = 20, int offset = 0, long startMessageId = 0, int previewLength = 0, bool extended = false, UserFields fields = UserFields.None, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("count", count)
                 .Add("offset", offset)
-                .Add("start_message_id", startMessageId > 0 ? startMessageId : (int?)null)
+                .Add("start_message_id", startMessageId != 0 ? startMessageId : (long?)null)
                 .Add("preview_length", previewLength)
                 .Add("extended", extended ? 1 : 0)
                 .Add("fields", EnumHelper.GetEnumFlagsDescription(fields))
@@ -639,14 +679,14 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An <see cref="ExtendedCollection{Message}"/> containing messages.</returns>
-        public async Task<ExtendedCollection<Message>> GetByConversationMessageIdAsync(int peerId, IEnumerable<int> conversationMessageIds, bool extended = false, UserFields fields = UserFields.None, int groupId = 0, CancellationToken ct = default)
+        public async Task<ExtendedCollection<Message>> GetByConversationMessageIdAsync(long peerId, IEnumerable<long> conversationMessageIds, bool extended = false, UserFields fields = UserFields.None, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("peer_id", peerId)
                 .Add("conversation_message_ids", conversationMessageIds != null ? string.Join(",", conversationMessageIds) : "")
                 .Add("extended", extended ? 1 : 0)
                 .Add("fields", EnumHelper.GetEnumFlagsDescription(fields))
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await GetAsync<ExtendedCollection<Message>>("getByConversationMessageId", parameters, ct);
@@ -660,12 +700,12 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>The nearest <see cref="Message"/> object.</returns>
-        public async Task<Message> GetNearestMessageForDateAsync(int peerId, long date, int groupId = 0, CancellationToken ct = default)
+        public async Task<Message> GetNearestMessageForDateAsync(long peerId, long date, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("peer_id", peerId)
                 .Add("date", date)
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await GetAsync<Message>("getNearestMessageForDate", parameters, ct);
@@ -683,7 +723,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An <see cref="ExtendedCollection{HistoryAttachmentItem}"/> containing attachment items and pagination cursor.</returns>
-        public async Task<ExtendedCollection<HistoryAttachmentItem>> GetHistoryAttachmentsAsync(int peerId, string mediaType = "photo", string startFrom = "", int count = 30, bool photoSizes = false, UserFields fields = UserFields.None, int groupId = 0, CancellationToken ct = default)
+        public async Task<ExtendedCollection<HistoryAttachmentItem>> GetHistoryAttachmentsAsync(long peerId, string mediaType = "photo", string startFrom = "", int count = 30, bool photoSizes = false, UserFields fields = UserFields.None, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("peer_id", peerId)
@@ -692,7 +732,7 @@ namespace OpenVkNetApi.Methods
                 .Add("count", count)
                 .Add("photo_sizes", photoSizes ? 1 : 0)
                 .Add("fields", EnumHelper.GetEnumFlagsDescription(fields))
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await GetAsync<ExtendedCollection<HistoryAttachmentItem>>("getHistoryAttachments", parameters, ct);
@@ -712,18 +752,18 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An <see cref="ExtendedCollection{Message}"/> of found messages.</returns>
-        public async Task<ExtendedCollection<Message>> SearchAsync(string query, int peerId = 0, long? date = null, int previewLength = 0, int offset = 0, int count = 20, bool extended = false, UserFields fields = UserFields.None, int groupId = 0, CancellationToken ct = default)
+        public async Task<ExtendedCollection<Message>> SearchAsync(string query, long peerId = 0, long? date = null, int previewLength = 0, int offset = 0, int count = 20, bool extended = false, UserFields fields = UserFields.None, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("q", query)
-                .Add("peer_id", peerId > 0 ? peerId : (int?)null)
+                .Add("peer_id", peerId != 0 ? peerId : (long?)null)
                 .Add("date", date)
                 .Add("preview_length", previewLength)
                 .Add("offset", offset)
                 .Add("count", count)
                 .Add("extended", extended ? 1 : 0)
                 .Add("fields", EnumHelper.GetEnumFlagsDescription(fields))
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await GetAsync<ExtendedCollection<Message>>("search", parameters, ct);
@@ -739,14 +779,14 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An <see cref="ExtendedCollection{Conversation}"/> of found conversations.</returns>
-        public async Task<ExtendedCollection<Conversation>> SearchConversationsAsync(string query, int count = 20, bool extended = false, UserFields fields = UserFields.None, int groupId = 0, CancellationToken ct = default)
+        public async Task<ExtendedCollection<Conversation>> SearchConversationsAsync(string query, int count = 20, bool extended = false, UserFields fields = UserFields.None, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("q", query)
                 .Add("count", count)
                 .Add("extended", extended ? 1 : 0)
                 .Add("fields", EnumHelper.GetEnumFlagsDescription(fields))
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await GetAsync<ExtendedCollection<Conversation>>("searchConversations", parameters, ct);
@@ -760,12 +800,12 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An <see cref="ExtendedCollection{ConversationMember}"/> of conversation members.</returns>
-        public async Task<ExtendedCollection<ConversationMember>> GetConversationMembersAsync(int peerId, bool extended = false, int groupId = 0, CancellationToken ct = default)
+        public async Task<ExtendedCollection<ConversationMember>> GetConversationMembersAsync(long peerId, bool extended = false, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("peer_id", peerId)
                 .Add("extended", extended ? 1 : 0)
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await GetAsync<ExtendedCollection<ConversationMember>>("getConversationMembers", parameters, ct);
@@ -779,12 +819,12 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An integer representing the API's success code (usually 1 on success).</returns>
-        public async Task<int> MarkAsImportantConversationAsync(int peerId, bool important = true, int groupId = 0, CancellationToken ct = default)
+        public async Task<int> MarkAsImportantConversationAsync(long peerId, bool important = true, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("peer_id", peerId)
                 .Add("important", important ? 1 : 0)
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await PostAsync<int>("markAsImportantConversation", parameters, ct);
@@ -798,12 +838,12 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An integer representing the API's success code (usually 1 on success).</returns>
-        public async Task<int> MarkAsAnsweredConversationAsync(int peerId, bool answered = true, int groupId = 0, CancellationToken ct = default)
+        public async Task<int> MarkAsAnsweredConversationAsync(long peerId, bool answered = true, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("peer_id", peerId)
                 .Add("answered", answered ? 1 : 0)
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await PostAsync<int>("markAsAnsweredConversation", parameters, ct);
@@ -817,12 +857,12 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An integer representing the API's success code (usually 1 on success).</returns>
-        public async Task<int> DeleteConversationAsync(int peerId, int userId = 0, int groupId = 0, CancellationToken ct = default)
+        public async Task<int> DeleteConversationAsync(long peerId, long userId = 0, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("peer_id", peerId)
-                .Add("user_id", userId > 0 ? userId : (int?)null)
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("user_id", userId != 0 ? userId : (long?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await PostAsync<int>("deleteConversation", parameters, ct);
@@ -835,7 +875,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="UserLastActivity"/> object.</returns>
         [AllowAnonymous]
-        public async Task<UserLastActivity> GetLastActivityAsync(int userId, CancellationToken ct = default)
+        public async Task<UserLastActivity> GetLastActivityAsync(long userId, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("user_id", userId)
@@ -855,15 +895,15 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An <see cref="ExtendedCollection{MessageViewer}"/> of message viewers.</returns>
-        public async Task<ExtendedCollection<MessageViewer>> GetMessageViewersAsync(int peerId, int conversationMessageId = 0, int messageId = 0, bool extended = false, UserFields fields = UserFields.None, int groupId = 0, CancellationToken ct = default)
+        public async Task<ExtendedCollection<MessageViewer>> GetMessageViewersAsync(long peerId, long conversationMessageId = 0, long messageId = 0, bool extended = false, UserFields fields = UserFields.None, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("peer_id", peerId)
-                .Add("conversation_message_id", conversationMessageId > 0 ? conversationMessageId : (int?)null)
-                .Add("message_id", messageId > 0 ? messageId : (int?)null)
+                .Add("conversation_message_id", conversationMessageId != 0 ? conversationMessageId : (long?)null)
+                .Add("message_id", messageId != 0 ? messageId : (long?)null)
                 .Add("extended", extended ? 1 : 0)
                 .Add("fields", EnumHelper.GetEnumFlagsDescription(fields))
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await GetAsync<ExtendedCollection<MessageViewer>>("getMessageViewers", parameters, ct);
@@ -879,7 +919,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An integer representing the API's success code (usually 1 on success).</returns>
-        public async Task<int> ReportAsync(int peerId, int messageId, string type = "spam", string comment = "", int? groupId = null, CancellationToken ct = default)
+        public async Task<int> ReportAsync(long peerId, long messageId, string type = "spam", string comment = "", long? groupId = null, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("peer_id", peerId)
@@ -898,10 +938,10 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>The number of unread messages.</returns>
-        public async Task<int> GetUnreadMessagesCountAsync(int groupId = 0, CancellationToken ct = default)
+        public async Task<int> GetUnreadMessagesCountAsync(long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             var res = await GetAsync<JObject>("getUnreadMessages", parameters, ct);
@@ -914,10 +954,10 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>The number of unread conversations.</returns>
-        public async Task<int> GetUnreadConversationsCountAsync(int groupId = 0, CancellationToken ct = default)
+        public async Task<int> GetUnreadConversationsCountAsync(long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             var res = await GetAsync<JObject>("getUnreadConversations", parameters, ct);
@@ -930,10 +970,10 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="JObject"/> containing user data.</returns>
-        public async Task<JObject> GetMeAsync(int groupId = 0, CancellationToken ct = default)
+        public async Task<JObject> GetMeAsync(long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await GetAsync<JObject>("getMe", parameters, ct);
@@ -946,7 +986,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="key">Optional verification key.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An integer representing the API's success code (usually 1 on success).</returns>
-        public async Task<int> AllowMessagesFromGroupAsync(int groupId, string key = "", CancellationToken ct = default)
+        public async Task<int> AllowMessagesFromGroupAsync(long groupId, string key = "", CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("group_id", groupId)
@@ -962,7 +1002,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">The group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>An integer representing the API's success code (usually 1 on success).</returns>
-        public async Task<int> DenyMessagesFromGroupAsync(int groupId, CancellationToken ct = default)
+        public async Task<int> DenyMessagesFromGroupAsync(long groupId, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("group_id", groupId)
@@ -978,11 +1018,11 @@ namespace OpenVkNetApi.Methods
         /// <param name="userId">The user ID to check.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns><c>true</c> if messages from the group are allowed; otherwise, <c>false</c>.</returns>
-        public async Task<bool> IsMessagesFromGroupAllowedAsync(int groupId, int userId = 0, CancellationToken ct = default)
+        public async Task<bool> IsMessagesFromGroupAllowedAsync(long groupId, long userId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("group_id", groupId)
-                .Add("user_id", userId > 0 ? userId : (int?)null)
+                .Add("user_id", userId != 0 ? userId : (long?)null)
                 .ToDictionary();
 
             var res = await GetAsync<JObject>("isMessagesFromGroupAllowed", parameters, ct);
@@ -999,12 +1039,12 @@ namespace OpenVkNetApi.Methods
         /// <param name="type">Type of the folder ("custom").</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>The ID of the created folder.</returns>
-        public async Task<int> CreateFolderAsync(string name, IEnumerable<int> includedPeerIds = null, string type = "custom", CancellationToken ct = default)
+        public async Task<int> CreateFolderAsync(string name, IEnumerable<long> includedPeerIds = null, string type = "custom", CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("name", name)
                 .Add("type", type)
-                .Add("included_peer_ids", includedPeerIds)
+                .Add("included_peer_ids", includedPeerIds != null ? string.Join(",", includedPeerIds) : null)
                 .ToDictionary();
 
             var res = await PostAsync<JObject>("createFolder", parameters, ct);
@@ -1044,13 +1084,13 @@ namespace OpenVkNetApi.Methods
         /// <summary>
         /// Updates a dialog folder.
         /// </summary>
-        public async Task<bool> UpdateFolderAsync(int folderId, string name = null, IEnumerable<int> addPeerIds = null, IEnumerable<int> removePeerIds = null, CancellationToken ct = default)
+        public async Task<bool> UpdateFolderAsync(int folderId, string name = null, IEnumerable<long> addPeerIds = null, IEnumerable<long> removePeerIds = null, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("folder_id", folderId)
                 .Add("name", name)
-                .Add("add_included_peer_ids", addPeerIds)
-                .Add("remove_included_peer_ids", removePeerIds)
+                .Add("add_included_peer_ids", addPeerIds != null ? string.Join(",", addPeerIds) : null)
+                .Add("remove_included_peer_ids", removePeerIds != null ? string.Join(",", removePeerIds) : null)
                 .ToDictionary();
 
             var res = await PostAsync<int>("updateFolder", parameters, ct);
@@ -1121,15 +1161,15 @@ namespace OpenVkNetApi.Methods
         /// <summary>
         /// Changes a participant's role in a group chat (e.g., "admin" or "member").
         /// </summary>
-        public async Task<bool> SetMemberRoleAsync(int peerId, int memberId, string role, int chatId = 0, int groupId = 0, CancellationToken ct = default)
+        public async Task<bool> SetMemberRoleAsync(long peerId, long memberId, string role, long chatId = 0, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("peer_id", peerId)
                 .Add("member_id", memberId)
                 .Add("user_id", memberId)
                 .Add("role", role)
-                .Add("chat_id", chatId > 0 ? chatId : (int?)null)
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("chat_id", chatId != 0 ? chatId : (long?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             var res = await PostAsync<int>("setMemberRole", parameters, ct);
@@ -1157,7 +1197,7 @@ namespace OpenVkNetApi.Methods
         /// <summary>
         /// Returns chat avatar photo history.
         /// </summary>
-        public async Task<Collection<Photo>> GetChatAvatarHistoryAsync(int chatId, CancellationToken ct = default)
+        public async Task<Collection<Photo>> GetChatAvatarHistoryAsync(long chatId, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("chat_id", chatId)
@@ -1219,11 +1259,11 @@ namespace OpenVkNetApi.Methods
         /// <summary>
         /// Returns diff content payload.
         /// </summary>
-        public async Task<List<ConversationDiffInfo>> GetDiffContentAsync(int nestedLimit = 0, int groupId = 0, CancellationToken ct = default)
+        public async Task<List<ConversationDiffInfo>> GetDiffContentAsync(int nestedLimit = 0, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("nested_limit", nestedLimit)
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             var res = await GetAsync<JObject>("getDiffContent", parameters, ct);
@@ -1249,11 +1289,11 @@ namespace OpenVkNetApi.Methods
         /// <summary>
         /// Returns list of recent calls.
         /// </summary>
-        public async Task<ExtendedCollection<CallItem>> GetRecentCallsAsync(int count = 20, int startMessageId = 0, UserFields fields = UserFields.None, bool extended = false, CancellationToken ct = default)
+        public async Task<ExtendedCollection<CallItem>> GetRecentCallsAsync(int count = 20, long startMessageId = 0, UserFields fields = UserFields.None, bool extended = false, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("count", count)
-                .Add("start_message_id", startMessageId > 0 ? startMessageId : (int?)null)
+                .Add("start_message_id", startMessageId != 0 ? startMessageId : (long?)null)
                 .Add("fields", fields)
                 .Add("extended", extended ? 1 : 0)
                 .ToDictionary();
@@ -1312,13 +1352,13 @@ namespace OpenVkNetApi.Methods
         /// <summary>
         /// Searches dialogs matching the specified query.
         /// </summary>
-        public async Task<List<ConversationAndMessage>> SearchDialogsAsync(string query, int limit = 20, UserFields fields = UserFields.None, int groupId = 0, CancellationToken ct = default)
+        public async Task<List<ConversationAndMessage>> SearchDialogsAsync(string query, int limit = 20, UserFields fields = UserFields.None, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("q", query)
                 .Add("limit", limit)
                 .Add("fields", fields)
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await GetAsync<List<ConversationAndMessage>>("searchDialogs", parameters, ct);
@@ -1327,15 +1367,15 @@ namespace OpenVkNetApi.Methods
         /// <summary>
         /// Deletes all messages in a dialog (legacy alias for deleteConversation).
         /// </summary>
-        public async Task<bool> DeleteDialogAsync(int peerId = 0, int userId = 0, int offset = 0, int count = 0, int groupId = 0, int chatId = 0, CancellationToken ct = default)
+        public async Task<bool> DeleteDialogAsync(long peerId = 0, long userId = 0, int offset = 0, int count = 0, long groupId = 0, long chatId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
-                .Add("peer_id", peerId > 0 ? peerId : (int?)null)
-                .Add("user_id", userId > 0 ? userId : (int?)null)
+                .Add("peer_id", peerId != 0 ? peerId : (long?)null)
+                .Add("user_id", userId != 0 ? userId : (long?)null)
                 .Add("offset", offset > 0 ? offset : (int?)null)
                 .Add("count", count > 0 ? count : (int?)null)
-                .Add("group_id", groupId > 0 ? groupId : (int?)null)
-                .Add("chat_id", chatId > 0 ? chatId : (int?)null)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
+                .Add("chat_id", chatId != 0 ? chatId : (long?)null)
                 .ToDictionary();
 
             var res = await PostAsync<int>("deleteDialog", parameters, ct);

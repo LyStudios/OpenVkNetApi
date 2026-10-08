@@ -20,7 +20,7 @@ int lastDeletedId = await api.Messages.DeleteConversationAsync(
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **peerId** <br> `int` | Идентификатор диалога/беседы, переписку в которой необходимо удалить. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **peerId** <br> `long` | Идентификатор диалога/беседы, переписку в которой необходимо удалить. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
 | **offset** <br> `int?` | Смещение относительно последнего сообщения. <br> <span style="color: var(--vp-c-text-3)">целое число</span> |
 | **count** <br> `int?` | Количество удаляемых сообщений (максимум 10000). <br> <span style="color: var(--vp-c-text-3)">целое число</span> |
 

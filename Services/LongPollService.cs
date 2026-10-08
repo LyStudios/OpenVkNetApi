@@ -21,7 +21,7 @@ namespace OpenVkNetApi.Services
         private LongPollServerInfo _lp;
         private CancellationTokenSource _internalCts;
 
-        private readonly HashSet<int> _recentIds = new HashSet<int>();
+        private readonly HashSet<long> _recentIds = new HashSet<long>();
         private const int MAX_CACHE = 1000;
 
         private bool _running;
@@ -356,7 +356,7 @@ namespace OpenVkNetApi.Services
 
         private void ProcessNewMessage(List<object> u)
         {
-            int msgId = SafeInt(u, 1);
+            long msgId = SafeLong(u, 1);
             if (msgId == 0) return;
 
             if (!_recentIds.Add(msgId))
@@ -365,7 +365,7 @@ namespace OpenVkNetApi.Services
             TrimCache();
 
             int flags = SafeInt(u, 2);
-            int peerId = SafeInt(u, 3);
+            long peerId = SafeLong(u, 3);
             long date = SafeLong(u, 4);
 
             string text = null;
@@ -378,16 +378,16 @@ namespace OpenVkNetApi.Services
                 text = s6;
             }
 
-            int fromId = peerId;
-            int cmid = 0;
+            long fromId = peerId;
+            long cmid = 0;
             if (u.Count > 9)
             {
-                cmid = SafeInt(u, 9);
+                cmid = SafeLong(u, 9);
             }
 
-            if (peerId > 2000000000)
+            if (peerId > 2000000000L)
             {
-                int extracted = ExtractFromId(u);
+                long extracted = ExtractFromId(u);
                 if (extracted != 0)
                 {
                     fromId = extracted;
@@ -401,7 +401,7 @@ namespace OpenVkNetApi.Services
                 FromId = fromId,
                 Date = date,
                 Text = text,
-                ConversationMessageId = cmid > 0 ? cmid : (int?)null,
+                ConversationMessageId = cmid > 0 ? cmid : (long?)null,
                 Out = (flags & 2) != 0 ? 1 : 0,
                 ReadState = (flags & 1) == 0 ? 1 : 0
             };
@@ -411,9 +411,9 @@ namespace OpenVkNetApi.Services
 
         private void ProcessMessageEdit(List<object> u)
         {
-            int msgId = SafeInt(u, 1);
+            long msgId = SafeLong(u, 1);
             int flags = SafeInt(u, 2);
-            int peerId = SafeInt(u, 3);
+            long peerId = SafeLong(u, 3);
             long date = SafeLong(u, 4);
             string text = u.Count > 5 ? u[5]?.ToString() : "";
 
@@ -422,15 +422,15 @@ namespace OpenVkNetApi.Services
 
         private void ProcessMessagesRead(List<object> u, bool isOutgoing)
         {
-            int peerId = SafeInt(u, 1);
-            int localId = SafeInt(u, 2);
+            long peerId = SafeLong(u, 1);
+            long localId = SafeLong(u, 2);
 
             OnMessagesRead?.Invoke(this, new MessagesReadEventArgs(peerId, localId, isOutgoing));
         }
 
         private void ProcessUserOnline(List<object> u)
         {
-            int userId = Math.Abs(SafeInt(u, 1));
+            long userId = Math.Abs(SafeLong(u, 1));
             int extra = SafeInt(u, 2);
             int platformId = extra & 0xFF;
             long timestamp = SafeLong(u, 3);
@@ -440,7 +440,7 @@ namespace OpenVkNetApi.Services
 
         private void ProcessUserOffline(List<object> u)
         {
-            int userId = Math.Abs(SafeInt(u, 1));
+            long userId = Math.Abs(SafeLong(u, 1));
             int flags = SafeInt(u, 2);
             long timestamp = SafeLong(u, 3);
 
@@ -449,24 +449,24 @@ namespace OpenVkNetApi.Services
 
         private void ProcessChatChangedUnknown(List<object> u)
         {
-            int chatId = SafeInt(u, 1);
+            long chatId = SafeLong(u, 1);
             bool self = SafeInt(u, 2) == 1;
 
-            OnChatChanged?.Invoke(this, new ChatChangeEventArgs(chatId, 2000000000 + chatId, 0, self));
+            OnChatChanged?.Invoke(this, new ChatChangeEventArgs(chatId, 2000000000L + chatId, 0, self));
         }
 
         private void ProcessChatChangedTyped(List<object> u)
         {
             int typeId = SafeInt(u, 1);
-            int peerId = SafeInt(u, 2);
-            int chatId = peerId > 2000000000 ? peerId - 2000000000 : peerId;
+            long peerId = SafeLong(u, 2);
+            long chatId = peerId > 2000000000L ? peerId - 2000000000L : peerId;
 
             OnChatChanged?.Invoke(this, new ChatChangeEventArgs(chatId, peerId, typeId, false));
         }
 
         private void ProcessUserTypingDm(List<object> u)
         {
-            int userId = SafeInt(u, 1);
+            long userId = SafeLong(u, 1);
             if (userId > 0)
             {
                 OnUserTyping?.Invoke(this, new UserTypingEventArgs(userId, userId, null, false));
@@ -475,11 +475,11 @@ namespace OpenVkNetApi.Services
 
         private void ProcessUserTypingChat(List<object> u)
         {
-            int userId = SafeInt(u, 1);
-            int chatId = SafeInt(u, 2);
+            long userId = SafeLong(u, 1);
+            long chatId = SafeLong(u, 2);
             if (userId > 0 && chatId > 0)
             {
-                int peerId = 2000000000 + chatId;
+                long peerId = 2000000000L + chatId;
                 OnUserTyping?.Invoke(this, new UserTypingEventArgs(userId, peerId, chatId, false));
             }
         }
@@ -488,11 +488,11 @@ namespace OpenVkNetApi.Services
         {
             if (u.Count < 3) return;
 
-            int peerId;
-            var userIds = new List<int>();
+            long peerId;
+            var userIds = new List<long>();
             ExtractUsersAndPeer(u, out peerId, userIds);
 
-            int? chatId = peerId > 2000000000 ? peerId - 2000000000 : (int?)null;
+            long? chatId = peerId > 2000000000L ? peerId - 2000000000L : (long?)null;
             foreach (var uid in userIds)
             {
                 if (uid > 0)
@@ -502,32 +502,32 @@ namespace OpenVkNetApi.Services
             }
         }
 
-        private static void ExtractUsersAndPeer(List<object> u, out int peerId, List<int> userIds)
+        private static void ExtractUsersAndPeer(List<object> u, out long peerId, List<long> userIds)
         {
             peerId = 0;
             if (u[1] is Newtonsoft.Json.Linq.JArray jArr1)
             {
                 foreach (var item in jArr1)
                 {
-                    if (int.TryParse(item?.ToString(), out int id))
+                    if (long.TryParse(item?.ToString(), out long id))
                         userIds.Add(id);
                 }
-                peerId = SafeInt(u, 2);
+                peerId = SafeLong(u, 2);
             }
             else if (u[2] is Newtonsoft.Json.Linq.JArray jArr2)
             {
-                peerId = SafeInt(u, 1);
+                peerId = SafeLong(u, 1);
                 foreach (var item in jArr2)
                 {
-                    if (int.TryParse(item?.ToString(), out int id))
+                    if (long.TryParse(item?.ToString(), out long id))
                         userIds.Add(id);
                 }
             }
             else
             {
-                int id1 = SafeInt(u, 1);
-                int id2 = SafeInt(u, 2);
-                if (id2 > 2000000000 || id2 < 0)
+                long id1 = SafeLong(u, 1);
+                long id2 = SafeLong(u, 2);
+                if (id2 > 2000000000L || id2 < 0)
                 {
                     peerId = id2;
                     if (id1 > 0) userIds.Add(id1);
@@ -547,18 +547,18 @@ namespace OpenVkNetApi.Services
             OnUnreadCountChanged?.Invoke(this, new UnreadCountEventArgs(count));
         }
 
-        private static int ExtractFromId(List<object> u)
+        private static long ExtractFromId(List<object> u)
         {
             for (int i = 6; i <= 7 && i < u.Count; i++)
             {
                 if (u[i] is Newtonsoft.Json.Linq.JObject jObj)
                 {
-                    if (jObj["from"] != null && int.TryParse(jObj["from"].ToString(), out int f))
+                    if (jObj["from"] != null && long.TryParse(jObj["from"].ToString(), out long f))
                         return f;
                 }
                 else if (u[i] is IDictionary<string, object> dict)
                 {
-                    if (dict.TryGetValue("from", out var fVal) && int.TryParse(fVal?.ToString(), out int f))
+                    if (dict.TryGetValue("from", out var fVal) && long.TryParse(fVal?.ToString(), out long f))
                         return f;
                 }
             }

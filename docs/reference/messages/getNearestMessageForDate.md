@@ -21,7 +21,7 @@ int messageId = await api.Messages.GetNearestMessageForDateAsync(
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **peerId** <br> `int` | Идентификатор диалога/беседы. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **peerId** <br> `long` | Идентификатор диалога/беседы. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
 | **date** <br> `long` | Unix timestamp целевой даты. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
 
 </div>

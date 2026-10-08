@@ -21,7 +21,7 @@ Collection<MessageViewer> viewers = await api.Messages.GetMessageViewersAsync(
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **peerId** <br> `int` | Идентификатор беседы. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **peerId** <br> `long` | Идентификатор беседы. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
 | **cmid** <br> `int?` | Номер сообщения в беседе (`conversation_message_id`). <br> <span style="color: var(--vp-c-text-3)">целое число</span> |
 | **messageId** <br> `int?` | Глобальный идентификатор сообщения. <br> <span style="color: var(--vp-c-text-3)">целое число</span> |
 | **count** <br> `int?` | Количество возвращаемых читателей (по умолчанию 20). <br> <span style="color: var(--vp-c-text-3)">целое число</span> |

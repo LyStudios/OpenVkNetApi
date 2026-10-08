@@ -11,7 +11,13 @@ namespace OpenVkNetApi.Models.RequestParameters.Messages
         /// The message ID to edit.
         /// </summary>
         [ApiParameter("message_id")]
-        public int MessageId { get; set; }
+        public long MessageId { get; set; }
+
+        /// <summary>
+        /// The conversation-specific message ID (cmid) to edit.
+        /// </summary>
+        [ApiParameter("conversation_message_id")]
+        public long? ConversationMessageId { get; set; }
 
         /// <summary>
         /// The new message text.
@@ -29,6 +35,6 @@ namespace OpenVkNetApi.Models.RequestParameters.Messages
         /// ID of the peer in the conversation.
         /// </summary>
         [ApiParameter("peer_id")]
-        public int PeerId { get; set; } = 0;
+        public long PeerId { get; set; } = 0;
     }
 }

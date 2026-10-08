@@ -42,12 +42,12 @@ namespace OpenVkNetApi.Models.Messages
         /// Gets or sets the IDs of currently active members in the chat.
         /// </summary>
         [JsonProperty("active_ids")]
-        public List<int> ActiveIds { get; set; }
+        public List<long> ActiveIds { get; set; }
 
         /// <summary>
         /// Gets or sets the admin/owner ID of the chat.
         /// </summary>
         [JsonProperty("admin_id")]
-        public int? AdminId { get; set; }
+        public long? AdminId { get; set; }
     }
 }

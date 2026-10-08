@@ -50,24 +50,24 @@ namespace OpenVkNetApi.Models.RequestParameters.Messages
         /// Specific user ID.
         /// </summary>
         [ApiParameter("user_id")]
-        public int? UserId { get; set; }
+        public long? UserId { get; set; }
 
         /// <summary>
         /// Specific peer ID.
         /// </summary>
         [ApiParameter("peer_id")]
-        public int? PeerId { get; set; }
+        public long? PeerId { get; set; }
 
         /// <summary>
         /// Specific chat ID.
         /// </summary>
         [ApiParameter("chat_id")]
-        public int? ChatId { get; set; }
+        public long? ChatId { get; set; }
 
         /// <summary>
         /// Group ID (if called on behalf of a community).
         /// </summary>
         [ApiParameter("group_id")]
-        public int? GroupId { get; set; }
+        public long? GroupId { get; set; }
     }
 }

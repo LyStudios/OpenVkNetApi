@@ -33,8 +33,8 @@ int result = await api.Messages.EditAsync(parameters);
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **PeerId** <br> `int` | Идентификатор диалога/собеседника. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
-| **MessageId** <br> `int` | Идентификатор редактируемого сообщения. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **PeerId** <br> `long` | Идентификатор диалога/собеседника. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **MessageId** <br> `long` | Идентификатор редактируемого сообщения. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
 | **Message** <br> `string` | Новый текст сообщения. <br> <span style="color: var(--vp-c-text-3)">строка, обязательный параметр (если не переданы новые вложения)</span> |
 | **Attachment** <br> `string` | Новый список медиавложений, разделенных запятыми. <br> <span style="color: var(--vp-c-text-3)">строка, необязательный параметр</span> |
 

@@ -48,7 +48,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Messages
         /// ID of the message received before the current request.
         /// </summary>
         [ApiParameter("last_message_id")]
-        public int LastMessageId { get; set; } = 0;
+        public long LastMessageId { get; set; } = 0;
 
         /// <summary>
         /// 1 to return extended user and group profiles.
@@ -67,6 +67,6 @@ namespace OpenVkNetApi.Models.RequestParameters.Messages
         /// Group ID (if called on behalf of a community).
         /// </summary>
         [ApiParameter("group_id")]
-        public int? GroupId { get; set; }
+        public long? GroupId { get; set; }
     }
 }

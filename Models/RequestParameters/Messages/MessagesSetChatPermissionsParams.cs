@@ -11,13 +11,13 @@ namespace OpenVkNetApi.Models.RequestParameters.Messages
         /// Destination ID (group chat peer ID, 2000000000 + chat_id).
         /// </summary>
         [ApiParameter("peer_id")]
-        public int PeerId { get; set; }
+        public long PeerId { get; set; }
 
         /// <summary>
         /// Chat ID (if peer_id is not passed).
         /// </summary>
         [ApiParameter("chat_id")]
-        public int? ChatId { get; set; }
+        public long? ChatId { get; set; }
 
         /// <summary>
         /// Raw JSON permissions string or policy.
@@ -77,6 +77,6 @@ namespace OpenVkNetApi.Models.RequestParameters.Messages
         /// Community ID (if calling from a group).
         /// </summary>
         [ApiParameter("group_id")]
-        public int? GroupId { get; set; }
+        public long? GroupId { get; set; }
     }
 }

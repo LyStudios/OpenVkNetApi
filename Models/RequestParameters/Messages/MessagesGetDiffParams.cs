@@ -35,6 +35,6 @@ namespace OpenVkNetApi.Models.RequestParameters.Messages
         /// Highest known message ID.
         /// </summary>
         [ApiParameter("max_msg_id")]
-        public int MaxMsgId { get; set; } = 0;
+        public long MaxMsgId { get; set; } = 0;
     }
 }

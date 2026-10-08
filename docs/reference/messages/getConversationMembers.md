@@ -21,7 +21,7 @@ ExtendedCollection<ConversationMember> members = await api.Messages.GetConversat
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **peerId** <br> `int` | Идентификатор беседы (`2000000000 + chat_id`). <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **peerId** <br> `long` | Идентификатор беседы (`2000000000 + chat_id`). <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
 | **offset** <br> `int?` | Смещение относительно начала списка участников. <br> <span style="color: var(--vp-c-text-3)">целое число</span> |
 | **count** <br> `int?` | Количество возвращаемых участников (по умолчанию 20). <br> <span style="color: var(--vp-c-text-3)">целое число</span> |
 | **extended** <br> `bool?` | Возвращать ли профили участников. <br> <span style="color: var(--vp-c-text-3)">логическое значение</span> |

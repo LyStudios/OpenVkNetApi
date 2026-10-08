@@ -10,12 +10,12 @@ namespace OpenVkNetApi.Events
         /// <summary>
         /// Gets the peer ID of the conversation.
         /// </summary>
-        public int PeerId { get; }
+        public long PeerId { get; }
 
         /// <summary>
         /// Gets the local message ID up to which messages were read.
         /// </summary>
-        public int LocalId { get; }
+        public long LocalId { get; }
 
         /// <summary>
         /// Gets a value indicating whether outgoing messages were read (true), or incoming (false).
@@ -25,7 +25,7 @@ namespace OpenVkNetApi.Events
         /// <summary>
         /// Initializes a new instance of the <see cref="MessagesReadEventArgs"/> class.
         /// </summary>
-        public MessagesReadEventArgs(int peerId, int localId, bool isOutgoing)
+        public MessagesReadEventArgs(long peerId, long localId, bool isOutgoing)
         {
             PeerId = peerId;
             LocalId = localId;

@@ -10,7 +10,7 @@ namespace OpenVkNetApi.Events
         /// <summary>
         /// Gets the ID of the user who went offline.
         /// </summary>
-        public int UserId { get; }
+        public long UserId { get; }
 
         /// <summary>
         /// Gets the offline flag (0: manual logout / left site, 1: inactivity timeout).
@@ -25,7 +25,7 @@ namespace OpenVkNetApi.Events
         /// <summary>
         /// Initializes a new instance of the <see cref="UserOfflineEventArgs"/> class.
         /// </summary>
-        public UserOfflineEventArgs(int userId, int flags, long timestamp)
+        public UserOfflineEventArgs(long userId, int flags, long timestamp)
         {
             UserId = userId;
             Flags = flags;

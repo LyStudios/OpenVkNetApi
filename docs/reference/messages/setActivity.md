@@ -22,7 +22,7 @@ int result = await api.Messages.SetActivityAsync(type: "typing", peerId: 12);
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **peerId** <br> `int` | Идентификатор диалога/собеседника, которому отправляется статус. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **peerId** <br> `long` | Идентификатор диалога/собеседника, которому отправляется статус. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
 | **type** <br> `string` | Тип активности. На данный момент поддерживается только `typing` (набор текста). <br> <span style="color: var(--vp-c-text-3)">строка, по умолчанию: "typing"</span> |
 
 </div>

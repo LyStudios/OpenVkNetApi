@@ -7,7 +7,7 @@
 # Вызов метода
 
 ```csharp
-int chatId = await api.Messages.JoinChatByInviteLinkAsync(
+long chatId = await api.Messages.JoinChatByInviteLinkAsync(
     link: "https://openvk.su/messages?act=join_chat&chat=..."
 );
 ```

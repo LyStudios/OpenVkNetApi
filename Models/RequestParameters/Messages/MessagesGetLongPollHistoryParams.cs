@@ -11,7 +11,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Messages
         /// Last event ID (from previous long poll response).
         /// </summary>
         [ApiParameter("ts")]
-        public int Ts { get; set; } = -1;
+        public long Ts { get; set; } = -1;
 
         /// <summary>
         /// The number of characters to return from the message text.

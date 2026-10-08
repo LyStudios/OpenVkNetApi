@@ -21,8 +21,8 @@ int result = await api.Messages.RemoveChatModeratorAsync(
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **chatId** <br> `int` | Идентификатор беседы. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
-| **userId** <br> `int` | Идентификатор пользователя, с которого снимаются права модератора. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **chatId** <br> `long` | Идентификатор беседы. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **userId** <br> `long` | Идентификатор пользователя, с которого снимаются права модератора. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
 
 </div>
 

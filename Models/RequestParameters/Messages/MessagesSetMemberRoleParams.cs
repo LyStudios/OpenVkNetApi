@@ -11,13 +11,13 @@ namespace OpenVkNetApi.Models.RequestParameters.Messages
         /// Destination ID (group chat peer ID, 2000000000 + chat_id).
         /// </summary>
         [ApiParameter("peer_id")]
-        public int PeerId { get; set; }
+        public long PeerId { get; set; }
 
         /// <summary>
         /// ID of the member whose role is being modified.
         /// </summary>
         [ApiParameter("member_id")]
-        public int MemberId { get; set; }
+        public long MemberId { get; set; }
 
         /// <summary>
         /// Role to assign: "admin" or "member".
@@ -29,6 +29,6 @@ namespace OpenVkNetApi.Models.RequestParameters.Messages
         /// Community ID (if calling from a group).
         /// </summary>
         [ApiParameter("group_id")]
-        public int? GroupId { get; set; }
+        public long? GroupId { get; set; }
     }
 }

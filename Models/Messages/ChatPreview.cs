@@ -12,13 +12,13 @@ namespace OpenVkNetApi.Models.Messages
         /// Gets or sets the chat admin user ID.
         /// </summary>
         [JsonProperty("admin_id")]
-        public int AdminId { get; set; }
+        public long AdminId { get; set; }
 
         /// <summary>
         /// Gets or sets member user IDs in the chat.
         /// </summary>
         [JsonProperty("members")]
-        public List<int> Members { get; set; }
+        public List<long> Members { get; set; }
 
         /// <summary>
         /// Gets or sets total member count.
@@ -42,6 +42,6 @@ namespace OpenVkNetApi.Models.Messages
         /// Gets or sets the local chat ID.
         /// </summary>
         [JsonProperty("local_id")]
-        public int LocalId { get; set; }
+        public long LocalId { get; set; }
     }
 }

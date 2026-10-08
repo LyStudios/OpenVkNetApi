@@ -21,7 +21,7 @@ Chat chat = await api.Messages.GetChatAsync(
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **chatId** <br> `int` | Идентификатор беседы (`chat_id`). <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **chatId** <br> `long` | Идентификатор беседы (`chat_id`). <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
 | **fields** <br> `string` | Дополнительные поля профилей участников через запятую. <br> <span style="color: var(--vp-c-text-3)">строка</span> |
 | **nameCase** <br> `string` | Падеж для склонения имени и фамилии участников. <br> <span style="color: var(--vp-c-text-3)">строка</span> |
 

@@ -11,19 +11,19 @@ namespace OpenVkNetApi.Events
         /// <summary>
         /// Gets the ID of the user who is typing.
         /// </summary>
-        public int UserId { get; }
+        public long UserId { get; }
 
         /// <summary>
         /// Gets the peer ID of the conversation where the user is typing.
         /// For private messages, this is the user's ID.
         /// For chat rooms, this is 2000000000 + chatId.
         /// </summary>
-        public int PeerId { get; }
+        public long PeerId { get; }
 
         /// <summary>
         /// Gets the raw chat ID if the user is typing in a group chat, otherwise <c>null</c>.
         /// </summary>
-        public int? ChatId { get; }
+        public long? ChatId { get; }
 
         /// <summary>
         /// Gets a value indicating whether the user is recording an audio/voice message.
@@ -37,7 +37,7 @@ namespace OpenVkNetApi.Events
         /// <param name="peerId">The peer ID of the conversation.</param>
         /// <param name="chatId">The optional chat ID.</param>
         /// <param name="isAudioMessage">True if the user is recording an audio message, false if typing.</param>
-        public UserTypingEventArgs(int userId, int peerId, int? chatId = null, bool isAudioMessage = false)
+        public UserTypingEventArgs(long userId, long peerId, long? chatId = null, bool isAudioMessage = false)
         {
             UserId = userId;
             PeerId = peerId;

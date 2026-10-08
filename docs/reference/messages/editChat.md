@@ -21,7 +21,7 @@ int result = await api.Messages.EditChatAsync(
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **chatId** <br> `int` | Идентификатор беседы. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **chatId** <br> `long` | Идентификатор беседы. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
 | **title** <br> `string` | Новое название беседы. <br> <span style="color: var(--vp-c-text-3)">строка, обязательный параметр</span> |
 
 </div>

@@ -11,13 +11,13 @@ namespace OpenVkNetApi.Models.Messages
         /// Gets or sets the member's user ID.
         /// </summary>
         [JsonProperty("member_id")]
-        public int MemberId { get; set; }
+        public long MemberId { get; set; }
 
         /// <summary>
         /// Gets or sets the ID of the user who invited this member.
         /// </summary>
         [JsonProperty("invited_by")]
-        public int InvitedBy { get; set; }
+        public long InvitedBy { get; set; }
 
         /// <summary>
         /// Gets or sets the Unix timestamp when the member joined the conversation.

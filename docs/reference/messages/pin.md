@@ -21,9 +21,9 @@ Message pinned = await api.Messages.PinAsync(
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **peerId** <br> `int` | Идентификатор назначения (диалога или чата). <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
-| **messageId** <br> `int?` | Глобальный идентификатор закрепляемого сообщения. <br> <span style="color: var(--vp-c-text-3)">целое число</span> |
-| **cmid** <br> `int?` | Идентификатор сообщения в рамках беседы (`conversation_message_id`). <br> <span style="color: var(--vp-c-text-3)">целое число</span> |
+| **peerId** <br> `long` | Идентификатор назначения (диалога или чата). <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **messageId** <br> `long?` | Глобальный идентификатор закрепляемого сообщения. <br> <span style="color: var(--vp-c-text-3)">целое число</span> |
+| **cmid** <br> `long?` | Идентификатор сообщения в рамках беседы (`conversation_message_id`). <br> <span style="color: var(--vp-c-text-3)">целое число</span> |
 
 </div>
 

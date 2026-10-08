@@ -7,7 +7,7 @@
 # Вызов метода
 
 ```csharp
-int chatId = await api.Messages.JoinChatByTopicAsync(
+long chatId = await api.Messages.JoinChatByTopicAsync(
     topicId: 42
 );
 ```
@@ -20,7 +20,7 @@ int chatId = await api.Messages.JoinChatByTopicAsync(
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **topicId** <br> `int` | Идентификатор темы обсуждения. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **topicId** <br> `long` | Идентификатор темы обсуждения. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
 
 </div>
 

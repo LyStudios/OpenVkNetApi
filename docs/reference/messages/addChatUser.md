@@ -21,8 +21,8 @@ int result = await api.Messages.AddChatUserAsync(
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **chatId** <br> `int` | Идентификатор беседы. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
-| **userId** <br> `int` | Идентификатор добавляемого пользователя. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **chatId** <br> `long` | Идентификатор беседы. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **userId** <br> `long` | Идентификатор добавляемого пользователя. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
 
 </div>
 

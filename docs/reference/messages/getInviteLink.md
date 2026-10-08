@@ -21,7 +21,7 @@ string link = await api.Messages.GetInviteLinkAsync(
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **peerId** <br> `int` | Идентификатор назначения (`2000000000 + chat_id`). <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **peerId** <br> `long` | Идентификатор назначения (`2000000000 + chat_id`). <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
 | **reset** <br> `bool?` | Аннулировать старую ссылку и сгенерировать новую (`true`). <br> <span style="color: var(--vp-c-text-3)">логическое значение</span> |
 
 </div>

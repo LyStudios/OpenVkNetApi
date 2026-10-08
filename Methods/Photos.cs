@@ -532,11 +532,11 @@ namespace OpenVkNetApi.Methods
         /// <param name="peerId">Destination ID for message.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="PhotosUploadServer"/> instance.</returns>
-        public async Task<PhotosUploadServer> GetMessagesUploadServerAsync(int groupId = 0, int peerId = 0, CancellationToken ct = default)
+        public async Task<PhotosUploadServer> GetMessagesUploadServerAsync(long groupId = 0, long peerId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
-                .Add("group_id", groupId)
-                .Add("peer_id", peerId)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
+                .Add("peer_id", peerId != 0 ? peerId : (long?)null)
                 .ToDictionary();
 
             return await GetAsync<PhotosUploadServer>("getMessagesUploadServer", parameters, ct);
@@ -570,7 +570,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="peerId">Destination ID (peer) of the conversation.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A list of saved <see cref="Photo"/> objects.</returns>
-        public async Task<List<Photo>> UploadMessagesPhotoAsync(Stream photoStream, string fileName, int groupId = 0, int peerId = 0, CancellationToken ct = default)
+        public async Task<List<Photo>> UploadMessagesPhotoAsync(Stream photoStream, string fileName, long groupId = 0, long peerId = 0, CancellationToken ct = default)
         {
             if (string.IsNullOrEmpty(_api.AccessToken))
                 throw new InvalidOperationException("API is not authorized. Call AuthorizeAsync() first.");
@@ -590,11 +590,11 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">Group ID, if uploading on behalf of a group.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>A <see cref="PhotosUploadServer"/> instance.</returns>
-        public async Task<PhotosUploadServer> GetChatUploadServerAsync(int chatId, int groupId = 0, CancellationToken ct = default)
+        public async Task<PhotosUploadServer> GetChatUploadServerAsync(long chatId, long groupId = 0, CancellationToken ct = default)
         {
             var parameters = new RequestParams()
                 .Add("chat_id", chatId)
-                .Add("group_id", groupId)
+                .Add("group_id", groupId != 0 ? groupId : (long?)null)
                 .ToDictionary();
 
             return await GetAsync<PhotosUploadServer>("getChatUploadServer", parameters, ct);
@@ -609,7 +609,7 @@ namespace OpenVkNetApi.Methods
         /// <param name="groupId">Group ID.</param>
         /// <param name="ct">A cancellation token for the operation.</param>
         /// <returns>The upload result containing file and hash.</returns>
-        public async Task<ChatPhotoUploadResult> UploadChatPhotoAsync(Stream photoStream, string fileName, int chatId, int groupId = 0, CancellationToken ct = default)
+        public async Task<ChatPhotoUploadResult> UploadChatPhotoAsync(Stream photoStream, string fileName, long chatId, long groupId = 0, CancellationToken ct = default)
         {
             if (string.IsNullOrEmpty(_api.AccessToken))
                 throw new InvalidOperationException("API is not authorized. Call AuthorizeAsync() first.");

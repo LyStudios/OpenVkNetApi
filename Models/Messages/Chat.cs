@@ -12,7 +12,7 @@ namespace OpenVkNetApi.Models.Messages
         /// Gets or sets the chat ID.
         /// </summary>
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Gets or sets the type of the dialog (always "chat").
@@ -30,13 +30,13 @@ namespace OpenVkNetApi.Models.Messages
         /// Gets or sets the ID of the chat creator/admin.
         /// </summary>
         [JsonProperty("admin_id")]
-        public int AdminId { get; set; }
+        public long AdminId { get; set; }
 
         /// <summary>
         /// Gets or sets the list of user IDs participating in the chat.
         /// </summary>
         [JsonProperty("users")]
-        public List<int> Users { get; set; }
+        public List<long> Users { get; set; }
 
         /// <summary>
         /// Gets or sets the number of members in the chat.

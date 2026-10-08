@@ -20,7 +20,7 @@ UserLastActivity activity = await api.Messages.GetLastActivityAsync(
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **userId** <br> `int` | Идентификатор пользователя. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **userId** <br> `long` | Идентификатор пользователя. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
 
 </div>
 

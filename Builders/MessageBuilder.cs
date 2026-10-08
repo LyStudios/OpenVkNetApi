@@ -1,4 +1,4 @@
-﻿using OpenVkNetApi.Methods;
+using OpenVkNetApi.Methods;
 using OpenVkNetApi.Models.Photos;
 using OpenVkNetApi.Models.RequestParameters.Messages;
 using System;
@@ -32,12 +32,12 @@ namespace OpenVkNetApi.Builders
         /// <summary>
         /// The target user identifier.
         /// </summary>
-        private int _userId;
+        private long _userId = -1;
 
         /// <summary>
         /// The target peer identifier.
         /// </summary>
-        private int _peerId;
+        private long _peerId = -1;
 
         /// <summary>
         /// The message text content.
@@ -70,7 +70,7 @@ namespace OpenVkNetApi.Builders
         /// </summary>
         /// <param name="userId">The identifier of the target user.</param>
         /// <returns>The current <see cref="MessageBuilder"/> instance.</returns>
-        public MessageBuilder ToUser(int userId)
+        public MessageBuilder ToUser(long userId)
         {
             _userId = userId;
             _peerId = -1;
@@ -84,7 +84,7 @@ namespace OpenVkNetApi.Builders
         /// The peer identifier (user, chat or community).
         /// </param>
         /// <returns>The current <see cref="MessageBuilder"/> instance.</returns>
-        public MessageBuilder ToPeer(int peerId)
+        public MessageBuilder ToPeer(long peerId)
         {
             _peerId = peerId;
             _userId = -1;
@@ -123,7 +123,7 @@ namespace OpenVkNetApi.Builders
         /// <param name="ownerId">The owner identifier of the media.</param>
         /// <param name="mediaId">The identifier of the media object.</param>
         /// <returns>The current <see cref="MessageBuilder"/> instance.</returns>
-        public MessageBuilder Attach(string type, int ownerId, int mediaId)
+        public MessageBuilder Attach(string type, long ownerId, long mediaId)
         {
             _attachments.Add($"{type}{ownerId}_{mediaId}");
             return this;
@@ -141,7 +141,7 @@ namespace OpenVkNetApi.Builders
         /// <exception cref="InvalidOperationException">
         /// Thrown if no recipient has been specified.
         /// </exception>
-        public async Task<List<int>> SendAsync(CancellationToken ct = default)
+        public async Task<List<long>> SendAsync(CancellationToken ct = default)
         {
             if (_userId == -1 && _peerId == -1)
                 throw new InvalidOperationException("Recipient is not specified.");

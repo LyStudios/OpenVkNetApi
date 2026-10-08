@@ -21,8 +21,8 @@ int result = await api.Messages.RemoveChatUserAsync(
 
 | Параметр / Тип | Описание |
 | :--- | :--- |
-| **chatId** <br> `int` | Идентификатор беседы. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
-| **userId** <br> `int` | Идентификатор исключаемого пользователя (если указан свой ID — пользователь покидает беседу). <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **chatId** <br> `long` | Идентификатор беседы. <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
+| **userId** <br> `long` | Идентификатор исключаемого пользователя (если указан свой ID — пользователь покидает беседу). <br> <span style="color: var(--vp-c-text-3)">целое число, обязательный параметр</span> |
 
 </div>
 

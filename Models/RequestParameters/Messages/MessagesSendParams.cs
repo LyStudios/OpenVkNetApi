@@ -11,13 +11,19 @@ namespace OpenVkNetApi.Models.RequestParameters.Messages
         /// User ID.
         /// </summary>
         [ApiParameter("user_id")]
-        public int UserId { get; set; } = -1;
+        public long UserId { get; set; } = -1;
 
         /// <summary>
         /// Peer ID.
         /// </summary>
         [ApiParameter("peer_id")]
-        public int PeerId { get; set; } = -1;
+        public long PeerId { get; set; } = -1;
+
+        /// <summary>
+        /// Unique random ID to prevent duplicate message sending.
+        /// </summary>
+        [ApiParameter("random_id")]
+        public long? RandomId { get; set; }
 
         /// <summary>
         /// User's domain name.
@@ -29,7 +35,7 @@ namespace OpenVkNetApi.Models.RequestParameters.Messages
         /// Chat ID.
         /// </summary>
         [ApiParameter("chat_id")]
-        public int ChatId { get; set; } = -1;
+        public long ChatId { get; set; } = -1;
 
         /// <summary>
         /// Comma-separated list of user IDs to send a message to.
