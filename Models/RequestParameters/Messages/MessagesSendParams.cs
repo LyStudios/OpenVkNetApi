@@ -11,13 +11,13 @@ namespace OpenVkNetApi.Models.RequestParameters.Messages
         /// User ID.
         /// </summary>
         [ApiParameter("user_id")]
-        public long UserId { get; set; } = -1;
+        public long? UserId { get; set; }
 
         /// <summary>
         /// Peer ID.
         /// </summary>
         [ApiParameter("peer_id")]
-        public long PeerId { get; set; } = -1;
+        public long? PeerId { get; set; }
 
         /// <summary>
         /// Unique random ID to prevent duplicate message sending.
@@ -29,31 +29,31 @@ namespace OpenVkNetApi.Models.RequestParameters.Messages
         /// User's domain name.
         /// </summary>
         [ApiParameter("domain")]
-        public string Domain { get; set; } = "";
+        public string Domain { get; set; }
 
         /// <summary>
         /// Chat ID.
         /// </summary>
         [ApiParameter("chat_id")]
-        public long ChatId { get; set; } = -1;
+        public long? ChatId { get; set; }
 
         /// <summary>
         /// Comma-separated list of user IDs to send a message to.
         /// </summary>
         [ApiParameter("user_ids")]
-        public string UserIds { get; set; } = "";
+        public string UserIds { get; set; }
 
         /// <summary>
         /// Message text.
         /// </summary>
         [ApiParameter("message")]
-        public string Message { get; set; } = "";
+        public string Message { get; set; }
 
         /// <summary>
         /// Sticker ID.
         /// </summary>
         [ApiParameter("sticker_id")]
-        public int StickerId { get; set; } = -1;
+        public int? StickerId { get; set; }
 
         /// <summary>
         /// A special flag to prevent reporting about online activity.
@@ -66,6 +66,6 @@ namespace OpenVkNetApi.Models.RequestParameters.Messages
         /// Attachment (e.g., photo_id, video_id).
         /// </summary>
         [ApiParameter("attachment")]
-        public string Attachment { get; set; } = "";
+        public string Attachment { get; set; }
     }
 }
